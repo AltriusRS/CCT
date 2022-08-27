@@ -944,7 +944,7 @@ local function buildBar(self, width, percentage, current, max, cursorY)
     end
     local bar = ""
     local blit = ""
-    local colorwidth = width * percentage
+    local colorwidth = width / percentage
     print(width, percentage, colorwidth)
     screen.setCursorPos(34, cursorY + 1)
     screen.blit(bar, "", blit)
@@ -984,14 +984,14 @@ local function writeGraphs(self, data)
         2
     )
     screen.setCursorPos(34, 7)
-    screen.write("Storage Capacity")
+    screen.write("Energy Storage")
     buildBar(
         nil,
         w - 35,
-        percentage(nil, data.total, data.capacity),
-        data.total,
-        data.capacity,
-        2
+        percentage(nil, data.energy.current, data.energy.max),
+        data.energy.current,
+        data.energy.max,
+        7
     )
 end
 print("Welcome to StockOS. Please wait whilst we run initial checks")

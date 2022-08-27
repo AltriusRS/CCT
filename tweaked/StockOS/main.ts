@@ -143,7 +143,7 @@ function buildBar(width: number, percentage: number, current: number, max: numbe
     let bar = ""
     let blit = ""
 
-    let colorwidth = width * percentage;
+    let colorwidth = width / percentage;
     print(width, percentage, colorwidth);
 
     screen.setCursorPos(34, cursorY + 1)
@@ -169,8 +169,8 @@ function writeGraphs(data: any) {
     screen.write("Storage Capacity")
     buildBar(w - 35, percentage(data.total, data.capacity), data.total, data.capacity, 2)
     screen.setCursorPos(34, 7)
-    screen.write("Storage Capacity")
-    buildBar(w - 35, percentage(data.total, data.capacity), data.total, data.capacity, 2)
+    screen.write("Energy Storage")
+    buildBar(w - 35, percentage(data.energy.current, data.energy.max), data.energy.current, data.energy.max, 7)
 }
 
 print("Welcome to StockOS. Please wait whilst we run initial checks")
