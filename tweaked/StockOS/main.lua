@@ -1053,7 +1053,7 @@ else
                 errored = true
                 lastError = 0
                 playChime(nil, "alert")
-                screen.setTextScale(2)
+                screen.setTextScale(3)
                 screen.setBackgroundColor(colors.red)
                 screen.setTextColor(colors.black)
                 screen.clear()
