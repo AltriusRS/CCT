@@ -960,7 +960,6 @@ local function buildBar(self, width, percentage, current, max, cursorY)
         end
         bar = bar .. " "
     end
-    print(width, percentage, colorwidth)
     screen.setCursorPos(34, cursorY + 1)
     if width > 6 then
         screen.write(" ")
@@ -974,15 +973,6 @@ local function buildBar(self, width, percentage, current, max, cursorY)
 end
 local function writeGraphs(self, data)
     local w, h = screen.getSize()
-    print(
-        "Storage used: ",
-        percentage(nil, data.total, data.capacity)
-    )
-    print(
-        "Energy used: ",
-        percentage(nil, data.energy.current, data.energy.max)
-    )
-    print("---------------------------")
     do
         local i = 2
         while i <= h do

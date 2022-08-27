@@ -159,7 +159,6 @@ function buildBar(width: number, percentage: number, current: number, max: numbe
         bar += " "
     }
 
-    print(width, percentage, colorwidth);
 
     screen.setCursorPos(34, cursorY + 1)
     if (width > 6) {
@@ -175,9 +174,6 @@ function buildBar(width: number, percentage: number, current: number, max: numbe
 
 function writeGraphs(data: any) {
     let [w, h] = screen.getSize();
-    print("Storage used: ", percentage(data.total, data.capacity))
-    print("Energy used: ", percentage(data.energy.current, data.energy.max))
-    print("---------------------------")
     for (let i = 2; i <= h; i++) {
         screen.setCursorPos(33, i);
         screen.write("|")
