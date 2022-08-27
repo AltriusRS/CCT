@@ -171,7 +171,7 @@ if (screen === undefined) {
         print(rightW, rightH);
         while (keepRendering) {
             let stats = grabItems()
-            pretty.pretty_print(stats)
+            print(stats.total, stats.capacity, stats.capacity / stats.total)
             writeToScreen(stats.processed, leftHalf)
             os.sleep(0.75)
             keepRendering = false
