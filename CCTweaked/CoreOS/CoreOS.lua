@@ -87,7 +87,7 @@ function install()
         write("Installing boot disk\n")
         settings.set("core_os_load", m.paste)
         settings.save()
-        shell.run("wget", "https://raw.githubusercontent.com/AltriusRS/CCT/main/CCTweaked/Bootloader/BootOS.lua", "startup")
+        shell.run("wget", "https://raw.githubusercontent.com/AltriusRS/CCT/main/CCTweaked/Bootloader/OldBootOS.lua", "startup")
         write("Installation completed.\nRebooting...")
         shell.execute("reboot")
     end
