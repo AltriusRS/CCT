@@ -777,6 +777,8 @@ else
         print("Warn: A speaker is optimal, but not required")
     end
 end
+print("Unexpected end of application...")
+sleep(5)
 return ____exports
  end,
 }

@@ -41,3 +41,6 @@ if (!screen) {
 } else {
     if (!speaker) print("Warn: A speaker is optimal, but not required");
 }
+
+print("Unexpected end of application...")
+sleep(5)
