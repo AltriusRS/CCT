@@ -49,7 +49,7 @@ let looping = true;
 
 while (looping) {
     let event = events.pullEvent("key");
-    print(event)
+    print(JSON.stringify(event))
 
     looping = false;
 }
