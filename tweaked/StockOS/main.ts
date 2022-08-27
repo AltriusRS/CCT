@@ -37,13 +37,20 @@ print("Welcome to StockOS. Please wait whilst we run initial checks")
 
 sleep(1)
 
-if (!screen) {
+if (screen !== undefined) {
     print("Error: No screen detected, but one is required. Please install some advanced monitors.")
     playChime("error");
-} else if (!rs) {
+} else if (rs !== undefined) {
     print("Error: No RS Bridge detected, but one is required. Please install one.")
 } else {
-    if (!speaker) print("Warn: A speaker is optimal, but not required");
+    if (speaker !== undefined) print("Warn: A speaker is optimal, but not required");
+    print("All checks passed")
+    print(rs)
+    print(screen)
+    print(speaker)
+    playChime("start")
+    sleep(5)
+    playChime("stop")
 }
 
 print("Unexpected end of application...")

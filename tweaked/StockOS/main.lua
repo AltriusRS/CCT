@@ -769,15 +769,22 @@ local function playChime(self, chime)
 end
 print("Welcome to StockOS. Please wait whilst we run initial checks")
 sleep(1)
-if not screen then
+if screen ~= nil then
     print("Error: No screen detected, but one is required. Please install some advanced monitors.")
     playChime(nil, "error")
-elseif not rs then
+elseif rs ~= nil then
     print("Error: No RS Bridge detected, but one is required. Please install one.")
 else
-    if not speaker then
+    if speaker ~= nil then
         print("Warn: A speaker is optimal, but not required")
     end
+    print("All checks passed")
+    print(rs)
+    print(screen)
+    print(speaker)
+    playChime(nil, "start")
+    sleep(5)
+    playChime(nil, "stop")
 end
 print("Unexpected end of application...")
 sleep(5)
