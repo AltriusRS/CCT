@@ -915,7 +915,7 @@ local function writeToScreen(self, items)
         while cursor <= height do
             screen.setCursorPos(1, cursor)
             screen.clearLine()
-            screen.write((formatNumber(nil, items[cursor - 2 + 1].quantity) .. " | ") .. formatName(nil, items[cursor - 2 + 1].name))
+            screen.write(((" " .. formatNumber(nil, items[cursor - 2 + 1].quantity)) .. " | ") .. formatName(nil, items[cursor - 2 + 1].name))
             cursor = cursor + 1
         end
     end
@@ -925,7 +925,7 @@ local function writeGraphs(self, data)
     do
         local i = 2
         while i <= h do
-            screen.setCursorPos(32, i)
+            screen.setCursorPos(33, i)
             screen.write("|")
             i = i + 1
         end

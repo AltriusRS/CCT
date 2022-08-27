@@ -122,7 +122,7 @@ function writeToScreen(items: any[]) {
         while (cursor <= height) {
             screen.setCursorPos(1, cursor);
             screen.clearLine()
-            screen.write(`${formatNumber(items[(cursor - 2)].quantity)} | ${formatName(items[(cursor - 2)].name)}`)
+            screen.write(` ${formatNumber(items[(cursor - 2)].quantity)} | ${formatName(items[(cursor - 2)].name)}`)
             cursor += 1
         }
     }
@@ -132,7 +132,7 @@ function writeGraphs(data: any) {
     let [w, h] = screen.getSize();
 
     for (let i = 2; i <= h; i++) {
-        screen.setCursorPos(32, i);
+        screen.setCursorPos(33, i);
         screen.write("|")
     }
 }
