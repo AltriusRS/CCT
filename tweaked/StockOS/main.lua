@@ -742,7 +742,7 @@ local function playChime(self, chime)
             local passes
             local ____cond4 = ____switch4 == "process"
             if ____cond4 then
-                speaker.playNote("chime", 0.1, 12)
+                speaker.playNote("chime", 0.5, 12)
                 break
             end
             ____cond4 = ____cond4 or ____switch4 == "start"

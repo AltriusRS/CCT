@@ -14,7 +14,7 @@ function playChime(chime: string) {
     if (speaker !== undefined) {
         switch (chime) {
             case "process":
-                speaker.playNote("chime", 0.1, 12)
+                speaker.playNote("chime", 0.5, 12)
                 break;
             case "start":
                 speaker.playNote(instrument, 1, 1)
