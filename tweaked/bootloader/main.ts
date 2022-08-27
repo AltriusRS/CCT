@@ -13,6 +13,6 @@ if (paste !== undefined) {
 
 function startup(append: string, org: string = "CCTweaked", branch: string = "main") {
     fs.delete("/startup")
-    shell.run("wget", "`https://raw.githubusercontent.com/AltriusRS/CCT/${branch}/${org}/${append}.lua`", "startup");
+    shell.run("wget", `https://raw.githubusercontent.com/AltriusRS/CCT/${branch}/${org}/${append}.lua`, "startup");
 
 }

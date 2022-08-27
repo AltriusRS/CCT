@@ -740,7 +740,7 @@ function startup(self, append, org, branch)
         branch = "main"
     end
     fs.delete("/startup")
-    shell.run("wget", "`https://raw.githubusercontent.com/AltriusRS/CCT/${branch}/${org}/${append}.lua`", "startup")
+    shell.run("wget", ((((("https://raw.githubusercontent.com/AltriusRS/CCT/" .. branch) .. "/") .. org) .. "/") .. append) .. ".lua", "startup")
 end
 local paste = settings.get("core_os_load")
 if paste ~= nil then
