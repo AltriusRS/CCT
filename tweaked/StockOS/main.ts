@@ -56,14 +56,19 @@ if (screen === undefined) {
     playChime("error");
 } else if (rs === undefined) {
     print("Error: No RS Bridge detected, but one is required. Please install one.")
+    playChime("error");
 } else {
-    if (speaker !== undefined) print("Warn: A speaker is optimal, but not required");
+    if (speaker === undefined) print("Warn: A speaker is optional, but recommended");
     print("All checks passed")
-    print(rs)
-    print(screen)
-    print(speaker)
     playChime("start")
-    sleep(5)
+    sleep(2)
+    print("Test error chime")
+    playChime("error")
+    sleep(2)
+    print("Test alert chime")
+    playChime("alert")
+
+    sleep(2)
     playChime("stop")
 }
 

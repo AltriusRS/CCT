@@ -788,16 +788,20 @@ if screen == nil then
     playChime(nil, "error")
 elseif rs == nil then
     print("Error: No RS Bridge detected, but one is required. Please install one.")
+    playChime(nil, "error")
 else
-    if speaker ~= nil then
-        print("Warn: A speaker is optimal, but not required")
+    if speaker == nil then
+        print("Warn: A speaker is optional, but recommended")
     end
     print("All checks passed")
-    print(rs)
-    print(screen)
-    print(speaker)
     playChime(nil, "start")
-    sleep(5)
+    sleep(2)
+    print("Test error chime")
+    playChime(nil, "error")
+    sleep(2)
+    print("Test alert chime")
+    playChime(nil, "alert")
+    sleep(2)
     playChime(nil, "stop")
 end
 print("Unexpected end of application...")
