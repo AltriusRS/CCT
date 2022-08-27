@@ -896,7 +896,7 @@ local function writeToScreen(self, items, window)
         screen.write(name)
         screen.setTextColor(colors.white)
         screen.setBackgroundColor(colors.black)
-        local cursor = 1
+        local cursor = 2
         while cursor <= height do
             window.setCursorPos(1, cursor)
             window.clearLine()

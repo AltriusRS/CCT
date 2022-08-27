@@ -106,7 +106,7 @@ function writeToScreen(items: any[], window: Window) {
         screen.write(name)
         screen.setTextColor(colors.white)
         screen.setBackgroundColor(colors.black)
-        let cursor = 1;
+        let cursor = 2;
         while (cursor <= height) {
             window.setCursorPos(1, cursor);
             window.clearLine()
