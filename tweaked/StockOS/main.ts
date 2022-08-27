@@ -93,8 +93,11 @@ function formatNumber(num: number | undefined): string {
         x += 1;
         num = num / 1000
     }
-
-    let text = `${Math.round(num * 100) / 100}${units[x]}`;
+    let n2 = ``+Math.round(num * 100) / 100;
+    if(n2.split(".").length !== 2) {
+        n2 = n2 + ".00"
+    }
+    let text = `${n2}${units[x]}`;
 
     while (text.length < 7) {
         text = ` ${text}`

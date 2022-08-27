@@ -889,7 +889,11 @@ local function formatNumber(self, num)
         x = x + 1
         num = num / 1000
     end
-    local text = tostring(math.floor(num * 100 + 0.5) / 100) .. units[x + 1]
+    local n2 = "" .. tostring(math.floor(num * 100 + 0.5) / 100)
+    if #__TS__StringSplit(n2, ".") ~= 2 then
+        n2 = n2 .. ".00"
+    end
+    local text = n2 .. units[x + 1]
     while #text < 7 do
         text = " " .. text
     end
