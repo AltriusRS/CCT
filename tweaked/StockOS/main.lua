@@ -731,8 +731,7 @@ return ____exports
 ["main"] = function(...) 
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
 local ____exports = {}
-local lines = 5
-local scale = 1
+local pretty = require("cc.pretty")
 local instrument = "bit"
 local speaker = peripheral.find("speaker")
 local screen = peripheral.find("monitor")
@@ -781,6 +780,19 @@ local function playChime(self, chime)
         print(speaker)
     end
 end
+local function grabItems(self)
+    local processed = {}
+    local storage = rs:listItems()
+    do
+        local i = 0
+        while i < storage.length do
+            local item = storage[i]
+            pretty.pretty_print(item)
+            i = i + 1
+        end
+    end
+    return processed
+end
 print("Welcome to StockOS. Please wait whilst we run initial checks")
 sleep(1)
 if screen == nil then
@@ -795,12 +807,6 @@ else
     end
     print("All checks passed")
     playChime(nil, "start")
-    sleep(2)
-    print("Test error chime")
-    playChime(nil, "error")
-    sleep(2)
-    print("Test alert chime")
-    playChime(nil, "alert")
     sleep(2)
     playChime(nil, "stop")
 end

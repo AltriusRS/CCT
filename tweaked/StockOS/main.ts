@@ -1,7 +1,6 @@
 import * as event from "./event";
+import * as pretty from "cc.pretty";
 
-let lines = 5;
-let scale = 1;
 let instrument = "bit";
 
 // grab peripherals
@@ -47,6 +46,18 @@ function playChime(chime: string) {
     }
 }
 
+function grabItems(): any[] {
+    let processed = [];
+
+    let storage = rs.listItems();
+    for (let i = 0; i < storage.length; i++) {
+        let item = storage[i];
+        pretty.pretty_print(item);
+    }
+
+    return processed;
+}
+
 print("Welcome to StockOS. Please wait whilst we run initial checks")
 
 sleep(1)
@@ -61,12 +72,7 @@ if (screen === undefined) {
     if (speaker === undefined) print("Warn: A speaker is optional, but recommended");
     print("All checks passed")
     playChime("start")
-    sleep(2)
-    print("Test error chime")
-    playChime("error")
-    sleep(2)
-    print("Test alert chime")
-    playChime("alert")
+
 
     sleep(2)
     playChime("stop")
