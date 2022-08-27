@@ -1054,14 +1054,26 @@ else
                 lastError = 0
                 playChime(nil, "alert")
                 screen.setTextScale(3)
-                screen.setBackgroundColor(colors.red)
-                screen.setTextColor(colors.black)
-                screen.clear()
                 local w2, h2 = screen.getSize()
                 local message = "ITEM STORAGE CRITICAL"
-                screen.setCursorPos((w2 - #message) / 2, h2 / 2)
-                screen.write(message)
-                os.sleep(5)
+                do
+                    local i = 0
+                    while i < 10 do
+                        if i % 2 == 0 then
+                            screen.setBackgroundColor(colors.red)
+                            screen.setTextColor(colors.black)
+                            screen.clear()
+                        else
+                            screen.setTextColor(colors.red)
+                            screen.setBackgroundColor(colors.black)
+                            screen.clear()
+                        end
+                        screen.setCursorPos((w2 - #message) / 2, h2 / 2)
+                        screen.write(message)
+                        os.sleep(0.5)
+                        i = i + 1
+                    end
+                end
                 screen.setTextScale(scale)
             else
                 lastError = lastError + 1
