@@ -156,14 +156,7 @@ function buildBar(width: number, percentage: number, current: number, max: numbe
             blit = blit + "F"
             fblit = fblit + "0"
         }
-
-        if (bar.length === 0) {
-            bar += "["
-        } else if (bar.length === (width - 6)) {
-            bar += "]"
-        } else {
-            bar += " "
-        }
+        bar += " "
     }
 
     print(width, percentage, colorwidth);
