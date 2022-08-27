@@ -112,7 +112,7 @@ function writeToScreen(items: any[], window: Window) {
         while (cursor <= height) {
             window.setCursorPos(1, cursor);
             window.clearLine()
-            window.write(`${formatName(items[cursor - 2].name)} | ${formatNumber(items[cursor - 2].quantity)}`)
+            window.write(`${formatName(items[(cursor - 2)].name)} | ${formatNumber(items[(cursor - 2)].quantity)}`)
             cursor += 1
         }
     }
@@ -171,8 +171,10 @@ if (screen === undefined) {
         print(rightW, rightH);
         while (keepRendering) {
             let stats = grabItems()
+            pretty.pretty_print(stats)
             writeToScreen(stats.processed, leftHalf)
             os.sleep(0.75)
+            keepRendering = false
         }
 
         sleep(2)

@@ -787,6 +787,7 @@ local function __TS__StringSubstring(self, start, ____end)
 end
 
 local ____exports = {}
+local pretty = require("cc.pretty")
 local instrument = "bit"
 local speaker = peripheral.find("speaker")
 local screen = peripheral.find("monitor")
@@ -974,8 +975,10 @@ else
         print(rightW, rightH)
         while keepRendering do
             local stats = grabItems(nil)
+            pretty.pretty_print(stats)
             writeToScreen(nil, stats.processed, leftHalf)
             os.sleep(0.75)
+            keepRendering = false
         end
         sleep(2)
         playChime(nil, "stop")
