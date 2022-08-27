@@ -767,6 +767,8 @@ local function playChime(self, chime)
         print("Speaker not installed, skipping chime: ", chime)
     end
 end
+print("Welcome to StockOS. Please wait whilst we run initial checks")
+sleep(1)
 if not screen then
     print("Error: No screen detected, but one is required. Please install some advanced monitors.")
     playChime(nil, "error")
