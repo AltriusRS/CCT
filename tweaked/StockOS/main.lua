@@ -944,7 +944,7 @@ local function buildBar(self, width, percentage, current, max, cursorY)
     end
     local bar = ""
     local blit = ""
-    local colorwidth = width / percentage
+    local colorwidth = percentage / 100 * width
     print(width, percentage, colorwidth)
     screen.setCursorPos(34, cursorY + 1)
     screen.blit(bar, "", blit)

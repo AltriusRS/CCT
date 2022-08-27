@@ -143,7 +143,7 @@ function buildBar(width: number, percentage: number, current: number, max: numbe
     let bar = ""
     let blit = ""
 
-    let colorwidth = width / percentage;
+    let colorwidth = (percentage / 100) * width;
     print(width, percentage, colorwidth);
 
     screen.setCursorPos(34, cursorY + 1)
