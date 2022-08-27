@@ -920,8 +920,20 @@ local function writeToScreen(self, items)
         end
     end
 end
+local function percentage(self, current, max)
+    return current / max * 100
+end
 local function writeGraphs(self, data)
     local w, h = screen.getSize()
+    print(
+        "Storage used: ",
+        percentage(nil, data.total, data.capacity)
+    )
+    print(
+        "Energy used: ",
+        percentage(nil, data.energy.current, data.energy.max)
+    )
+    print("---------------------------")
     do
         local i = 2
         while i <= h do
@@ -976,9 +988,9 @@ else
         while keepRendering do
             local stats = grabItems(nil)
             print(
-                formatNumber(nil, stats.total),
-                formatNumber(nil, stats.capacity),
-                stats.capacity / stats.total
+                formatNumber(nil, 1254),
+                formatNumber(nil, 5149),
+                1254 / 5149 * 100
             )
             writeToScreen(nil, stats.processed)
             writeGraphs(nil, stats)

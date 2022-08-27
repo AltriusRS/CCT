@@ -128,9 +128,15 @@ function writeToScreen(items: any[]) {
     }
 }
 
+function percentage(current, max): number {
+    return (current / max) * 100
+}
+
 function writeGraphs(data: any) {
     let [w, h] = screen.getSize();
-
+    print("Storage used: ", percentage(data.total, data.capacity))
+    print("Energy used: ", percentage(data.energy.current, data.energy.max))
+    print("---------------------------")
     for (let i = 2; i <= h; i++) {
         screen.setCursorPos(33, i);
         screen.write("|")
@@ -183,7 +189,8 @@ if (screen === undefined) {
 
         while (keepRendering) {
             let stats = grabItems()
-            print(formatNumber(stats.total), formatNumber(stats.capacity), stats.capacity / stats.total)
+            // print(formatNumber(stats.total), formatNumber(stats.capacity), (stats.total / stats.capacity) * 100)
+            print(formatNumber(1254), formatNumber(5149), (1254 / 5149) * 100)
             writeToScreen(stats.processed)
             writeGraphs(stats)
             os.sleep(0.75)
