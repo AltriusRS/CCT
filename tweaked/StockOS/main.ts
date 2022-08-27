@@ -91,7 +91,7 @@ function writeToScreen(items: any[]) {
         while (cursor <= height) {
             screen.setCursorPos(1, cursor);
             screen.clearLine()
-            screen.write(`${formatName(items[cursor - 1].name)} | ${items[cursor - 1].quantity}`)
+            screen.write(`${formatName(items[cursor - 2].name)} | ${items[cursor - 2].quantity}`)
             cursor += 1
         }
     }

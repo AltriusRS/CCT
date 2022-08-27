@@ -884,7 +884,7 @@ local function writeToScreen(self, items)
         while cursor <= height do
             screen.setCursorPos(1, cursor)
             screen.clearLine()
-            screen.write((formatName(nil, items[cursor].name) .. " | ") .. tostring(items[cursor].quantity))
+            screen.write((formatName(nil, items[cursor - 2 + 1].name) .. " | ") .. tostring(items[cursor - 2 + 1].quantity))
             cursor = cursor + 1
         end
     end
