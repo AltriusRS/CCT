@@ -848,7 +848,7 @@ local function grabItems(self)
         processed[#processed + 1] = {name = entities[entity].displayName, quantity = entities[entity].amount}
     end
     table.sort(
-        entities,
+        processed,
         function(a, b) return a.quantity > b.quantity end
     )
     return processed

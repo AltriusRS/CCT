@@ -60,7 +60,7 @@ function grabItems(): any[] {
             quantity: entities[entity].amount
         })
     }
-    table.sort(entities, (a: any, b: any) => a.quantity > b.quantity)
+    table.sort(processed, (a: any, b: any) => a.quantity > b.quantity)
     return processed;
 }
 
