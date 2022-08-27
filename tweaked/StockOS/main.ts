@@ -49,8 +49,9 @@ function playChime(chime: string) {
     }
 }
 
-function grabItems(): any[] {
+function grabItems(): any {
     let processed = [];
+    let total = 0
 
     let entities = rs.listItems();
     for (let entity in entities) {
@@ -59,9 +60,14 @@ function grabItems(): any[] {
             name: entities[entity].displayName,
             quantity: entities[entity].amount
         })
+        total += entities[entity].amount
     }
     table.sort(processed, (a: any, b: any) => a.quantity > b.quantity)
-    return processed;
+    return {
+        processed,
+        total,
+        capacity: rs.getMaxItemDiskStorage()
+    };
 }
 
 function formatName(name: string): string {
@@ -81,10 +87,12 @@ function formatNumber(num: number): string {
         x += 1;
         num = num / 1000
     }
-    return `${Math.round(num * 100) / 100}${units[x]}`;
+    let text = `${Math.round(num * 100) / 100}${units[x]}`;
+
+    return
 }
 
-function writeToScreen(items: any[]) {
+function writeToScreen(items: any[], window: Window) {
     if (screen !== undefined) {
         screen.clear();
         screen.setCursorPos(1, 1)
@@ -98,11 +106,11 @@ function writeToScreen(items: any[]) {
         screen.write(name)
         screen.setTextColor(colors.white)
         screen.setBackgroundColor(colors.black)
-        let cursor = 2;
+        let cursor = 1;
         while (cursor <= height) {
-            screen.setCursorPos(1, cursor);
-            screen.clearLine()
-            screen.write(`${formatName(items[cursor - 2].name)} | ${formatNumber(items[cursor - 2].quantity)}`)
+            window.setCursorPos(1, cursor);
+            window.clearLine()
+            window.write(`${formatName(items[cursor - 1].name)} | ${formatNumber(items[cursor - 1].quantity)}`)
             cursor += 1
         }
     }
@@ -121,9 +129,12 @@ if (screen === undefined) {
     print("Error: No RS Bridge detected, but one is required. Please install one.")
     playChime("error");
 } else {
+    // permit app to start
+
+    // Automatically scale the display
     let scale = 1.5;
     screen.setTextScale(scale);
-    let [width, _] = screen.getSize();
+    let [width, height] = screen.getSize();
     while (width < 35 && scale > 0.5) {
         scale = scale - 0.5
         screen.setTextScale(scale);
@@ -133,21 +144,32 @@ if (screen === undefined) {
     }
     let [w, _h] = screen.getSize();
     if (scale === 0.5 && w < 35) {
+        // Throw an error if the screen is not big enough
         screen.setTextScale(0.5)
         screen.setTextColor(colors.black)
         screen.setBackgroundColor(colors.red)
         screen.clear();
         screen.setCursorPos(1, 1)
+        print("Screen too small")
         screen.write("Screen too small")
         playChime("error")
     } else {
+        // Screen size is valid,
+
         if (speaker === undefined) print("Warn: A speaker is optional, but recommended");
         print("All checks passed")
         playChime("start")
 
+        print(width, height)
+
+        let leftHalf = new Window(screen, 1, 1, 31, height - 1, true);
+        let rightHalf = new Window(screen, 31, 1, width - 31, height - 1, false)
+
+        let [rightW, rightH] = rightHalf.getSize()
+        print(rightW, rightH);
         while (keepRendering) {
-            let items = grabItems()
-            writeToScreen(items)
+            let stats = grabItems()
+            writeToScreen(stats.processed, leftHalf)
             os.sleep(0.75)
         }
 

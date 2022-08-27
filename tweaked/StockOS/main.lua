@@ -842,16 +842,22 @@ local function playChime(self, chime)
 end
 local function grabItems(self)
     local processed = {}
+    local total = 0
     local entities = rs:listItems()
     for entity in pairs(entities) do
         screen.clear()
         processed[#processed + 1] = {name = entities[entity].displayName, quantity = entities[entity].amount}
+        total = total + entities[entity].amount
     end
     table.sort(
         processed,
         function(a, b) return a.quantity > b.quantity end
     )
-    return processed
+    return {
+        processed = processed,
+        total = total,
+        capacity = rs:getMaxItemDiskStorage()
+    }
 end
 local function formatName(self, name)
     local n = __TS__StringSplit(
@@ -873,9 +879,10 @@ local function formatNumber(self, num)
         x = x + 1
         num = num / 1000
     end
-    return tostring(math.floor(num * 100 + 0.5) / 100) .. units[x + 1]
+    local text = tostring(math.floor(num * 100 + 0.5) / 100) .. units[x + 1]
+    return
 end
-local function writeToScreen(self, items)
+local function writeToScreen(self, items, window)
     if screen ~= nil then
         screen.clear()
         screen.setCursorPos(1, 1)
@@ -889,11 +896,11 @@ local function writeToScreen(self, items)
         screen.write(name)
         screen.setTextColor(colors.white)
         screen.setBackgroundColor(colors.black)
-        local cursor = 2
+        local cursor = 1
         while cursor <= height do
-            screen.setCursorPos(1, cursor)
-            screen.clearLine()
-            screen.write((formatName(nil, items[cursor - 2 + 1].name) .. " | ") .. formatNumber(nil, items[cursor - 2 + 1].quantity))
+            window.setCursorPos(1, cursor)
+            window.clearLine()
+            window.write((formatName(nil, items[cursor].name) .. " | ") .. formatNumber(nil, items[cursor].quantity))
             cursor = cursor + 1
         end
     end
@@ -910,7 +917,7 @@ elseif rs == nil then
 else
     local scale = 1.5
     screen.setTextScale(scale)
-    local width, _ = screen.getSize()
+    local width, height = screen.getSize()
     while width < 35 and scale > 0.5 do
         scale = scale - 0.5
         screen.setTextScale(scale)
@@ -931,6 +938,7 @@ else
         screen.setBackgroundColor(colors.red)
         screen.clear()
         screen.setCursorPos(1, 1)
+        print("Screen too small")
         screen.write("Screen too small")
         playChime(nil, "error")
     else
@@ -939,9 +947,28 @@ else
         end
         print("All checks passed")
         playChime(nil, "start")
+        print(width, height)
+        local leftHalf = window.create(
+            screen,
+            1,
+            1,
+            31,
+            height - 1,
+            true
+        )
+        local rightHalf = window.create(
+            screen,
+            31,
+            1,
+            width - 31,
+            height - 1,
+            false
+        )
+        local rightW, rightH = rightHalf.getSize()
+        print(rightW, rightH)
         while keepRendering do
-            local items = grabItems(nil)
-            writeToScreen(nil, items)
+            local stats = grabItems(nil)
+            writeToScreen(nil, stats.processed, leftHalf)
             os.sleep(0.75)
         end
         sleep(2)
