@@ -51,7 +51,7 @@ function grabItems(): any[] {
 
     let entities = rs.listItems();
     for (let entity in entities) {
-        pretty.pretty_print(entities[entity])
+        screen.write(pretty.pretty(entities[entity]).toString())
     }
 
     return processed;
