@@ -885,8 +885,7 @@ local function formatNumber(self, num)
         x = x + 1
         num = num / 1000
     end
-    local text = tostring(math.floor(num * 100 + 0.5) / 100) .. units[x + 1]
-    return
+    return tostring(math.floor(num * 100 + 0.5) / 100) .. units[x + 1]
 end
 local function writeToScreen(self, items, window)
     if screen ~= nil then
