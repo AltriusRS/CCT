@@ -826,17 +826,23 @@ elseif rs == nil then
     print("Error: No RS Bridge detected, but one is required. Please install one.")
     playChime(nil, "error")
 else
+    local scale = 2
     screen.setTextScale(1)
+    local width, _ = screen.getSize()
+    while width < 20 do
+        screen.setTextScale(scale - 0.1)
+        local w, _ = screen.getSize()
+        width = w
+    end
     if speaker == nil then
         print("Warn: A speaker is optional, but recommended")
     end
     print("All checks passed")
     playChime(nil, "start")
     while keepRendering do
-        playChime(nil, "process")
         local items = grabItems(nil)
         writeToScreen(nil, items)
-        os.sleep(1)
+        os.sleep(0.5)
     end
     sleep(2)
     playChime(nil, "stop")

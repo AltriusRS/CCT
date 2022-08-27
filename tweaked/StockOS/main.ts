@@ -101,16 +101,22 @@ if (screen === undefined) {
     print("Error: No RS Bridge detected, but one is required. Please install one.")
     playChime("error");
 } else {
-    screen.setTextScale(1)
+    let scale = 2;
+    screen.setTextScale(1);
+    let [width, _] = screen.getSize();
+    while (width < 20) {
+        screen.setTextScale(scale - 0.1);
+        let [w, _] = screen.getSize();
+        width = w;
+    }
     if (speaker === undefined) print("Warn: A speaker is optional, but recommended");
     print("All checks passed")
     playChime("start")
 
     while (keepRendering) {
-        playChime("process")
         let items = grabItems()
         writeToScreen(items)
-        os.sleep(1)
+        os.sleep(0.5)
     }
 
     sleep(2)
