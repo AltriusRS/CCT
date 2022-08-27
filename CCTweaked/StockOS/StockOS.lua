@@ -103,7 +103,7 @@ function render_list(items)
 
     local longest = 0
     local listed = {}
-    for k, v in pairs(items) do
+    for _, v in pairs(items) do
         v.displayName = split_str(v.displayName, "[")[2]
         v.displayName = split_str(v.displayName, "]")[1]
         if #v.displayName > longest then
@@ -116,12 +116,12 @@ function render_list(items)
     end
 
     local line = 2;
-    print("Longest", longest)
+    print("Longest", longest, "Scale", screen.getTextScale())
     table.sort(listed, function(a, b)
         return a[2] > b[2]
     end)
 
-    for k, v in pairs(listed) do
+    for _, v in pairs(listed) do
         screen.setCursorPos(1, line)
         if line % 2 == 0 then
             screen.setBackgroundColor(0x80)
