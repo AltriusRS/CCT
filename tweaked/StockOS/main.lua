@@ -807,6 +807,7 @@ else
     end
     print("All checks passed")
     playChime(nil, "start")
+    local items = grabItems(nil)
     sleep(2)
     playChime(nil, "stop")
 end

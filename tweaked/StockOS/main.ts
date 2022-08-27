@@ -73,6 +73,7 @@ if (screen === undefined) {
     print("All checks passed")
     playChime("start")
 
+    let items = grabItems()
 
     sleep(2)
     playChime("stop")
