@@ -18,8 +18,8 @@ Optional Blocks\
 - 1x Advanced Peripherals Energy Detector\
 ",
         display = "GlassOS",
-        version = "0.1.0",
-        paste = "nLyFVZKv",
+        version = "1.0.0",
+        paste = "GlassOS/GlassOS",
         plugins = {
             ReactorOSPlugin = {
                 name = "GlassOS.plugins.ReactorOS",
@@ -38,8 +38,8 @@ Requirements:\
 \
 *See compatible reactor block list above",
                 display = "ReactorOS",
-                version = "0.0.1",
-                paste = "1pUpeEMQ"
+                version = "1.0.0",
+                paste = "GlassOS/plugins/ReactorOS"
             }
         }
     },
@@ -47,15 +47,15 @@ Requirements:\
         name = "ReactorOS.core",
         info = "Smart control algorithms for Mekanism Fission + Fusion reactors, as well as a basic attempt at a Draconic Reactor control algorithm",
         display = "ReactorOS",
-        version = "0.1.0",
-        paste = "pjAT6yvX"
+        version = "1.0.0",
+        paste = "ReactorOS/ReactorOS"
     },
     StockOS = {
         name = "StockOS.core",
         info = "Stock OS is an integration for Refined Storage which makes use of large monitors to show current stock levels of the most numerous items in your system.",
         display = "StockOS",
         version = "1.0.0",
-        paste = "ARH6KnQn"
+        paste = "StockOS/StockOS"
     }
 }
 
@@ -86,11 +86,11 @@ local function install()
         write("clearing startup trash\n")
         os.sleep(0.1)
         shell.execute("rm", "startup")
-        write("Installing bootdisk\n")
+        write("Installing boot disk\n")
         os.sleep(0.2)
         settings.set("core_os_load", m.paste)
         settings.save()
-        shell.execute("pastebin", "get", "ARH6KnQn", "startup")
+        shell.execute("wget", "https://raw.githubusercontent.com/AltriusRS/CCT/main/CCTweaked/" .. m.paste .. ".lua", "startup")
         os.sleep(0.2)
         write("Installation completed.\nRebooting...")
         os.sleep(1)
