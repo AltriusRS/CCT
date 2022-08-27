@@ -731,6 +731,7 @@ return ____exports
 ["main"] = function(...) 
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
 local ____exports = {}
+local pretty = require("cc.pretty")
 local instrument = "bit"
 local speaker = peripheral.find("speaker")
 local screen = peripheral.find("monitor")
@@ -781,18 +782,9 @@ local function playChime(self, chime)
 end
 local function grabItems(self)
     local processed = {}
-    local storage = pairs(rs:listItems())
-    print(
-        "Unique item count:",
-        debug.getinfo(storage).nparams
-    )
-    do
-        local i = 0
-        while i < debug.getinfo(storage).nparams do
-            local k, item = table.unpack(storage[i])
-            print(k, item.displayName)
-            i = i + 1
-        end
+    local entities = rs:listItems()
+    for entity in pairs(entities) do
+        pretty.pretty_print(entity)
     end
     return processed
 end

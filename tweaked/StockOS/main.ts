@@ -49,16 +49,14 @@ function playChime(chime: string) {
 function grabItems(): any[] {
     let processed = [];
 
-    let storage = pairs(rs.listItems());
-    print("Unique item count:", storage.length)
-
-    for (let i = 0; i < storage.length; i++) {
-        let [k, item] = storage[i];
-        print(k, item.displayName)
+    let entities = rs.listItems();
+    for (let entity in entities) {
+        pretty.pretty_print(entity)
     }
 
     return processed;
 }
+
 
 print("Welcome to StockOS. Please wait whilst we run initial checks")
 
