@@ -730,25 +730,26 @@ return ____exports
  end,
 ["main"] = function(...) 
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
--- Lua Library inline imports
-local function __TS__TypeOf(value)
-    local luaType = type(value)
-    if luaType == "table" then
-        return "object"
-    elseif luaType == "nil" then
-        return "undefined"
-    else
-        return luaType
-    end
-end
-
 local ____exports = {}
+local startup
+function startup(self, append, org, branch)
+    if org == nil then
+        org = "CCTweaked"
+    end
+    if branch == nil then
+        branch = "main"
+    end
+    fs.delete("/startup")
+    shell.run("wget", "`https://raw.githubusercontent.com/AltriusRS/CCT/${branch}/${org}/${append}.lua`", "startup")
+end
 local paste = settings.get("core_os_load")
-print(
-    __TS__TypeOf(paste),
-    paste
-)
-print(paste)
+if paste ~= nil then
+    print("Attempting to download bootloader updates")
+    startup(nil, "bootloader/main", "tweaked")
+    os.sleep(5)
+    shell.exit()
+else
+end
 return ____exports
  end,
 }
