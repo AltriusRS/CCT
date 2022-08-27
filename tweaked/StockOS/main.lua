@@ -899,7 +899,7 @@ local function formatNumber(self, num)
     end
     return text
 end
-local function writeToScreen(self, items, window)
+local function writeToScreen(self, items, subwin)
     if screen ~= nil then
         screen.clear()
         screen.setCursorPos(1, 1)
@@ -915,20 +915,20 @@ local function writeToScreen(self, items, window)
         screen.setBackgroundColor(colors.black)
         local cursor = 2
         while cursor <= height do
-            window.setCursorPos(1, cursor)
-            window.clearLine()
-            window.write((formatNumber(nil, items[cursor - 2 + 1].quantity) .. " | ") .. formatName(nil, items[cursor - 2 + 1].name))
+            subwin.setCursorPos(1, cursor)
+            subwin.clearLine()
+            subwin.write((formatNumber(nil, items[cursor - 2 + 1].quantity) .. " | ") .. formatName(nil, items[cursor - 2 + 1].name))
             cursor = cursor + 1
         end
     end
 end
-local function writeGraphs(self, data, window)
-    local w, h = table.unpack(window:getSize())
+local function writeGraphs(self, data, subwin)
+    local w, h = subwin.getSize()
     do
         local i = 0
         while i < h do
-            window:setCursorPos(1, i + 1)
-            window:write("|")
+            subwin.setCursorPos(1, i + 1)
+            subwin.write("|")
             i = i + 1
         end
     end

@@ -106,7 +106,7 @@ function formatNumber(num: number | undefined): string {
     return text
 }
 
-function writeToScreen(items: any[], window: Window) {
+function writeToScreen(items: any[], subwin: Window) {
     if (screen !== undefined) {
         screen.clear();
         screen.setCursorPos(1, 1)
@@ -122,20 +122,20 @@ function writeToScreen(items: any[], window: Window) {
         screen.setBackgroundColor(colors.black)
         let cursor = 2;
         while (cursor <= height) {
-            window.setCursorPos(1, cursor);
-            window.clearLine()
-            window.write(`${formatNumber(items[(cursor - 2)].quantity)} | ${formatName(items[(cursor - 2)].name)}`)
+            subwin.setCursorPos(1, cursor);
+            subwin.clearLine()
+            subwin.write(`${formatNumber(items[(cursor - 2)].quantity)} | ${formatName(items[(cursor - 2)].name)}`)
             cursor += 1
         }
     }
 }
 
-function writeGraphs(data, window) {
-    let [w, h] = window.getSize();
+function writeGraphs(data: any, subwin: Window) {
+    let [w, h] = subwin.getSize();
 
     for (let i = 0; i < h; i++) {
-        window.setCursorPos(1, i + 1);
-        window.write("|")
+        subwin.setCursorPos(1, i + 1);
+        subwin.write("|")
     }
 }
 
