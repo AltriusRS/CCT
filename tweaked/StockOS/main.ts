@@ -121,7 +121,7 @@ if (screen === undefined) {
     print("Error: No RS Bridge detected, but one is required. Please install one.")
     playChime("error");
 } else {
-    let scale = 2;
+    let scale = 1.5;
     screen.setTextScale(scale);
     let [width, _] = screen.getSize();
     while (width < 35 && scale > 0.5) {

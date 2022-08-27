@@ -908,7 +908,7 @@ elseif rs == nil then
     print("Error: No RS Bridge detected, but one is required. Please install one.")
     playChime(nil, "error")
 else
-    local scale = 2
+    local scale = 1.5
     screen.setTextScale(scale)
     local width, _ = screen.getSize()
     while width < 35 and scale > 0.5 do
