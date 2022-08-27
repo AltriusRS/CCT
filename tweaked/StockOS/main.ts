@@ -13,6 +13,9 @@ const rs: any = peripheral.find("rsBridge")[0];
 function playChime(chime: string) {
     if (speaker !== undefined) {
         switch (chime) {
+            case "process":
+                speaker.playNote("chime", 0.1, 12)
+                break;
             case "start":
                 speaker.playNote(instrument, 1, 1)
                 sleep(0.25)
@@ -89,6 +92,7 @@ if (screen === undefined) {
     playChime("start")
 
     while (keepRendering) {
+        playChime("process")
         let items = grabItems()
         writeToScreen(items)
         os.sleep(1)

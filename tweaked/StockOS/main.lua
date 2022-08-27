@@ -740,7 +740,12 @@ local function playChime(self, chime)
         repeat
             local ____switch4 = chime
             local passes
-            local ____cond4 = ____switch4 == "start"
+            local ____cond4 = ____switch4 == "process"
+            if ____cond4 then
+                speaker.playNote("chime", 0.1, 12)
+                break
+            end
+            ____cond4 = ____cond4 or ____switch4 == "start"
             if ____cond4 then
                 speaker.playNote(instrument, 1, 1)
                 sleep(0.25)
@@ -813,6 +818,7 @@ else
     print("All checks passed")
     playChime(nil, "start")
     while keepRendering do
+        playChime(nil, "process")
         local items = grabItems(nil)
         writeToScreen(nil, items)
         os.sleep(1)
