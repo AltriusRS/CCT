@@ -104,23 +104,35 @@ if (screen === undefined) {
     let scale = 2;
     screen.setTextScale(1);
     let [width, _] = screen.getSize();
-    while (width < 35) {
+    while (width < 35 && scale > 0.5) {
         screen.setTextScale(scale - 0.1);
         let [w, _] = screen.getSize();
         width = w;
     }
-    if (speaker === undefined) print("Warn: A speaker is optional, but recommended");
-    print("All checks passed")
-    playChime("start")
+    let [w, _h] = screen.getSize();
+    if (scale === 0.5 && w < 35) {
+        screen.setTextScale(0.5)
+        screen.setTextColor(colors.black)
+        screen.setBackgroundColor(colors.red)
+        screen.clear();
+        screen.setCursorPos(1, 1)
+        screen.write("Screen too small")
+        playChime("error")
+    } else {
 
-    while (keepRendering) {
-        let items = grabItems()
-        writeToScreen(items)
-        os.sleep(0.5)
+        if (speaker === undefined) print("Warn: A speaker is optional, but recommended");
+        print("All checks passed")
+        playChime("start")
+
+        while (keepRendering) {
+            let items = grabItems()
+            writeToScreen(items)
+            os.sleep(0.5)
+        }
+
+        sleep(2)
+        playChime("stop")
     }
-
-    sleep(2)
-    playChime("stop")
 }
 
 print("Unexpected end of application...")

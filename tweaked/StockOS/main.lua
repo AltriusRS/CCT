@@ -829,23 +829,34 @@ else
     local scale = 2
     screen.setTextScale(1)
     local width, _ = screen.getSize()
-    while width < 35 do
+    while width < 35 and scale > 0.5 do
         screen.setTextScale(scale - 0.1)
         local w, _ = screen.getSize()
         width = w
     end
-    if speaker == nil then
-        print("Warn: A speaker is optional, but recommended")
+    local w, _h = screen.getSize()
+    if scale == 0.5 and w < 35 then
+        screen.setTextScale(0.5)
+        screen.setTextColor(colors.black)
+        screen.setBackgroundColor(colors.red)
+        screen.clear()
+        screen.setCursorPos(1, 1)
+        screen.write("Screen too small")
+        playChime(nil, "error")
+    else
+        if speaker == nil then
+            print("Warn: A speaker is optional, but recommended")
+        end
+        print("All checks passed")
+        playChime(nil, "start")
+        while keepRendering do
+            local items = grabItems(nil)
+            writeToScreen(nil, items)
+            os.sleep(0.5)
+        end
+        sleep(2)
+        playChime(nil, "stop")
     end
-    print("All checks passed")
-    playChime(nil, "start")
-    while keepRendering do
-        local items = grabItems(nil)
-        writeToScreen(nil, items)
-        os.sleep(0.5)
-    end
-    sleep(2)
-    playChime(nil, "stop")
 end
 print("Unexpected end of application...")
 sleep(5)
