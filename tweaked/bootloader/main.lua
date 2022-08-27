@@ -747,7 +747,7 @@ if paste ~= nil then
     print("Attempting to download bootloader updates")
     download(nil, "startup", "bootloader/main", "tweaked")
     print("Attempting to download software updates")
-    download(nil, "software", "CoreOS/CoreOS")
+    download(nil, "software", paste)
     print("Downloads finished, launching in 5 seconds")
     os.sleep(5)
     shell.run("software")
@@ -756,7 +756,7 @@ if paste ~= nil then
 else
     print("Error, coreOS settings corrupted or invalid.")
     print("Reinstalling CoreOS and resetting device.")
-    download(nil, "startup", "CoreOS/CoreOS")
+    download(nil, "startup", "bootloader/main", "tweaked")
     os.reboot()
 end
 return ____exports
