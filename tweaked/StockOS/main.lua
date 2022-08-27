@@ -944,13 +944,14 @@ local function buildBar(self, width, percentage, current, max, cursorY)
     end
     local bar = ""
     local blit = ""
-    local colorwidth = percentage * width
+    local colorwidth = width * percentage
     print(width, percentage, colorwidth)
     screen.setCursorPos(34, cursorY + 1)
     screen.blit(bar, "", blit)
-    screen.write(formatNumber(nil, percentage, true))
+    screen.write(formatNumber(nil, percentage, true) .. "%")
     screen.setCursorPos(34, cursorY + 2)
     screen.write("Current: " .. formatNumber(nil, current, true))
+    screen.setCursorPos(34, cursorY + 3)
     screen.write("Maximum: " .. formatNumber(nil, max, true))
 end
 local function writeGraphs(self, data)
@@ -973,6 +974,16 @@ local function writeGraphs(self, data)
         end
     end
     screen.setCursorPos(34, 2)
+    screen.write("Storage Capacity")
+    buildBar(
+        nil,
+        w - 35,
+        percentage(nil, data.total, data.capacity),
+        data.total,
+        data.capacity,
+        2
+    )
+    screen.setCursorPos(34, 7)
     screen.write("Storage Capacity")
     buildBar(
         nil,

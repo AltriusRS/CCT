@@ -143,14 +143,15 @@ function buildBar(width: number, percentage: number, current: number, max: numbe
     let bar = ""
     let blit = ""
 
-    let colorwidth = percentage * width;
+    let colorwidth = width * percentage;
     print(width, percentage, colorwidth);
 
     screen.setCursorPos(34, cursorY + 1)
     screen.blit(bar, "", blit)
-    screen.write(formatNumber(percentage, true))
+    screen.write(formatNumber(percentage, true) + "%")
     screen.setCursorPos(34, cursorY + 2)
     screen.write(`Current: ${formatNumber(current, true)}`)
+    screen.setCursorPos(34, cursorY + 3)
     screen.write(`Maximum: ${formatNumber(max, true)}`)
 }
 
@@ -165,6 +166,9 @@ function writeGraphs(data: any) {
     }
 
     screen.setCursorPos(34, 2)
+    screen.write("Storage Capacity")
+    buildBar(w - 35, percentage(data.total, data.capacity), data.total, data.capacity, 2)
+    screen.setCursorPos(34, 7)
     screen.write("Storage Capacity")
     buildBar(w - 35, percentage(data.total, data.capacity), data.total, data.capacity, 2)
 }
