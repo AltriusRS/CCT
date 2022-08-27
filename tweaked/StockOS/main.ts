@@ -190,13 +190,6 @@ function writeGraphs(data: any, itemPC: number) {
     buildBar(w - 35, percentage(data.energy.current, data.energy.max), data.energy.current, data.energy.max, 7)
 }
 
-function writeLine() {
-    let [w, h] = screen.getSize()
-    for (let x = 0; x < w; x++) {
-        screen.write(" ")
-    }
-}
-
 print("Welcome to StockOS. Please wait whilst we run initial checks")
 
 sleep(1)
@@ -273,18 +266,15 @@ if (screen === undefined) {
                 writeGraphs(stats, itemPC)
 
                 if (itemPC > 80 && !errored) {
-                    screen.setCursorPos(1, height - 2);
-                    screen.clearLine();
-                    writeLine()
-                    screen.setCursorPos(1, height);
-                    screen.clearLine();
-                    writeLine()
-                    screen.setCursorPos(1, height - 1);
-                    screen.clearLine();
-                    writeLine()
-                    screen.setCursorPos((w - "LOW ITEM STORAGE".length) / 2, height - 1);
                     screen.setBackgroundColor(colors.orange);
                     screen.setTextColor(colors.black);
+                    screen.setCursorPos(1, height - 2);
+                    screen.clearLine();
+                    screen.setCursorPos(1, height);
+                    screen.clearLine();
+                    screen.setCursorPos(1, height - 1);
+                    screen.clearLine();
+                    screen.setCursorPos((w - "LOW ITEM STORAGE".length) / 2, height - 1);
                     screen.write("LOW ITEM STORAGE")
                 }
             }
