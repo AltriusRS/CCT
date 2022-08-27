@@ -742,12 +742,22 @@ function download(self, path, append, org, branch)
     fs.delete(path)
     shell.run("wget", ((((("https://raw.githubusercontent.com/AltriusRS/CCT/" .. branch) .. "/") .. org) .. "/") .. append) .. ".lua", path)
 end
-local paste = settings.get("core_os_load")
-if paste ~= nil then
+local paste = {
+    append = settings.get("coreos.append"),
+    branch = settings.get("coreos.branch"),
+    org = settings.get("coreos.org")
+}
+if paste.append and paste.branch and paste.org then
     print("Attempting to download bootloader updates")
     download(nil, "startup", "bootloader/main", "tweaked")
     print("Attempting to download software updates")
-    download(nil, "software", paste)
+    download(
+        nil,
+        "software",
+        paste.append,
+        paste.org,
+        paste.branch
+    )
     print("Downloads finished, launching in 5 seconds")
     os.sleep(5)
     shell.run("software")
@@ -756,7 +766,7 @@ if paste ~= nil then
 else
     print("Error, coreOS settings corrupted or invalid.")
     print("Reinstalling CoreOS and resetting device.")
-    download(nil, "startup", "bootloader/main", "tweaked")
+    download(nil, "startup", "coreOS/CoreOS", "CCTweaked")
     os.reboot()
 end
 return ____exports

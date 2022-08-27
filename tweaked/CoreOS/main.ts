@@ -47,9 +47,13 @@ Optional Blocks
 ]
 let looping = true;
 
+for (let i = 0; i < apps.length; i++) {
+
+}
+
 while (looping) {
     let event = events.pullEvent("key");
-    print(event.get_args().keys());
+    print(event.get_args()[0]);
     // let key = event['key']
     // if (key === keys.up) {
     //     print("Up")

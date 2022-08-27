@@ -24,7 +24,7 @@ if (paste.append && paste.branch && paste.org) {
 } else {
     print("Error, coreOS settings corrupted or invalid.")
     print("Reinstalling CoreOS and resetting device.")
-    download("startup", "bootloader/main", "tweaked")
+    download("startup", "coreOS/CoreOS", "CCTweaked")
     os.reboot()
 }
 

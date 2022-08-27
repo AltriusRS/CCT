@@ -19,28 +19,10 @@ Optional Blocks\
 ",
         display = "GlassOS",
         version = "1.0.0",
-        paste = "GlassOS/GlassOS",
-        plugins = {
-            ReactorOSPlugin = {
-                name = "GlassOS.plugins.ReactorOS",
-                info = "GlassOS plugin designed to interact with ReactorOS.\
-This plugin requires an advanced computer placed directly next to one of:\
-- Mekanism:fission_reactor_logic_adaptor\
-- Mekanism:fusion_reactor_logic_adaptor\
-- Draconic Evolution:reactor_stabilizer\
-\
-Without placing the computer next to one of the above blocks, this plugin will not work.\
-\
-Requirements:\
-- 1x Advanced Computer\
-- 1x Wired Modem\
-- 1x 'Reactor Block'*\
-\
-*See compatible reactor block list above",
-                display = "ReactorOS",
-                version = "1.0.0",
-                paste = "GlassOS/plugins/ReactorOS"
-            }
+        download = {
+            append = "GlassOS/GlassOS",
+            branch = "main",
+            org = "CCTweaked"
         }
     },
     ReactorOS = {
@@ -48,14 +30,22 @@ Requirements:\
         info = "Smart control algorithms for Mekanism Fission + Fusion reactors, as well as a basic attempt at a Draconic Reactor control algorithm",
         display = "ReactorOS",
         version = "1.0.0",
-        paste = "ReactorOS/ReactorOS"
+        download = {
+            append = "ReactorOS/ReactorOS",
+            branch = "main",
+            org = "CCTweaked"
+        }
     },
     StockOS = {
         name = "StockOS.core",
         info = "Stock OS is an integration for Refined Storage which makes use of large monitors to show current stock levels of the most numerous items in your system.",
         display = "StockOS",
         version = "1.0.0",
-        paste = "StockOS/StockOS"
+        download = {
+            append = "StockOS/StockOS",
+            branch = "main",
+            org = "CCTweaked"
+        }
     }
 }
 
@@ -85,9 +75,11 @@ function install()
         write("clearing trash\n")
         shell.execute("rm", "startup")
         write("Installing boot disk\n")
-        settings.set("core_os_load", m.paste)
+        settings.set("coreos.append", m.download.append)
+        settings.set("coreos.branch", m.download.branch)
+        settings.set("coreos.org", m.download.org)
         settings.save()
-        shell.run("wget", "https://raw.githubusercontent.com/AltriusRS/CCT/main/CCTweaked/Bootloader/OldBootOS.lua", "startup")
+        shell.run("wget", "https://raw.githubusercontent.com/AltriusRS/CCT/main/tweaked/bootloader/main.lua", "startup")
         write("Installation completed.\nRebooting...")
         shell.execute("reboot")
     end
@@ -113,21 +105,6 @@ while true do
                 write(object.display .. " (v" .. object.version .. ")\n")
             end
             printing = printing + 1
-            if object.plugins ~= nil then
-                for _, pobject in next, object.plugins do
-                    if printing == position then
-                        term.setBackgroundColor(colors.gray)
-                        term.setTextColor(colors.black)
-                        write(" - Plugin: " .. pobject.display .. " (v" .. pobject.version .. ")\n")
-                        m = pobject
-                    else
-                        term.setBackgroundColor(colors.black)
-                        term.setTextColor(colors.white)
-                        write(" - Plugin: " .. pobject.display .. " (v" .. pobject.version .. ")\n")
-                    end
-                    printing = printing + 1
-                end
-            end
         end
     end
 
