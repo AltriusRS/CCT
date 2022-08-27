@@ -73,7 +73,7 @@ function writeToScreen(items: any[]) {
         screen.setTextColor(colors.black)
         screen.clearLine()
         screen.write("Stock OS - 1.0.1")
-        let name = `${os.getComputerID()} - ${os.getComputerLabel()}`
+        let name = `${os.date()}`
         screen.setCursorPos(width - name.length, 1)
         screen.write(name)
         screen.setTextColor(colors.white)
