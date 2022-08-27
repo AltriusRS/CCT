@@ -847,12 +847,10 @@ local function grabItems(self)
         screen.clear()
         processed[#processed + 1] = {name = entities[entity].displayName, quantity = entities[entity].amount}
     end
-    entities:sort(function(____, a, b)
-        if a.quantity > b.quantity then
-            return 1
-        end
-        return -1
-    end)
+    table.sort(
+        entities,
+        function(a, b) return a.quantity > b.quantity end
+    )
     return processed
 end
 local function formatName(self, name)
