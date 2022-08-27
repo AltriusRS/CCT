@@ -741,25 +741,38 @@ local function playChime(self, chime)
     if speaker ~= nil then
         repeat
             local ____switch4 = chime
+            local passes
             local ____cond4 = ____switch4 == "start"
             if ____cond4 then
-                speaker:playNote(instrument, 1, 1)
+                speaker.playNote(instrument, 1, 1)
                 sleep(0.25)
-                speaker:playNote(instrument, 1, 12)
+                speaker.playNote(instrument, 1, 12)
                 break
             end
             ____cond4 = ____cond4 or ____switch4 == "stop"
             if ____cond4 then
-                speaker:playNote(instrument, 1, 12)
+                speaker.playNote(instrument, 1, 12)
                 sleep(0.25)
-                speaker:playNote(instrument, 1, 1)
+                speaker.playNote(instrument, 1, 1)
                 break
             end
             ____cond4 = ____cond4 or ____switch4 == "error"
             if ____cond4 then
-                speaker:playNote(instrument, 1, 12)
+                speaker.playNote(instrument, 3, 3)
                 sleep(0.25)
-                speaker:playNote(instrument, 1, 1)
+                speaker.playNote(instrument, 3, 3)
+                break
+            end
+            ____cond4 = ____cond4 or ____switch4 == "alert"
+            if ____cond4 then
+                passes = 0
+                while passes < 10 do
+                    speaker.playNote(instrument, 3, 8)
+                    sleep(0.25)
+                    speaker.playNote(instrument, 3, 8)
+                    sleep(0.25)
+                    passes = passes + 1
+                end
                 break
             end
         until true

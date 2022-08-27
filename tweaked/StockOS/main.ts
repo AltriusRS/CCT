@@ -23,9 +23,20 @@ function playChime(chime: string) {
                 speaker.playNote(instrument, 1, 1)
                 break;
             case "error":
-                speaker.playNote(instrument, 1, 12)
+                speaker.playNote(instrument, 3, 3)
                 sleep(0.25)
-                speaker.playNote(instrument, 1, 1)
+                speaker.playNote(instrument, 3, 3)
+                break;
+            case "alert":
+                let passes = 0;
+                while (passes < 10) {
+                    speaker.playNote(instrument, 3, 8)
+                    sleep(0.25)
+                    speaker.playNote(instrument, 3, 8)
+                    sleep(0.25)
+                    passes += 1
+                }
+
                 break;
         }
     } else {
