@@ -162,8 +162,8 @@ if (screen === undefined) {
 
         print(width, height)
 
-        let leftHalf = new Window(screen, 1, 1, 31, height - 1, true);
-        let rightHalf = new Window(screen, 31, 1, width - 31, height - 1, false)
+        let leftHalf = new Window(screen, 1, 1, 31, height, true);
+        let rightHalf = new Window(screen, 31, 1, width - 31, height, false)
 
         let [rightW, rightH] = rightHalf.getSize()
         print(rightW, rightH);

@@ -958,7 +958,7 @@ else
             1,
             1,
             31,
-            height - 1,
+            height,
             true
         )
         local rightHalf = window.create(
@@ -966,7 +966,7 @@ else
             31,
             1,
             width - 31,
-            height - 1,
+            height,
             false
         )
         local rightW, rightH = rightHalf.getSize()
