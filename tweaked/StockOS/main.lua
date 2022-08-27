@@ -730,6 +730,62 @@ return ____exports
  end,
 ["main"] = function(...) 
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
+-- Lua Library inline imports
+local __TS__StringSplit
+do
+    local sub = string.sub
+    local find = string.find
+    function __TS__StringSplit(source, separator, limit)
+        if limit == nil then
+            limit = 4294967295
+        end
+        if limit == 0 then
+            return {}
+        end
+        local result = {}
+        local resultIndex = 1
+        if separator == nil or separator == "" then
+            for i = 1, #source do
+                result[resultIndex] = sub(source, i, i)
+                resultIndex = resultIndex + 1
+            end
+        else
+            local currentPos = 1
+            while resultIndex <= limit do
+                local startPos, endPos = find(source, separator, currentPos, true)
+                if not startPos then
+                    break
+                end
+                result[resultIndex] = sub(source, currentPos, startPos - 1)
+                resultIndex = resultIndex + 1
+                currentPos = endPos + 1
+            end
+            if resultIndex <= limit then
+                result[resultIndex] = sub(source, currentPos)
+            end
+        end
+        return result
+    end
+end
+
+local function __TS__StringSubstring(self, start, ____end)
+    if ____end ~= ____end then
+        ____end = 0
+    end
+    if ____end ~= nil and start > ____end then
+        start, ____end = ____end, start
+    end
+    if start >= 0 then
+        start = start + 1
+    else
+        start = 1
+    end
+    if ____end ~= nil and ____end < 0 then
+        ____end = 0
+    end
+    return string.sub(self, start, ____end)
+end
+
 local ____exports = {}
 local instrument = "bit"
 local speaker = peripheral.find("speaker")
@@ -793,6 +849,19 @@ local function grabItems(self)
     end
     return processed
 end
+local function formatName(self, name)
+    local n = __TS__StringSplit(
+        __TS__StringSplit(name, "[")[2],
+        "]"
+    )[1]
+    while #n < 20 do
+        n = n .. " "
+    end
+    if #n > 20 then
+        n = __TS__StringSubstring(n, 0, 17) .. "..."
+    end
+    return n
+end
 local function writeToScreen(self, items)
     if screen ~= nil then
         screen.clear()
@@ -802,7 +871,7 @@ local function writeToScreen(self, items)
         screen.setTextColor(colors.black)
         screen.clearLine()
         screen.write("Stock OS - 1.0.1")
-        local name = tostring(os.date())
+        local name = tostring(os.date("%a %d/%m/%y - %H:%M"))
         screen.setCursorPos(width - #name, 1)
         screen.write(name)
         screen.setTextColor(colors.white)
@@ -811,7 +880,7 @@ local function writeToScreen(self, items)
         while cursor <= height do
             screen.setCursorPos(1, cursor)
             screen.clearLine()
-            screen.write((tostring(items[cursor].name) .. " - ") .. tostring(items[cursor].quantity))
+            screen.write((formatName(nil, items[cursor].name) .. " | ") .. tostring(items[cursor].quantity))
             cursor = cursor + 1
         end
     end

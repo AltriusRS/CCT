@@ -64,6 +64,15 @@ function grabItems(): any[] {
     return processed;
 }
 
+function formatName(name: string): string {
+    let n = name.split("[")[1].split("]")[0];
+    while (n.length < 20) {
+        n = `${n} `
+    }
+    if (n.length > 20) n = `${n.substring(0, 17)}...`;
+    return n;
+}
+
 function writeToScreen(items: any[]) {
     if (screen !== undefined) {
         screen.clear();
@@ -73,7 +82,7 @@ function writeToScreen(items: any[]) {
         screen.setTextColor(colors.black)
         screen.clearLine()
         screen.write("Stock OS - 1.0.1")
-        let name = `${os.date()}`
+        let name = `${os.date("%a %d/%m/%y - %H:%M")}`
         screen.setCursorPos(width - name.length, 1)
         screen.write(name)
         screen.setTextColor(colors.white)
@@ -82,7 +91,7 @@ function writeToScreen(items: any[]) {
         while (cursor <= height) {
             screen.setCursorPos(1, cursor);
             screen.clearLine()
-            screen.write(`${items[cursor - 1].name} - ${items[cursor - 1].quantity}`)
+            screen.write(`${formatName(items[cursor - 1].name)} | ${items[cursor - 1].quantity}`)
             cursor += 1
         }
     }
