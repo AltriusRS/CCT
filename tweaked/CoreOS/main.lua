@@ -736,8 +736,13 @@ local apps = {{name = "GlassOS", info = "Glass OS is a HUD overlay built using t
 local looping = true
 while looping do
     local event = events:pullEvent("key")
-    print(JSON:stringify(event))
-    looping = false
+    local key = event.key
+    if key == keys.up then
+        print("Up")
+        looping = false
+    else
+        print(key)
+    end
 end
 print("CoreOS Exited with an unknown error")
 return ____exports

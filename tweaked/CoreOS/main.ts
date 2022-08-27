@@ -49,9 +49,14 @@ let looping = true;
 
 while (looping) {
     let event = events.pullEvent("key");
-    print(JSON.stringify(event))
+    let key = event['key']
+    if (key === keys.up) {
+        print("Up")
+        looping = false;
+    } else {
+        print(key)
+    }
 
-    looping = false;
 }
 
 print("CoreOS Exited with an unknown error")
