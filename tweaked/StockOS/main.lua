@@ -798,6 +798,7 @@ local function writeToScreen(self, items)
 end
 print("Welcome to StockOS. Please wait whilst we run initial checks")
 sleep(1)
+local keepRendering = true
 if screen == nil then
     print("Error: No screen detected, but one is required. Please install some advanced monitors.")
     playChime(nil, "error")
@@ -805,13 +806,17 @@ elseif rs == nil then
     print("Error: No RS Bridge detected, but one is required. Please install one.")
     playChime(nil, "error")
 else
+    screen.setTextScale(1)
     if speaker == nil then
         print("Warn: A speaker is optional, but recommended")
     end
     print("All checks passed")
     playChime(nil, "start")
-    local items = grabItems(nil)
-    writeToScreen(nil, items)
+    while keepRendering do
+        local items = grabItems(nil)
+        writeToScreen(nil, items)
+        os.sleep(1)
+    end
     sleep(2)
     playChime(nil, "stop")
 end

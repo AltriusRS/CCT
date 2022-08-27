@@ -74,6 +74,8 @@ print("Welcome to StockOS. Please wait whilst we run initial checks")
 
 sleep(1)
 
+let keepRendering = true;
+
 if (screen === undefined) {
     print("Error: No screen detected, but one is required. Please install some advanced monitors.")
     playChime("error");
@@ -81,12 +83,16 @@ if (screen === undefined) {
     print("Error: No RS Bridge detected, but one is required. Please install one.")
     playChime("error");
 } else {
+    screen.setTextScale(1)
     if (speaker === undefined) print("Warn: A speaker is optional, but recommended");
     print("All checks passed")
     playChime("start")
 
-    let items = grabItems()
-    writeToScreen(items)
+    while (keepRendering) {
+        let items = grabItems()
+        writeToScreen(items)
+        os.sleep(1)
+    }
 
     sleep(2)
     playChime("stop")
