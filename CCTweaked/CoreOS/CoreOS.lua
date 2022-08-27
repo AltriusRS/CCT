@@ -59,13 +59,13 @@ Requirements:\
     }
 }
 
-local optLen = 4
-local printing = 1
-local inInfo = false
+optLen = 4
+printing = 1
+inInfo = false
 
-local m = nil
+m = nil
 
-local function info()
+function info()
     term.setBackgroundColor(colors.white)
     term.setTextColor(colors.black)
     term.clear()
@@ -74,7 +74,7 @@ local function info()
     write(m.info)
 end
 
-local function install()
+function install()
     term.setBackgroundColor(colors.blue)
     term.setTextColor(colors.gray)
     term.clear()
@@ -90,7 +90,7 @@ local function install()
         os.sleep(0.2)
         settings.set("core_os_load", m.paste)
         settings.save()
-        shell.execute("wget", "https://raw.githubusercontent.com/AltriusRS/CCT/main/CCTweaked/" .. m.paste .. ".lua", "startup")
+        shell.run("wget", "https://raw.githubusercontent.com/AltriusRS/CCT/main/CCTweaked/Bootloader/BootOS.lua", "startup")
         os.sleep(0.2)
         write("Installation completed.\nRebooting...")
         os.sleep(1)
@@ -136,7 +136,7 @@ while true do
         end
     end
 
-    local _, key = os.pullEvent("key")
+    _, key = os.pullEvent("key")
     if key == keys.up then
         if position == 1 then
             position = optLen
