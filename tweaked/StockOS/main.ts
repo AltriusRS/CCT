@@ -132,7 +132,7 @@ function writeGraphs(data: any) {
     let [w, h] = screen.getSize();
 
     for (let i = 2; i <= h; i++) {
-        screen.setCursorPos(35, i);
+        screen.setCursorPos(32, i);
         screen.write("|")
     }
 }

@@ -925,7 +925,7 @@ local function writeGraphs(self, data)
     do
         local i = 2
         while i <= h do
-            screen.setCursorPos(35, i)
+            screen.setCursorPos(32, i)
             screen.write("|")
             i = i + 1
         end
