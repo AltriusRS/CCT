@@ -40,11 +40,11 @@ Optional Blocks\
         name = "StockOS.core",
         info = "Stock OS is an integration for Refined Storage which makes use of large monitors to show current stock levels of the most numerous items in your system.",
         display = "StockOS",
-        version = "1.0.0",
+        version = "1.0.1-alpha",
         download = {
-            append = "StockOS/StockOS",
+            append = "StockOS/main",
             branch = "main",
-            org = "CCTweaked"
+            org = "tweaked"
         }
     }
 }
