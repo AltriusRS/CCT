@@ -860,6 +860,9 @@ local function grabItems(self)
     }
 end
 local function formatName(self, name)
+    if name == nil then
+        name = "[N/A]"
+    end
     local n = __TS__StringSplit(
         __TS__StringSplit(name, "[")[2],
         "]"
@@ -874,6 +877,9 @@ local function formatName(self, name)
 end
 local units = {"", "K", "M", "B"}
 local function formatNumber(self, num)
+    if num == nil then
+        num = 0
+    end
     local x = 0
     while num > 1000 do
         x = x + 1

@@ -70,7 +70,8 @@ function grabItems(): any {
     };
 }
 
-function formatName(name: string): string {
+function formatName(name: string | undefined): string {
+    if (name === undefined) name = "[N/A]"
     let n = name.split("[")[1].split("]")[0];
     while (n.length < 20) {
         n = `${n} `
@@ -81,7 +82,8 @@ function formatName(name: string): string {
 
 const units = ["", "K", "M", "B"]
 
-function formatNumber(num: number): string {
+function formatNumber(num: number | undefined): string {
+    if (num === undefined) num = 0;
     let x = 0;
     while (num > 1000) {
         x += 1;
