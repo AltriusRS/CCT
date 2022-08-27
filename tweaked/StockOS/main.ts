@@ -242,14 +242,23 @@ if (screen === undefined) {
                 lastError = 0;
                 playChime("alert")
                 screen.setTextScale(3)
-                screen.setBackgroundColor(colors.red)
-                screen.setTextColor(colors.black)
-                screen.clear();
+
                 let [w2, h2] = screen.getSize();
                 let message = "ITEM STORAGE CRITICAL"
-                screen.setCursorPos((w2 - message.length) / 2, h2 / 2)
-                screen.write(message);
-                os.sleep(5)
+                for (let i = 0; i < 10; i++) {
+                    if (i % 2 == 0) {
+                        screen.setBackgroundColor(colors.red)
+                        screen.setTextColor(colors.black)
+                        screen.clear();
+                    } else {
+                        screen.setTextColor(colors.red)
+                        screen.setBackgroundColor(colors.black)
+                        screen.clear();
+                    }
+                    screen.setCursorPos((w2 - message.length) / 2, h2 / 2)
+                    screen.write(message);
+                    os.sleep(0.5)
+                }
                 screen.setTextScale(scale)
             } else {
                 lastError++
