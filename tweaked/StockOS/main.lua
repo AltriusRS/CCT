@@ -784,7 +784,7 @@ local function grabItems(self)
     local processed = {}
     local entities = rs:listItems()
     for entity in pairs(entities) do
-        pretty.pretty_print(entity)
+        pretty.pretty_print(entities[entity])
     end
     return processed
 end
