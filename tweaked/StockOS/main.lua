@@ -783,10 +783,10 @@ local function playChime(self, chime)
 end
 print("Welcome to StockOS. Please wait whilst we run initial checks")
 sleep(1)
-if screen ~= nil then
+if screen == nil then
     print("Error: No screen detected, but one is required. Please install some advanced monitors.")
     playChime(nil, "error")
-elseif rs ~= nil then
+elseif rs == nil then
     print("Error: No RS Bridge detected, but one is required. Please install one.")
 else
     if speaker ~= nil then

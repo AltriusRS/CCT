@@ -51,10 +51,10 @@ print("Welcome to StockOS. Please wait whilst we run initial checks")
 
 sleep(1)
 
-if (screen !== undefined) {
+if (screen === undefined) {
     print("Error: No screen detected, but one is required. Please install some advanced monitors.")
     playChime("error");
-} else if (rs !== undefined) {
+} else if (rs === undefined) {
     print("Error: No RS Bridge detected, but one is required. Please install one.")
 } else {
     if (speaker !== undefined) print("Warn: A speaker is optimal, but not required");
