@@ -266,12 +266,13 @@ if (screen === undefined) {
                 writeGraphs(stats, itemPC)
 
                 if (itemPC > 80 && !errored) {
-                    screen.setCursorPos((w - "LOW ITEM STORAGE".length) / 2, height - 2);
+                    screen.setCursorPos(1, height - 2);
                     screen.clearLine();
-                    screen.setCursorPos((w - "LOW ITEM STORAGE".length) / 2, height);
+                    screen.setCursorPos(1, height);
+                    screen.clearLine();
+                    screen.setCursorPos(1, height - 1);
                     screen.clearLine();
                     screen.setCursorPos((w - "LOW ITEM STORAGE".length) / 2, height - 1);
-                    screen.clearLine();
                     screen.setBackgroundColor(colors.orange);
                     screen.setTextColor(colors.black);
                     screen.write("LOW ITEM STORAGE")
