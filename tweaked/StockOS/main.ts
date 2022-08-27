@@ -106,7 +106,8 @@ if (screen === undefined) {
     let [width, _] = screen.getSize();
     while (width < 35 && scale > 0.5) {
         screen.setTextScale(scale - 0.1);
-        let [w, _] = screen.getSize();
+        let [w, h] = screen.getSize();
+        print("Setting screen scale to ", scale, "New dimensions", w, h)
         width = w;
     }
     let [w, _h] = screen.getSize();
@@ -119,7 +120,6 @@ if (screen === undefined) {
         screen.write("Screen too small")
         playChime("error")
     } else {
-
         if (speaker === undefined) print("Warn: A speaker is optional, but recommended");
         print("All checks passed")
         playChime("start")
