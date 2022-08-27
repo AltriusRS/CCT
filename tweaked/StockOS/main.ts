@@ -85,7 +85,7 @@ function formatName(name: string | undefined): string {
 
 const units = ["", "K", "M", "B"]
 
-function formatNumber(num: number | undefined): string {
+function formatNumber(num: number | undefined, isBar: boolean = false): string {
     if (num === undefined) num = 0;
     let x = 0;
     while (num > 1000) {
@@ -95,10 +95,12 @@ function formatNumber(num: number | undefined): string {
     let n2 = `` + Math.round(num * 100) / 100;
     if (n2.split(".").length !== 2) {
         n2 = n2 + ".00"
+    } else if (n2.split(".")[1].length !== 2) {
+        n2 = `${n2.split(".")[0]}.${n2.split(".")[1]}0`
     }
     let text = `${n2}${units[x]}`;
 
-    while (text.length < 7) {
+    while (text.length < 7 && !isBar) {
         text = ` ${text}`
     }
 
@@ -132,6 +134,26 @@ function percentage(current, max): number {
     return (current / max) * 100
 }
 
+function buildBar(width: number, percentage: number, current: number, max: number, cursorY: number = 0) {
+    if (width < 2) width = 2;
+    let color = "D";
+    if (percentage >= 75) color = "1";
+    if (percentage >= 90) color = "E"
+
+    let bar = ""
+    let blit = ""
+
+    let colorwidth = percentage * width;
+    print(width, percentage, colorwidth);
+
+    screen.setCursorPos(34, cursorY + 1)
+    screen.blit(bar, "", blit)
+    screen.write(formatNumber(percentage, true))
+    screen.setCursorPos(34, cursorY + 2)
+    screen.write(`Current: ${formatNumber(current, true)}`)
+    screen.write(`Maximum: ${formatNumber(max, true)}`)
+}
+
 function writeGraphs(data: any) {
     let [w, h] = screen.getSize();
     print("Storage used: ", percentage(data.total, data.capacity))
@@ -141,6 +163,10 @@ function writeGraphs(data: any) {
         screen.setCursorPos(33, i);
         screen.write("|")
     }
+
+    screen.setCursorPos(34, 2)
+    screen.write("Storage Capacity")
+    buildBar(w - 35, percentage(data.total, data.capacity), data.total, data.capacity, 2)
 }
 
 print("Welcome to StockOS. Please wait whilst we run initial checks")
@@ -189,8 +215,6 @@ if (screen === undefined) {
 
         while (keepRendering) {
             let stats = grabItems()
-            // print(formatNumber(stats.total), formatNumber(stats.capacity), (stats.total / stats.capacity) * 100)
-            print(formatNumber(1254), formatNumber(5149), (1254 / 5149) * 100)
             writeToScreen(stats.processed)
             writeGraphs(stats)
             os.sleep(0.75)

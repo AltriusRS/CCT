@@ -879,7 +879,10 @@ local function formatName(self, name)
     return n
 end
 local units = {"", "K", "M", "B"}
-local function formatNumber(self, num)
+local function formatNumber(self, num, isBar)
+    if isBar == nil then
+        isBar = false
+    end
     if num == nil then
         num = 0
     end
@@ -891,9 +894,11 @@ local function formatNumber(self, num)
     local n2 = "" .. tostring(math.floor(num * 100 + 0.5) / 100)
     if #__TS__StringSplit(n2, ".") ~= 2 then
         n2 = n2 .. ".00"
+    elseif #__TS__StringSplit(n2, ".")[2] ~= 2 then
+        n2 = ((__TS__StringSplit(n2, ".")[1] .. ".") .. __TS__StringSplit(n2, ".")[2]) .. "0"
     end
     local text = n2 .. units[x + 1]
-    while #text < 7 do
+    while #text < 7 and not isBar do
         text = " " .. text
     end
     return text
@@ -923,6 +928,31 @@ end
 local function percentage(self, current, max)
     return current / max * 100
 end
+local function buildBar(self, width, percentage, current, max, cursorY)
+    if cursorY == nil then
+        cursorY = 0
+    end
+    if width < 2 then
+        width = 2
+    end
+    local color = "D"
+    if percentage >= 75 then
+        color = "1"
+    end
+    if percentage >= 90 then
+        color = "E"
+    end
+    local bar = ""
+    local blit = ""
+    local colorwidth = percentage * width
+    print(width, percentage, colorwidth)
+    screen.setCursorPos(34, cursorY + 1)
+    screen.blit(bar, "", blit)
+    screen.write(formatNumber(nil, percentage, true))
+    screen.setCursorPos(34, cursorY + 2)
+    screen.write("Current: " .. formatNumber(nil, current, true))
+    screen.write("Maximum: " .. formatNumber(nil, max, true))
+end
 local function writeGraphs(self, data)
     local w, h = screen.getSize()
     print(
@@ -942,6 +972,16 @@ local function writeGraphs(self, data)
             i = i + 1
         end
     end
+    screen.setCursorPos(34, 2)
+    screen.write("Storage Capacity")
+    buildBar(
+        nil,
+        w - 35,
+        percentage(nil, data.total, data.capacity),
+        data.total,
+        data.capacity,
+        2
+    )
 end
 print("Welcome to StockOS. Please wait whilst we run initial checks")
 sleep(1)
@@ -987,11 +1027,6 @@ else
         playChime(nil, "start")
         while keepRendering do
             local stats = grabItems(nil)
-            print(
-                formatNumber(nil, 1254),
-                formatNumber(nil, 5149),
-                1254 / 5149 * 100
-            )
             writeToScreen(nil, stats.processed)
             writeGraphs(nil, stats)
             os.sleep(0.75)
