@@ -950,7 +950,7 @@ local function buildBar(self, width, percentage, current, max, cursorY)
     local blit = ""
     local fblit = ""
     local colorwidth = percentage / 100 * width
-    while #bar < width - 5 do
+    while #bar < width - 7 do
         if #bar < colorwidth then
             blit = blit .. color
             fblit = fblit .. "F"
@@ -963,9 +963,10 @@ local function buildBar(self, width, percentage, current, max, cursorY)
     print(width, percentage, colorwidth)
     screen.setCursorPos(34, cursorY + 1)
     if width > 6 then
+        screen.write(" ")
         screen.blit(bar, fblit, blit)
     end
-    screen.write(formatNumber(nil, percentage, true) .. "%")
+    screen.write((" " .. formatNumber(nil, percentage, true)) .. "%")
     screen.setCursorPos(34, cursorY + 2)
     screen.write("Current: " .. formatNumber(nil, current, true))
     screen.setCursorPos(34, cursorY + 3)
