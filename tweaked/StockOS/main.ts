@@ -50,7 +50,7 @@ function grabItems(): any[] {
     let processed = [];
 
     let storage = rs.listItems();
-    pretty.pretty_print(storage);
+    pretty.pretty_print(storage[0]);
 
 
     // for (let i = 0; i < storage.length; i++) {

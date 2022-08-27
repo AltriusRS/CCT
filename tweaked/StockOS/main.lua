@@ -783,7 +783,7 @@ end
 local function grabItems(self)
     local processed = {}
     local storage = rs:listItems()
-    pretty.pretty_print(storage)
+    pretty.pretty_print(storage[0])
     return processed
 end
 print("Welcome to StockOS. Please wait whilst we run initial checks")
