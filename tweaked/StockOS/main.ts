@@ -10,7 +10,7 @@ let screen: any = peripheral.find("monitor");
 let rs: any = peripheral.find("rsBridge");
 
 function playChime(chime: string) {
-    if (speaker) {
+    if (speaker !== undefined) {
         switch (chime) {
             case "start":
                 speaker.playNote(instrument, 1, 1)
@@ -30,6 +30,7 @@ function playChime(chime: string) {
         }
     } else {
         print("Speaker not installed, skipping chime: ", chime)
+        print(speaker)
     }
 }
 

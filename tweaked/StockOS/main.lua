@@ -738,7 +738,7 @@ local speaker = {peripheral.find("speaker")}
 local screen = {peripheral.find("monitor")}
 local rs = {peripheral.find("rsBridge")}
 local function playChime(self, chime)
-    if speaker then
+    if speaker ~= nil then
         repeat
             local ____switch4 = chime
             local ____cond4 = ____switch4 == "start"
@@ -765,6 +765,7 @@ local function playChime(self, chime)
         until true
     else
         print("Speaker not installed, skipping chime: ", chime)
+        print(speaker)
     end
 end
 print("Welcome to StockOS. Please wait whilst we run initial checks")
