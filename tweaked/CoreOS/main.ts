@@ -49,11 +49,11 @@ let looping = true;
 
 while (looping) {
     let event = events.pullEvent("key");
-    print(event.get_args());
+    print(event.get_args().keys());
     // let key = event['key']
     // if (key === keys.up) {
     //     print("Up")
-        looping = false;
+    looping = false;
     // } else {
     //     print(key)
     // }
