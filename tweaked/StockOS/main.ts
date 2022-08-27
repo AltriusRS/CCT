@@ -172,7 +172,10 @@ function buildBar(width: number, percentage: number, current: number, max: numbe
     screen.write(` Maximum: ${formatNumber(max, true)}`)
 }
 
-function writeGraphs(data: any) {
+let errored = false
+let lastError = 0;
+
+function writeGraphs(data: any, itemPC: number) {
     let [w, h] = screen.getSize();
     for (let i = 2; i <= h; i++) {
         screen.setCursorPos(33, i);
@@ -181,7 +184,7 @@ function writeGraphs(data: any) {
 
     screen.setCursorPos(34, 2)
     screen.write(" Storage Capacity")
-    buildBar(w - 35, percentage(data.total, data.capacity), data.total, data.capacity, 2)
+    buildBar(w - 35, itemPC, data.total, data.capacity, 2)
     screen.setCursorPos(34, 7)
     screen.write(" Energy Storage")
     buildBar(w - 35, percentage(data.energy.current, data.energy.max), data.energy.current, data.energy.max, 7)
@@ -233,8 +236,33 @@ if (screen === undefined) {
 
         while (keepRendering) {
             let stats = grabItems()
-            writeToScreen(stats.processed)
-            writeGraphs(stats)
+            let itemPC = percentage(stats.total, stats.capacity);
+            if (itemPC > 95 && (!errored || lastError > 15)) {
+                errored = true;
+                lastError = 0;
+                playChime("alert")
+                screen.setTextScale(2)
+                screen.setBackgroundColor(colors.red)
+                screen.setTextColor(colors.black)
+                screen.clear();
+                let [w2, h2] = screen.getSize();
+                let message = "ITEM STORAGE CRITICAL"
+                screen.setCursorPos((w2 - message.length) / 2, h2 / 2)
+                screen.write(message);
+                os.sleep(5)
+            } else {
+                lastError++
+                writeToScreen(stats.processed)
+                writeGraphs(stats, itemPC)
+
+                if (itemPC > 80 && !errored) {
+                    screen.setCursorPos((w - "LOW ITEM STORAGE".length) / 2, height);
+                    screen.clearLine();
+                    screen.setBackgroundColor(colors.orange);
+                    screen.setTextColor(colors.black);
+                    screen.write("LOW ITEM STORAGE")
+                }
+            }
             os.sleep(0.75)
         }
 

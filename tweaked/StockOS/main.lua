@@ -971,7 +971,9 @@ local function buildBar(self, width, percentage, current, max, cursorY)
     screen.setCursorPos(34, cursorY + 3)
     screen.write(" Maximum: " .. formatNumber(nil, max, true))
 end
-local function writeGraphs(self, data)
+local errored = false
+local lastError = 0
+local function writeGraphs(self, data, itemPC)
     local w, h = screen.getSize()
     do
         local i = 2
@@ -986,7 +988,7 @@ local function writeGraphs(self, data)
     buildBar(
         nil,
         w - 35,
-        percentage(nil, data.total, data.capacity),
+        itemPC,
         data.total,
         data.capacity,
         2
@@ -1046,8 +1048,32 @@ else
         playChime(nil, "start")
         while keepRendering do
             local stats = grabItems(nil)
-            writeToScreen(nil, stats.processed)
-            writeGraphs(nil, stats)
+            local itemPC = percentage(nil, stats.total, stats.capacity)
+            if itemPC > 95 and (not errored or lastError > 15) then
+                errored = true
+                lastError = 0
+                playChime(nil, "alert")
+                screen.setTextScale(2)
+                screen.setBackgroundColor(colors.red)
+                screen.setTextColor(colors.black)
+                screen.clear()
+                local w2, h2 = screen.getSize()
+                local message = "ITEM STORAGE CRITICAL"
+                screen.setCursorPos((w2 - #message) / 2, h2 / 2)
+                screen.write(message)
+                os.sleep(5)
+            else
+                lastError = lastError + 1
+                writeToScreen(nil, stats.processed)
+                writeGraphs(nil, stats, itemPC)
+                if itemPC > 80 and not errored then
+                    screen.setCursorPos((w - #"LOW ITEM STORAGE") / 2, height)
+                    screen.clearLine()
+                    screen.setBackgroundColor(colors.orange)
+                    screen.setTextColor(colors.black)
+                    screen.write("LOW ITEM STORAGE")
+                end
+            end
             os.sleep(0.75)
         end
         sleep(2)
