@@ -137,6 +137,7 @@ end
 
 function start()
     print("Scale", screen.getTextScale())
+    print("Size", screen.getSize())
     if speaker ~= nil then
         speaker.playNote(instrument, volume, 1)
         sleep(0.25)
