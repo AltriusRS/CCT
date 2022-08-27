@@ -1062,6 +1062,7 @@ else
                 screen.setCursorPos((w2 - #message) / 2, h2 / 2)
                 screen.write(message)
                 os.sleep(5)
+                screen.setTextScale(scale)
             else
                 lastError = lastError + 1
                 writeToScreen(nil, stats.processed)

@@ -250,6 +250,7 @@ if (screen === undefined) {
                 screen.setCursorPos((w2 - message.length) / 2, h2 / 2)
                 screen.write(message);
                 os.sleep(5)
+                screen.setTextScale(scale)
             } else {
                 lastError++
                 writeToScreen(stats.processed)
