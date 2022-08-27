@@ -752,6 +752,7 @@ else
     print("Error, coreOS settings corrupted or invalid.")
     print("Reinstalling CoreOS and resetting device.")
     startup(nil, "CoreOS/CoreOS")
+    shell.run("reboot")
 end
 return ____exports
  end,

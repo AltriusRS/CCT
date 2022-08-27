@@ -11,6 +11,7 @@ if (paste !== undefined) {
     print("Error, coreOS settings corrupted or invalid.")
     print("Reinstalling CoreOS and resetting device.")
     startup("CoreOS/CoreOS")
+    shell.run("reboot")
 }
 
 function startup(append: string, org: string = "CCTweaked", branch: string = "main") {
