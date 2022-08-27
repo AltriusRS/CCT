@@ -899,7 +899,7 @@ local function formatNumber(self, num)
     end
     return text
 end
-local function writeToScreen(self, items, subwin)
+local function writeToScreen(self, items)
     if screen ~= nil then
         screen.setCursorPos(1, 1)
         local width, height = screen.getSize()
@@ -914,20 +914,20 @@ local function writeToScreen(self, items, subwin)
         screen.setBackgroundColor(colors.black)
         local cursor = 2
         while cursor <= height do
-            subwin.setCursorPos(1, cursor)
-            subwin.clearLine()
-            subwin.write((formatNumber(nil, items[cursor - 2 + 1].quantity) .. " | ") .. formatName(nil, items[cursor - 2 + 1].name))
+            screen.setCursorPos(1, cursor)
+            screen.clearLine()
+            screen.write((formatNumber(nil, items[cursor - 2 + 1].quantity) .. " | ") .. formatName(nil, items[cursor - 2 + 1].name))
             cursor = cursor + 1
         end
     end
 end
-local function writeGraphs(self, data, subwin)
-    local w, h = subwin.getSize()
+local function writeGraphs(self, data)
+    local w, h = screen.getSize()
     do
-        local i = 0
-        while i < h do
-            subwin.setCursorPos(1, i + 1)
-            subwin.write("|")
+        local i = 1
+        while i <= h do
+            screen.setCursorPos(40, i)
+            screen.write("|")
             i = i + 1
         end
     end
@@ -974,30 +974,11 @@ else
         end
         print("All checks passed")
         playChime(nil, "start")
-        print(width, height)
-        local leftHalf = window.create(
-            screen,
-            1,
-            1,
-            31,
-            height,
-            true
-        )
-        local rightHalf = window.create(
-            screen,
-            31,
-            1,
-            width - 31,
-            height,
-            false
-        )
-        local rightW, rightH = rightHalf.getSize()
-        print(rightW, rightH)
         while keepRendering do
             local stats = grabItems(nil)
             print(stats.total, stats.capacity, stats.capacity / stats.total)
-            writeToScreen(nil, stats.processed, leftHalf)
-            writeGraphs(nil, stats, rightHalf)
+            writeToScreen(nil, stats.processed)
+            writeGraphs(nil, stats)
             os.sleep(0.75)
         end
         sleep(2)

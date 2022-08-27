@@ -106,7 +106,7 @@ function formatNumber(num: number | undefined): string {
     return text
 }
 
-function writeToScreen(items: any[], subwin: Window) {
+function writeToScreen(items: any[]) {
     if (screen !== undefined) {
         screen.setCursorPos(1, 1)
         let [width, height] = screen.getSize();
@@ -121,20 +121,20 @@ function writeToScreen(items: any[], subwin: Window) {
         screen.setBackgroundColor(colors.black)
         let cursor = 2;
         while (cursor <= height) {
-            subwin.setCursorPos(1, cursor);
-            subwin.clearLine()
-            subwin.write(`${formatNumber(items[(cursor - 2)].quantity)} | ${formatName(items[(cursor - 2)].name)}`)
+            screen.setCursorPos(1, cursor);
+            screen.clearLine()
+            screen.write(`${formatNumber(items[(cursor - 2)].quantity)} | ${formatName(items[(cursor - 2)].name)}`)
             cursor += 1
         }
     }
 }
 
-function writeGraphs(data: any, subwin: Window) {
-    let [w, h] = subwin.getSize();
+function writeGraphs(data: any) {
+    let [w, h] = screen.getSize();
 
-    for (let i = 0; i < h; i++) {
-        subwin.setCursorPos(1, i + 1);
-        subwin.write("|")
+    for (let i = 1; i <= h; i++) {
+        screen.setCursorPos(40, i);
+        screen.write("|")
     }
 }
 
@@ -180,20 +180,13 @@ if (screen === undefined) {
 
         if (speaker === undefined) print("Warn: A speaker is optional, but recommended");
         print("All checks passed")
-        playChime("start")
+        playChime("start");
 
-        print(width, height)
-
-        let leftHalf = new Window(screen, 1, 1, 31, height, true);
-        let rightHalf = new Window(screen, 31, 1, width - 31, height, false)
-
-        let [rightW, rightH] = rightHalf.getSize()
-        print(rightW, rightH);
         while (keepRendering) {
             let stats = grabItems()
             print(stats.total, stats.capacity, stats.capacity / stats.total)
-            writeToScreen(stats.processed, leftHalf)
-            writeGraphs(stats, rightHalf)
+            writeToScreen(stats.processed)
+            writeGraphs(stats)
             os.sleep(0.75)
         }
 
