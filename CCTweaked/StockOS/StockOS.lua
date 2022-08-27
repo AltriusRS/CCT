@@ -116,7 +116,7 @@ function render_list(items)
     end
 
     local line = 2;
-
+    print("Longest", longest)
     table.sort(listed, function(a, b)
         return a[2] > b[2]
     end)
