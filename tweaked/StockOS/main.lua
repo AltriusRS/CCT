@@ -845,7 +845,6 @@ local function grabItems(self)
     local total = 0
     local entities = rs:listItems()
     for entity in pairs(entities) do
-        screen.clear()
         processed[#processed + 1] = {name = entities[entity].displayName, quantity = entities[entity].amount}
         total = total + entities[entity].amount
     end
@@ -924,9 +923,9 @@ end
 local function writeGraphs(self, data)
     local w, h = screen.getSize()
     do
-        local i = 1
+        local i = 2
         while i <= h do
-            screen.setCursorPos(40, i)
+            screen.setCursorPos(35, i)
             screen.write("|")
             i = i + 1
         end

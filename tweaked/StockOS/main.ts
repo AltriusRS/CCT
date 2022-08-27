@@ -55,7 +55,6 @@ function grabItems(): any {
 
     let entities = rs.listItems();
     for (let entity in entities) {
-        screen.clear()
         processed.push({
             name: entities[entity].displayName,
             quantity: entities[entity].amount
@@ -132,8 +131,8 @@ function writeToScreen(items: any[]) {
 function writeGraphs(data: any) {
     let [w, h] = screen.getSize();
 
-    for (let i = 1; i <= h; i++) {
-        screen.setCursorPos(40, i);
+    for (let i = 2; i <= h; i++) {
+        screen.setCursorPos(35, i);
         screen.write("|")
     }
 }
