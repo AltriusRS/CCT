@@ -856,7 +856,11 @@ local function grabItems(self)
     return {
         processed = processed,
         total = total,
-        capacity = rs:getMaxItemDiskStorage()
+        capacity = rs:getMaxItemDiskStorage(),
+        energy = {
+            current = rs:getEnergyStorage(),
+            max = rs:getMaxEnergyStorage()
+        }
     }
 end
 local function formatName(self, name)
@@ -905,7 +909,7 @@ local function writeToScreen(self, items, window)
         while cursor <= height do
             window.setCursorPos(1, cursor)
             window.clearLine()
-            window.write((formatName(nil, items[cursor - 2 + 1].name) .. " | ") .. formatNumber(nil, items[cursor - 2 + 1].quantity))
+            window.write((formatNumber(nil, items[cursor - 2 + 1].quantity) .. " | ") .. formatName(nil, items[cursor - 2 + 1].name))
             cursor = cursor + 1
         end
     end

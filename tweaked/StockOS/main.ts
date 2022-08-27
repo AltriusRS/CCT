@@ -66,7 +66,11 @@ function grabItems(): any {
     return {
         processed,
         total,
-        capacity: rs.getMaxItemDiskStorage()
+        capacity: rs.getMaxItemDiskStorage(),
+        energy: {
+            current: rs.getEnergyStorage(),
+            max: rs.getMaxEnergyStorage()
+        }
     };
 }
 
@@ -110,7 +114,7 @@ function writeToScreen(items: any[], window: Window) {
         while (cursor <= height) {
             window.setCursorPos(1, cursor);
             window.clearLine()
-            window.write(`${formatName(items[(cursor - 2)].name)} | ${formatNumber(items[(cursor - 2)].quantity)}`)
+            window.write(`${formatNumber(items[(cursor - 2)].quantity)} | ${formatName(items[(cursor - 2)].name)}`)
             cursor += 1
         }
     }
