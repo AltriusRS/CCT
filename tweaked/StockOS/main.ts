@@ -73,6 +73,17 @@ function formatName(name: string): string {
     return n;
 }
 
+const units = ["", "K", "M", "B"]
+
+function formatNumber(num: number): string {
+    let x = 0;
+    while (num > 1000) {
+        x += 1;
+        num = num / 1000
+    }
+    return `${Math.round(num * 100) / 100}${units[x]}`;
+}
+
 function writeToScreen(items: any[]) {
     if (screen !== undefined) {
         screen.clear();
@@ -91,7 +102,7 @@ function writeToScreen(items: any[]) {
         while (cursor <= height) {
             screen.setCursorPos(1, cursor);
             screen.clearLine()
-            screen.write(`${formatName(items[cursor - 2].name)} | ${items[cursor - 2].quantity}`)
+            screen.write(`${formatName(items[cursor - 2].name)} | ${formatNumber(items[cursor - 2].quantity)}`)
             cursor += 1
         }
     }

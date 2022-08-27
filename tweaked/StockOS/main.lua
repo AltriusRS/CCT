@@ -866,6 +866,15 @@ local function formatName(self, name)
     end
     return n
 end
+local units = {"", "K", "M", "B"}
+local function formatNumber(self, num)
+    local x = 0
+    while num > 1000 do
+        x = x + 1
+        num = num / 1000
+    end
+    return tostring(math.floor(num * 100 + 0.5) / 100) .. units[x + 1]
+end
 local function writeToScreen(self, items)
     if screen ~= nil then
         screen.clear()
@@ -884,7 +893,7 @@ local function writeToScreen(self, items)
         while cursor <= height do
             screen.setCursorPos(1, cursor)
             screen.clearLine()
-            screen.write((formatName(nil, items[cursor - 2 + 1].name) .. " | ") .. tostring(items[cursor - 2 + 1].quantity))
+            screen.write((formatName(nil, items[cursor - 2 + 1].name) .. " | ") .. formatNumber(nil, items[cursor - 2 + 1].quantity))
             cursor = cursor + 1
         end
     end
