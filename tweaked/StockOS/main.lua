@@ -829,7 +829,7 @@ else
     local scale = 2
     screen.setTextScale(1)
     local width, _ = screen.getSize()
-    while width < 20 do
+    while width < 35 do
         screen.setTextScale(scale - 0.1)
         local w, _ = screen.getSize()
         width = w

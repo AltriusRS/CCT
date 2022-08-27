@@ -104,7 +104,7 @@ if (screen === undefined) {
     let scale = 2;
     screen.setTextScale(1);
     let [width, _] = screen.getSize();
-    while (width < 20) {
+    while (width < 35) {
         screen.setTextScale(scale - 0.1);
         let [w, _] = screen.getSize();
         width = w;
