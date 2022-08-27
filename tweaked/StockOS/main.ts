@@ -93,7 +93,14 @@ function formatNumber(num: number | undefined): string {
         x += 1;
         num = num / 1000
     }
-    return `${Math.round(num * 100) / 100}${units[x]}`;
+
+    let text = `${Math.round(num * 100) / 100}${units[x]}`;
+
+    while (text.length < 7) {
+        text = ` ${text}`
+    }
+
+    return text
 }
 
 function writeToScreen(items: any[], window: Window) {

@@ -889,7 +889,11 @@ local function formatNumber(self, num)
         x = x + 1
         num = num / 1000
     end
-    return tostring(math.floor(num * 100 + 0.5) / 100) .. units[x + 1]
+    local text = tostring(math.floor(num * 100 + 0.5) / 100) .. units[x + 1]
+    while #text < 7 do
+        text = " " .. text
+    end
+    return text
 end
 local function writeToScreen(self, items, window)
     if screen ~= nil then
