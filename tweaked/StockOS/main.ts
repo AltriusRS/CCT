@@ -183,7 +183,7 @@ if (screen === undefined) {
 
         while (keepRendering) {
             let stats = grabItems()
-            print(stats.total, stats.capacity, stats.capacity / stats.total)
+            print(formatNumber(stats.total), formatNumber(stats.capacity), stats.capacity / stats.total)
             writeToScreen(stats.processed)
             writeGraphs(stats)
             os.sleep(0.75)

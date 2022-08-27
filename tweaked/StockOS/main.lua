@@ -975,7 +975,11 @@ else
         playChime(nil, "start")
         while keepRendering do
             local stats = grabItems(nil)
-            print(stats.total, stats.capacity, stats.capacity / stats.total)
+            print(
+                formatNumber(nil, stats.total),
+                formatNumber(nil, stats.capacity),
+                stats.capacity / stats.total
+            )
             writeToScreen(nil, stats.processed)
             writeGraphs(nil, stats)
             os.sleep(0.75)
