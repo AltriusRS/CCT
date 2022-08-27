@@ -108,7 +108,6 @@ function formatNumber(num: number | undefined): string {
 
 function writeToScreen(items: any[], subwin: Window) {
     if (screen !== undefined) {
-        screen.clear();
         screen.setCursorPos(1, 1)
         let [width, height] = screen.getSize();
         screen.setBackgroundColor(colors.orange)

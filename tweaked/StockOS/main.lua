@@ -901,7 +901,6 @@ local function formatNumber(self, num)
 end
 local function writeToScreen(self, items, subwin)
     if screen ~= nil then
-        screen.clear()
         screen.setCursorPos(1, 1)
         local width, height = screen.getSize()
         screen.setBackgroundColor(colors.orange)
