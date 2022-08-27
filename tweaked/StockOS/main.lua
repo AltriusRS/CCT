@@ -731,7 +731,6 @@ return ____exports
 ["main"] = function(...) 
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
 local ____exports = {}
-local pretty = require("cc.pretty")
 local instrument = "bit"
 local speaker = peripheral.find("speaker")
 local screen = peripheral.find("monitor")
@@ -784,9 +783,18 @@ local function grabItems(self)
     local processed = {}
     local entities = rs:listItems()
     for entity in pairs(entities) do
-        screen.write(tostring(pretty.pretty(entities[entity])))
+        screen.clear()
+        processed[#processed + 1] = {name = entities[entity].displayName, quantity = entities[entity].amount}
     end
     return processed
+end
+local function writeToScreen(self, items)
+    if screen ~= nil then
+        screen.clear()
+        screen.setCursorPos(1, 1)
+        local width, height = screen.getSize()
+        screen.write((("This display is: " .. tostring(width)) .. " by ") .. tostring(height))
+    end
 end
 print("Welcome to StockOS. Please wait whilst we run initial checks")
 sleep(1)
@@ -803,6 +811,7 @@ else
     print("All checks passed")
     playChime(nil, "start")
     local items = grabItems(nil)
+    writeToScreen(nil, items)
     sleep(2)
     playChime(nil, "stop")
 end

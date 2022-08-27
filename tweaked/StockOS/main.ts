@@ -51,12 +51,24 @@ function grabItems(): any[] {
 
     let entities = rs.listItems();
     for (let entity in entities) {
-        screen.write(pretty.pretty(entities[entity]).toString())
+        screen.clear()
+        processed.push({
+            name: entities[entity].displayName,
+            quantity: entities[entity].amount
+        })
     }
 
     return processed;
 }
 
+function writeToScreen(items: any[]) {
+    if (screen !== undefined) {
+        screen.clear();
+        screen.setCursorPos(1, 1)
+        let [width, height] = screen.getSize();
+        screen.write(`This display is: ${width} by ${height}`)
+    }
+}
 
 print("Welcome to StockOS. Please wait whilst we run initial checks")
 
@@ -74,6 +86,7 @@ if (screen === undefined) {
     playChime("start")
 
     let items = grabItems()
+    writeToScreen(items)
 
     sleep(2)
     playChime("stop")
