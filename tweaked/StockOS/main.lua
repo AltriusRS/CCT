@@ -812,6 +812,7 @@ local function writeToScreen(self, items)
             screen.setCursorPos(1, cursor)
             screen.clearLine()
             screen.write((tostring(items[cursor].name) .. " - ") .. tostring(items[cursor].quantity))
+            cursor = cursor + 1
         end
     end
 end

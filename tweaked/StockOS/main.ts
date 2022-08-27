@@ -83,6 +83,7 @@ function writeToScreen(items: any[]) {
             screen.setCursorPos(1, cursor);
             screen.clearLine()
             screen.write(`${items[cursor - 1].name} - ${items[cursor - 1].quantity}`)
+            cursor += 1
         }
     }
 }
