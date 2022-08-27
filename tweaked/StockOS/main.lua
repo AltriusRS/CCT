@@ -1004,6 +1004,16 @@ local function writeGraphs(self, data, itemPC)
         7
     )
 end
+local function writeLine(self)
+    local w, h = screen.getSize()
+    do
+        local x = 0
+        while x < w do
+            screen.write(" ")
+            x = x + 1
+        end
+    end
+end
 print("Welcome to StockOS. Please wait whilst we run initial checks")
 sleep(1)
 local keepRendering = true
@@ -1082,10 +1092,13 @@ else
                 if itemPC > 80 and not errored then
                     screen.setCursorPos(1, height - 2)
                     screen.clearLine()
+                    writeLine(nil)
                     screen.setCursorPos(1, height)
                     screen.clearLine()
+                    writeLine(nil)
                     screen.setCursorPos(1, height - 1)
                     screen.clearLine()
+                    writeLine(nil)
                     screen.setCursorPos((w - #"LOW ITEM STORAGE") / 2, height - 1)
                     screen.setBackgroundColor(colors.orange)
                     screen.setTextColor(colors.black)
