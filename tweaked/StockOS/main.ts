@@ -49,13 +49,13 @@ function playChime(chime: string) {
 function grabItems(): any[] {
     let processed = [];
 
-    let storage = rs.listItems();
-    pretty.pretty_print(storage[0]);
+    let storage = pairs(rs.listItems());
 
 
-    // for (let i = 0; i < storage.length; i++) {
-    //     let item = storage[i];
-    // }
+    for (let i = 0; i < storage.length; i++) {
+        let [k, item] = storage[i];
+        print(k, item.displayName)
+    }
 
     return processed;
 }
