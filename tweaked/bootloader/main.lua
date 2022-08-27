@@ -744,7 +744,11 @@ end
 
 local ____exports = {}
 local paste = settings.get("core_os_load")
-print(__TS__TypeOf(paste))
+print(
+    __TS__TypeOf(paste),
+    paste
+)
+print(paste)
 return ____exports
  end,
 }
