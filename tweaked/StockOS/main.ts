@@ -69,7 +69,21 @@ function writeToScreen(items: any[]) {
         screen.clear();
         screen.setCursorPos(1, 1)
         let [width, height] = screen.getSize();
-        screen.write(`This display is: ${width} by ${height}`)
+        screen.setBackgroundColor(colors.orange)
+        screen.setTextColor(colors.black)
+        screen.clearLine()
+        screen.write("Stock OS - 1.0.1")
+        let name = `${os.getComputerID()} - ${os.getComputerLabel()}`
+        screen.setCursorPos(width - name.length, 1)
+        screen.write(name)
+        screen.setTextColor(colors.white)
+        screen.setBackgroundColor(colors.black)
+        let cursor = 2;
+        while (cursor < height) {
+            screen.setCursorPos(1, cursor);
+            screen.clearLine()
+            screen.write(`${items[cursor - 1].name} - ${items[cursor - 1].quantity}`)
+        }
     }
 }
 

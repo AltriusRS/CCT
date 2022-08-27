@@ -798,7 +798,21 @@ local function writeToScreen(self, items)
         screen.clear()
         screen.setCursorPos(1, 1)
         local width, height = screen.getSize()
-        screen.write((("This display is: " .. tostring(width)) .. " by ") .. tostring(height))
+        screen.setBackgroundColor(colors.orange)
+        screen.setTextColor(colors.black)
+        screen.clearLine()
+        screen.write("Stock OS - 1.0.1")
+        local name = (tostring(os.getComputerID()) .. " - ") .. os.getComputerLabel()
+        screen.setCursorPos(width - #name, 1)
+        screen.write(name)
+        screen.setTextColor(colors.white)
+        screen.setBackgroundColor(colors.black)
+        local cursor = 2
+        while cursor < height do
+            screen.setCursorPos(1, cursor)
+            screen.clearLine()
+            screen.write((tostring(items[cursor].name) .. " - ") .. tostring(items[cursor].quantity))
+        end
     end
 end
 print("Welcome to StockOS. Please wait whilst we run initial checks")
