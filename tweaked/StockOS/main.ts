@@ -145,13 +145,16 @@ function buildBar(width: number, percentage: number, current: number, max: numbe
 
     let bar = ""
     let blit = ""
+    let fblit = ""
     let colorwidth = (percentage / 100) * width;
 
     while (bar.length < (width - 5)) {
         if (bar.length < colorwidth) {
             blit = blit + color;
+            fblit = fblit + "F"
         } else {
             blit = blit + "F"
+            fblit = fblit + "0"
         }
 
         if (bar.length === 0) {
@@ -166,7 +169,7 @@ function buildBar(width: number, percentage: number, current: number, max: numbe
     print(width, percentage, colorwidth);
 
     screen.setCursorPos(34, cursorY + 1)
-    if (width > 6) screen.blit(bar, "", blit)
+    if (width > 6) screen.blit(bar, fblit, blit)
     screen.write(formatNumber(percentage, true) + "%")
     screen.setCursorPos(34, cursorY + 2)
     screen.write(`Current: ${formatNumber(current, true)}`)
