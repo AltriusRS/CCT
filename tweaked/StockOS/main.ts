@@ -100,7 +100,10 @@ function formatNumber(num: number | undefined, isBar: boolean = false): string {
     }
     let text = `${n2}${units[x]}`;
 
-    while (text.length < 7 && !isBar) {
+    let required = 7;
+    if (isBar) required = 5;
+
+    while (text.length < required) {
         text = ` ${text}`
     }
 
@@ -135,19 +138,35 @@ function percentage(current, max): number {
 }
 
 function buildBar(width: number, percentage: number, current: number, max: number, cursorY: number = 0) {
-    if (width < 2) width = 2;
+    if (width < 5) width = 5;
     let color = "D";
     if (percentage >= 75) color = "1";
     if (percentage >= 90) color = "E"
 
     let bar = ""
     let blit = ""
-
     let colorwidth = (percentage / 100) * width;
+
+    while (bar.length < (width - 5)) {
+        if (bar.length < colorwidth) {
+            blit = blit + color;
+        } else {
+            blit = blit + "F"
+        }
+
+        if (bar.length === 0) {
+            bar += "["
+        } else if (bar.length === (width - 6)) {
+            bar += "]"
+        } else {
+            bar += " "
+        }
+    }
+
     print(width, percentage, colorwidth);
 
     screen.setCursorPos(34, cursorY + 1)
-    screen.blit(bar, "", blit)
+    if (width > 6) screen.blit(bar, "", blit)
     screen.write(formatNumber(percentage, true) + "%")
     screen.setCursorPos(34, cursorY + 2)
     screen.write(`Current: ${formatNumber(current, true)}`)
@@ -189,7 +208,7 @@ if (screen === undefined) {
     // permit app to start
 
     // Automatically scale the display
-    let scale = 1.5;
+    let scale = 1;
     screen.setTextScale(scale);
     let [width, height] = screen.getSize();
     while (width < 35 && scale > 0.5) {

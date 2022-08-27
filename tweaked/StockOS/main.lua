@@ -898,7 +898,11 @@ local function formatNumber(self, num, isBar)
         n2 = ((__TS__StringSplit(n2, ".")[1] .. ".") .. __TS__StringSplit(n2, ".")[2]) .. "0"
     end
     local text = n2 .. units[x + 1]
-    while #text < 7 and not isBar do
+    local required = 7
+    if isBar then
+        required = 5
+    end
+    while #text < required do
         text = " " .. text
     end
     return text
@@ -932,8 +936,8 @@ local function buildBar(self, width, percentage, current, max, cursorY)
     if cursorY == nil then
         cursorY = 0
     end
-    if width < 2 then
-        width = 2
+    if width < 5 then
+        width = 5
     end
     local color = "D"
     if percentage >= 75 then
@@ -945,9 +949,25 @@ local function buildBar(self, width, percentage, current, max, cursorY)
     local bar = ""
     local blit = ""
     local colorwidth = percentage / 100 * width
+    while #bar < width - 5 do
+        if #bar < colorwidth then
+            blit = blit .. color
+        else
+            blit = blit .. "F"
+        end
+        if #bar == 0 then
+            bar = bar .. "["
+        elseif #bar == width - 6 then
+            bar = bar .. "]"
+        else
+            bar = bar .. " "
+        end
+    end
     print(width, percentage, colorwidth)
     screen.setCursorPos(34, cursorY + 1)
-    screen.blit(bar, "", blit)
+    if width > 6 then
+        screen.blit(bar, "", blit)
+    end
     screen.write(formatNumber(nil, percentage, true) .. "%")
     screen.setCursorPos(34, cursorY + 2)
     screen.write("Current: " .. formatNumber(nil, current, true))
@@ -1004,7 +1024,7 @@ elseif rs == nil then
     print("Error: No RS Bridge detected, but one is required. Please install one.")
     playChime(nil, "error")
 else
-    local scale = 1.5
+    local scale = 1
     screen.setTextScale(scale)
     local width, height = screen.getSize()
     while width < 35 and scale > 0.5 do
