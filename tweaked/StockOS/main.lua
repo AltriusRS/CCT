@@ -808,7 +808,7 @@ local function writeToScreen(self, items)
         screen.setTextColor(colors.white)
         screen.setBackgroundColor(colors.black)
         local cursor = 2
-        while cursor < height do
+        while cursor <= height do
             screen.setCursorPos(1, cursor)
             screen.clearLine()
             screen.write((tostring(items[cursor].name) .. " - ") .. tostring(items[cursor].quantity))
@@ -826,11 +826,11 @@ elseif rs == nil then
     print("Error: No RS Bridge detected, but one is required. Please install one.")
     playChime(nil, "error")
 else
-    local scale = 2
-    screen.setTextScale(1)
+    local scale = 5
+    screen.setTextScale(scale)
     local width, _ = screen.getSize()
     while width < 35 and scale > 0.5 do
-        scale = scale - 0.1
+        scale = scale - 0.5
         screen.setTextScale(scale)
         local w, h = screen.getSize()
         print(
@@ -860,7 +860,7 @@ else
         while keepRendering do
             local items = grabItems(nil)
             writeToScreen(nil, items)
-            os.sleep(0.5)
+            os.sleep(0.75)
         end
         sleep(2)
         playChime(nil, "stop")

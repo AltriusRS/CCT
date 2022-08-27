@@ -79,7 +79,7 @@ function writeToScreen(items: any[]) {
         screen.setTextColor(colors.white)
         screen.setBackgroundColor(colors.black)
         let cursor = 2;
-        while (cursor < height) {
+        while (cursor <= height) {
             screen.setCursorPos(1, cursor);
             screen.clearLine()
             screen.write(`${items[cursor - 1].name} - ${items[cursor - 1].quantity}`)
@@ -101,11 +101,11 @@ if (screen === undefined) {
     print("Error: No RS Bridge detected, but one is required. Please install one.")
     playChime("error");
 } else {
-    let scale = 2;
-    screen.setTextScale(1);
+    let scale = 5;
+    screen.setTextScale(scale);
     let [width, _] = screen.getSize();
     while (width < 35 && scale > 0.5) {
-        scale = scale - 0.1
+        scale = scale - 0.5
         screen.setTextScale(scale);
         let [w, h] = screen.getSize();
         print("Setting screen scale to ", scale, "New dimensions", w, h)
@@ -128,7 +128,7 @@ if (screen === undefined) {
         while (keepRendering) {
             let items = grabItems()
             writeToScreen(items)
-            os.sleep(0.5)
+            os.sleep(0.75)
         }
 
         sleep(2)
