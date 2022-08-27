@@ -3,19 +3,29 @@ import * as event from "./event";
 let paste = settings.get("core_os_load")
 
 if (paste !== undefined) {
+    // Update bootloader
     print("Attempting to download bootloader updates")
-    startup("bootloader/main", "tweaked")
+    download("startup", "bootloader/main", "tweaked")
+
+    // Install software
+    print("Attempting to download software updates")
+    download("software", "CoreOS/CoreOS")
+    print("Downloads finished, launching in 5 seconds")
     os.sleep(5)
-    shell.exit()
+    shell.run("software")
+
+    // Use this generic ending code to exit and reboot the system
+    os.sleep(5)
+    os.reboot()
 } else {
     print("Error, coreOS settings corrupted or invalid.")
     print("Reinstalling CoreOS and resetting device.")
-    startup("CoreOS/CoreOS")
-    shell.run("reboot")
+    download("startup", "CoreOS/CoreOS")
+    os.reboot()
 }
 
-function startup(append: string, org: string = "CCTweaked", branch: string = "main") {
-    fs.delete("/startup")
-    shell.run("wget", `https://raw.githubusercontent.com/AltriusRS/CCT/${branch}/${org}/${append}.lua`, "startup");
+function download(path: string, append: string, org: string = "CCTweaked", branch: string = "main") {
+    fs.delete(path)
+    shell.run("wget", `https://raw.githubusercontent.com/AltriusRS/CCT/${branch}/${org}/${append}.lua`, path);
 
 }

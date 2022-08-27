@@ -731,28 +731,33 @@ return ____exports
 ["main"] = function(...) 
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
 local ____exports = {}
-local startup
-function startup(self, append, org, branch)
+local download
+function download(self, path, append, org, branch)
     if org == nil then
         org = "CCTweaked"
     end
     if branch == nil then
         branch = "main"
     end
-    fs.delete("/startup")
-    shell.run("wget", ((((("https://raw.githubusercontent.com/AltriusRS/CCT/" .. branch) .. "/") .. org) .. "/") .. append) .. ".lua", "startup")
+    fs.delete(path)
+    shell.run("wget", ((((("https://raw.githubusercontent.com/AltriusRS/CCT/" .. branch) .. "/") .. org) .. "/") .. append) .. ".lua", path)
 end
 local paste = settings.get("core_os_load")
 if paste ~= nil then
     print("Attempting to download bootloader updates")
-    startup(nil, "bootloader/main", "tweaked")
+    download(nil, "startup", "bootloader/main", "tweaked")
+    print("Attempting to download software updates")
+    download(nil, "software", "CoreOS/CoreOS")
+    print("Downloads finished, launching in 5 seconds")
     os.sleep(5)
-    shell.exit()
+    shell.run("software")
+    os.sleep(5)
+    os.reboot()
 else
     print("Error, coreOS settings corrupted or invalid.")
     print("Reinstalling CoreOS and resetting device.")
-    startup(nil, "CoreOS/CoreOS")
-    shell.run("reboot")
+    download(nil, "startup", "CoreOS/CoreOS")
+    os.reboot()
 end
 return ____exports
  end,
