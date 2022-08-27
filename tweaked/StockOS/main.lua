@@ -734,9 +734,9 @@ local ____exports = {}
 local lines = 5
 local scale = 1
 local instrument = "bit"
-local speaker = {peripheral.find("speaker")}
-local screen = {peripheral.find("monitor")}
-local rs = {peripheral.find("rsBridge")}
+local speaker = peripheral.find("speaker")
+local screen = peripheral.find("monitor")
+local rs = peripheral.find("rsBridge")
 local function playChime(self, chime)
     if speaker ~= nil then
         repeat

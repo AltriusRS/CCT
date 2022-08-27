@@ -5,9 +5,11 @@ let scale = 1;
 let instrument = "bit";
 
 // grab peripherals
-let speaker: any = peripheral.find("speaker");
-let screen: any = peripheral.find("monitor");
-let rs: any = peripheral.find("rsBridge");
+// @ts-ignore
+const speaker: SpeakerPeripheral = peripheral.find("speaker")[0];
+// @ts-ignore
+const screen: MonitorPeripheral = peripheral.find("monitor")[0];
+const rs: any = peripheral.find("rsBridge")[0];
 
 function playChime(chime: string) {
     if (speaker !== undefined) {
