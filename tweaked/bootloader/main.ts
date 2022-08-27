@@ -8,7 +8,9 @@ if (paste !== undefined) {
     os.sleep(5)
     shell.exit()
 } else {
-
+    print("Error, coreOS settings corrupted or invalid.")
+    print("Reinstalling CoreOS and resetting device.")
+    startup("CoreOS/CoreOS")
 }
 
 function startup(append: string, org: string = "CCTweaked", branch: string = "main") {

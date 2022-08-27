@@ -749,6 +749,9 @@ if paste ~= nil then
     os.sleep(5)
     shell.exit()
 else
+    print("Error, coreOS settings corrupted or invalid.")
+    print("Reinstalling CoreOS and resetting device.")
+    startup(nil, "CoreOS/CoreOS")
 end
 return ____exports
  end,
