@@ -105,7 +105,8 @@ if (screen === undefined) {
     screen.setTextScale(1);
     let [width, _] = screen.getSize();
     while (width < 35 && scale > 0.5) {
-        screen.setTextScale(scale - 0.1);
+        scale = scale - 0.1
+        screen.setTextScale(scale);
         let [w, h] = screen.getSize();
         print("Setting screen scale to ", scale, "New dimensions", w, h)
         width = w;

@@ -830,7 +830,8 @@ else
     screen.setTextScale(1)
     local width, _ = screen.getSize()
     while width < 35 and scale > 0.5 do
-        screen.setTextScale(scale - 0.1)
+        scale = scale - 0.1
+        screen.setTextScale(scale)
         local w, h = screen.getSize()
         print(
             "Setting screen scale to ",
