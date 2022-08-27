@@ -117,7 +117,6 @@ function render_list(items)
 
     local line = 2;
     print("Longest", longest)
-    print("Scale", screen.getTextScale())
     table.sort(listed, function(a, b)
         return a[2] > b[2]
     end)
@@ -137,6 +136,7 @@ function render_list(items)
 end
 
 function start()
+    print("Scale", screen.getTextScale())
     if speaker ~= nil then
         speaker.playNote(instrument, volume, 1)
         sleep(0.25)
