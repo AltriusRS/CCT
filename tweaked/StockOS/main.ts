@@ -50,7 +50,7 @@ function grabItems(): any[] {
     let processed = [];
 
     let storage = pairs(rs.listItems());
-
+    print("Unique item count:", storage.length)
 
     for (let i = 0; i < storage.length; i++) {
         let [k, item] = storage[i];

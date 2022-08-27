@@ -782,6 +782,10 @@ end
 local function grabItems(self)
     local processed = {}
     local storage = pairs(rs:listItems())
+    print(
+        "Unique item count:",
+        debug.getinfo(storage).nparams
+    )
     do
         local i = 0
         while i < debug.getinfo(storage).nparams do
