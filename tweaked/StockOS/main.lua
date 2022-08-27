@@ -958,13 +958,7 @@ local function buildBar(self, width, percentage, current, max, cursorY)
             blit = blit .. "F"
             fblit = fblit .. "0"
         end
-        if #bar == 0 then
-            bar = bar .. "["
-        elseif #bar == width - 6 then
-            bar = bar .. "]"
-        else
-            bar = bar .. " "
-        end
+        bar = bar .. " "
     end
     print(width, percentage, colorwidth)
     screen.setCursorPos(34, cursorY + 1)
