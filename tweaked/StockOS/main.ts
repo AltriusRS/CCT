@@ -167,9 +167,9 @@ function buildBar(width: number, percentage: number, current: number, max: numbe
     }
     screen.write(" " + formatNumber(percentage, true) + "%")
     screen.setCursorPos(34, cursorY + 2)
-    screen.write(`Current: ${formatNumber(current, true)}`)
+    screen.write(` Current: ${formatNumber(current, true)}`)
     screen.setCursorPos(34, cursorY + 3)
-    screen.write(`Maximum: ${formatNumber(max, true)}`)
+    screen.write(` Maximum: ${formatNumber(max, true)}`)
 }
 
 function writeGraphs(data: any) {
@@ -180,10 +180,10 @@ function writeGraphs(data: any) {
     }
 
     screen.setCursorPos(34, 2)
-    screen.write("Storage Capacity")
+    screen.write(" Storage Capacity")
     buildBar(w - 35, percentage(data.total, data.capacity), data.total, data.capacity, 2)
     screen.setCursorPos(34, 7)
-    screen.write("Energy Storage")
+    screen.write(" Energy Storage")
     buildBar(w - 35, percentage(data.energy.current, data.energy.max), data.energy.current, data.energy.max, 7)
 }
 
