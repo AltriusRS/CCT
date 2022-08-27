@@ -110,7 +110,7 @@ function writeToScreen(items: any[], window: Window) {
         while (cursor <= height) {
             window.setCursorPos(1, cursor);
             window.clearLine()
-            window.write(`${formatName(items[cursor - 1].name)} | ${formatNumber(items[cursor - 1].quantity)}`)
+            window.write(`${formatName(items[cursor - 2].name)} | ${formatNumber(items[cursor - 2].quantity)}`)
             cursor += 1
         }
     }

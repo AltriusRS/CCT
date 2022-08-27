@@ -900,7 +900,7 @@ local function writeToScreen(self, items, window)
         while cursor <= height do
             window.setCursorPos(1, cursor)
             window.clearLine()
-            window.write((formatName(nil, items[cursor].name) .. " | ") .. formatNumber(nil, items[cursor].quantity))
+            window.write((formatName(nil, items[cursor - 2 + 1].name) .. " | ") .. formatNumber(nil, items[cursor - 2 + 1].quantity))
             cursor = cursor + 1
         end
     end
