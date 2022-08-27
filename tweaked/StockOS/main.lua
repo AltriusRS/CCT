@@ -922,6 +922,17 @@ local function writeToScreen(self, items, window)
         end
     end
 end
+local function writeGraphs(self, data, window)
+    local w, h = table.unpack(window:getSize())
+    do
+        local i = 0
+        while i < h do
+            window:setCursorPos(1, i + 1)
+            window:write("|")
+            i = i + 1
+        end
+    end
+end
 print("Welcome to StockOS. Please wait whilst we run initial checks")
 sleep(1)
 local keepRendering = true
@@ -987,8 +998,8 @@ else
             local stats = grabItems(nil)
             print(stats.total, stats.capacity, stats.capacity / stats.total)
             writeToScreen(nil, stats.processed, leftHalf)
+            writeGraphs(nil, stats, rightHalf)
             os.sleep(0.75)
-            keepRendering = false
         end
         sleep(2)
         playChime(nil, "stop")

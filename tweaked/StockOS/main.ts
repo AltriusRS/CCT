@@ -93,8 +93,8 @@ function formatNumber(num: number | undefined): string {
         x += 1;
         num = num / 1000
     }
-    let n2 = ``+Math.round(num * 100) / 100;
-    if(n2.split(".").length !== 2) {
+    let n2 = `` + Math.round(num * 100) / 100;
+    if (n2.split(".").length !== 2) {
         n2 = n2 + ".00"
     }
     let text = `${n2}${units[x]}`;
@@ -127,6 +127,15 @@ function writeToScreen(items: any[], window: Window) {
             window.write(`${formatNumber(items[(cursor - 2)].quantity)} | ${formatName(items[(cursor - 2)].name)}`)
             cursor += 1
         }
+    }
+}
+
+function writeGraphs(data, window) {
+    let [w, h] = window.getSize();
+
+    for (let i = 0; i < h; i++) {
+        window.setCursorPos(1, i + 1);
+        window.write("|")
     }
 }
 
@@ -185,8 +194,8 @@ if (screen === undefined) {
             let stats = grabItems()
             print(stats.total, stats.capacity, stats.capacity / stats.total)
             writeToScreen(stats.processed, leftHalf)
+            writeGraphs(stats, rightHalf)
             os.sleep(0.75)
-            keepRendering = false
         }
 
         sleep(2)
