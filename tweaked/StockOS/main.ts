@@ -197,8 +197,26 @@ sleep(1)
 let keepRendering = true;
 
 if (screen === undefined) {
-    print("Error: No screen detected, but one is required. Please install some advanced monitors.")
-    playChime("error");
+    if (speaker === undefined) print("Warn: A speaker is optional, but recommended");
+    print("All checks passed")
+    playChime("start");
+
+    while (keepRendering) {
+        let stats = grabItems()
+        let itemPC = percentage(stats.total, stats.capacity);
+        if (itemPC > 95 && (!errored || lastError > 15)) {
+            errored = true;
+            lastError = 0;
+            playChime("alert")
+        } else {
+            lastError++
+        }
+        os.sleep(0.75)
+    }
+
+    sleep(2)
+    playChime("stop")
+
 } else if (rs === undefined) {
     print("Error: No RS Bridge detected, but one is required. Please install one.")
     playChime("error");

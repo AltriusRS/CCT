@@ -1008,8 +1008,25 @@ print("Welcome to StockOS. Please wait whilst we run initial checks")
 sleep(1)
 local keepRendering = true
 if screen == nil then
-    print("Error: No screen detected, but one is required. Please install some advanced monitors.")
-    playChime(nil, "error")
+    if speaker == nil then
+        print("Warn: A speaker is optional, but recommended")
+    end
+    print("All checks passed")
+    playChime(nil, "start")
+    while keepRendering do
+        local stats = grabItems(nil)
+        local itemPC = percentage(nil, stats.total, stats.capacity)
+        if itemPC > 95 and (not errored or lastError > 15) then
+            errored = true
+            lastError = 0
+            playChime(nil, "alert")
+        else
+            lastError = lastError + 1
+        end
+        os.sleep(0.75)
+    end
+    sleep(2)
+    playChime(nil, "stop")
 elseif rs == nil then
     print("Error: No RS Bridge detected, but one is required. Please install one.")
     playChime(nil, "error")
