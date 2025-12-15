@@ -9,7 +9,7 @@ function log(message)
     print("[" .. utc_time .. "] " .. message)
 end
 
-local asset_base = "https://raw.githubusercontent.com/AltriusRS/CCT/tree/main/ATM-10/"
+local asset_base = "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/ATM-10/"
 local log_file = "/boot/install.log"
 local os_directory = "/os"
 local library_directory = "/lib"
