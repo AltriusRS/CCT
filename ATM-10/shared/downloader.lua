@@ -33,7 +33,7 @@ end
 -- Always use DOWNLOADER.sha256 instead.
 DOWNLOADER.sha256_unsafe = function(path)
     -- Depend on sha2 library for this functions
-    local sha2 = require("sha2")
+    local sha2 = require("lib/shared/sha2")
     local file = fs.open(path, "r")
     if file then
         local data = file.readAll()
@@ -43,6 +43,8 @@ DOWNLOADER.sha256_unsafe = function(path)
         return nil
     end
 end
+
+
 
 
 return DOWNLOADER

@@ -59,7 +59,6 @@ end
 
 
 log("Starting installation")
-log("> Installing bootstrapper dependencies")
 
 -- Delete existing files (This allows for clean updates)
 fs.delete(os_directory)
@@ -69,12 +68,18 @@ fs.delete(library_directory)
 fs.makeDir(os_directory)
 fs.makeDir(library_directory)
 
+log("> Installing bootstrapper dependencies")
 
+log("> - Downloader")
 basic_dl("shared/downloader")
 
-local DOWNLOADER = require("/lib/downloader")
+log("> - Sha2")
+basic_dl("shared/sha2")
+
+local DOWNLOADER = require("lib/shared/downloader")
 
 
+print(DOWNLOADER.sha256("/lib/shared/downloader"))
 
 
 print("Downloading shared libraries")
