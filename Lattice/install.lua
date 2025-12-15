@@ -138,8 +138,8 @@ index = "index.toml"
 end
 
 local function install_bootloader()
-    local remote = asset_base .. "boot/init.lua"
-    local local_path = "/boot/init.lua"
+    local remote = asset_base .. "boot/lboot.lua"
+    local local_path = "/os/boot/lboot.lua"
 
     local ok, result = pcall(shell.run, "wget", remote, local_path)
 
@@ -154,6 +154,25 @@ local function install_bootloader()
     end
 
     log("> Bootloader installed")
+end
+
+local function install_startup()
+    local remote = asset_base .. "boot/startup.lua"
+    local local_path = "/os/boot/startup.lua"
+
+    local ok, result = pcall(shell.run, "wget", remote, local_path)
+
+    if not ok then
+        log("Lua error while downloading startup: " .. tostring(result))
+        shell.exit(1)
+    end
+
+    if not result then
+        log("Failed to download startup")
+        shell.exit(1)
+    end
+
+    log("> Startup installed")
 end
 
 
@@ -215,6 +234,10 @@ write_repo_config()
 
 log("> Installing bootloader")
 install_bootloader()
+
+log("> Installing startup")
+install_startup()
+
 
 log("Installation complete")
 log("Lattice OS scaffold installed")
