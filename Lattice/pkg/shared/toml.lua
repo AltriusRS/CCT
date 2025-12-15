@@ -646,4 +646,11 @@ TOML.encode = function(tbl)
 	return toml:sub(1, -2)
 end
 
+
+TOML.parse_file = function(path)
+	local file = fs.open(path, "r")
+	local toml_string = file.readAll()
+	return TOML.parse(toml_string)
+end
+
 return TOML

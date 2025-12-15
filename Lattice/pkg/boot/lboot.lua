@@ -10,11 +10,14 @@ end
 println("Booting Lattice OS")
 
 -- Load system manifest
-local ok, toml = pcall(require, "lib/shared/toml")
+local ok, toml = pcall(require, "shared/toml")
 if not ok then
     println("Failed to load TOML library")
+    println("Reason: "..toml)
     return
 end
+
+print(toml)
 
 local cfg = toml.parse_file("/os/lattice.toml")
 
