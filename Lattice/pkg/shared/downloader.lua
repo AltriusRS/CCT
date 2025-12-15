@@ -24,7 +24,7 @@ DOWNLOADER.sha256 = function(path)
         return signature
     else
         print("Error calculating SHA-256 hash:", err)
-        return nil
+        return ""
     end
 end
 

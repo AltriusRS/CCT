@@ -1,0 +1,9 @@
+[repository]
+name = "Lattice Official"
+description = "Official Lattice package repository"
+
+[packages.shared]
+sha2 = "shared/sha2.lua"
+toml = "shared/toml.lua"
+downloader = "shared/downloader.lua"
+log = "shared/log.lua"
