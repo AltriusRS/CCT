@@ -650,6 +650,7 @@ end
 TOML.parse_file = function(path)
 	local file = fs.open(path, "r")
 	local toml_string = file.readAll()
+	file.close()
 	return TOML.parse(toml_string)
 end
 
