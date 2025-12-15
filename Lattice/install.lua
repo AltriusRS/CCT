@@ -4,6 +4,7 @@
 -- License: MIT
 -- Last Updated: 2025-12-15
 
+package.path = package.path .. ";/lib/?.lua;/lib/?/init.lua"
 
 local debug = false
 
@@ -25,7 +26,7 @@ local bootloader = {
         }
     }
 }
-local asset_base = "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/pkg"
+local asset_base = "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/pkg/"
 local log_file = "/boot/install.log"
 local os_directory = "/os"
 local library_directory = "/lib"
@@ -70,7 +71,6 @@ local function log(message)
 
         redraw_monitor()
     end
-    os.sleep(1)
 end
 
 -- Basic downloader function. Does not validate anything.
@@ -95,6 +95,65 @@ local function basic_dl(mod)
     if debug then
         log("DBG: Fetched " .. mod)
     end
+end
+
+
+local function write_lattice_manifest()
+    local contents = [[
+[system]
+name = "Lattice"
+version = "0.1.0"
+codename = "Scaffold"
+
+[node]
+role = "controller"
+
+[boot]
+entry = "/boot/init.lua"
+
+[dependencies]
+shared = ["sha2", "toml", "downloader", "log"]
+
+[ui]
+monitor = true
+speaker = true
+]]
+
+    local f = fs.open(os_directory .. "/lattice.toml", "w")
+    f.write(contents)
+    f.close()
+end
+
+
+local function write_repo_config()
+    local contents = [[
+[repository]
+base = "https://raw.githubusercontent.com/AltriusRS/CCT/main/Lattice/pkg"
+index = "index.toml"
+]]
+
+    local f = fs.open(os_directory .. "/repo.toml", "w")
+    f.write(contents)
+    f.close()
+end
+
+local function install_bootloader()
+    local remote = asset_base .. "boot/init.lua"
+    local local_path = "/boot/init.lua"
+
+    local ok, result = pcall(shell.run, "wget", remote, local_path)
+
+    if not ok then
+        log("Lua error while downloading bootloader: " .. tostring(result))
+        shell.exit(1)
+    end
+
+    if not result then
+        log("Failed to download bootloader")
+        shell.exit(1)
+    end
+
+    log("> Bootloader installed")
 end
 
 
@@ -141,44 +200,27 @@ fs.delete(library_directory)
 fs.makeDir(os_directory)
 fs.makeDir(library_directory)
 
-log("> Installing bootstrapper dependencies")
+log("> Installing core dependencies")
 
-log("> - Downloader")
-basic_dl("shared/downloader")
+for _, dep in ipairs(bootloader.manifest.dependencies) do
+    log("> - " .. dep)
+    basic_dl(dep)
+end
 
-log("> - Sha2")
-basic_dl("shared/sha2")
+log("> Writing lattice.toml")
+write_lattice_manifest()
 
-local DOWNLOADER = require("lib/shared/downloader")
+log("> Writing repo configuration")
+write_repo_config()
 
+log("> Installing bootloader")
+install_bootloader()
 
--- log(DOWNLOADER.sha256("/lib/shared/downloader"))
+log("Installation complete")
+log("Lattice OS scaffold installed")
 
+if speaker then
+    speaker.playNote("pling")
+end
 
--- -- Install dependencies
-
--- for dep_id, dep_name in ipairs(bootloader.manifest.dependencies) do
---     print("(" .. dep_id .. " / " .. #bootloader.manifest.dependencies .. ") Installing dependency: " .. dep_name)
---     -- TODO: Implement dependency installation logic
--- end
-
-
-
-
--- -- Download initial bootload manifest
--- TOML = require("shared/toml")
--- DOWNLOADER = require("shared/downloader")
-
--- -- Download initial bootload manifest
--- local manifest_url = "https://example.com/manifest.toml"
--- local manifest_path = "/boot/manifest.toml"
-
--- print("Downloading initial bootload manifest")
--- DOWNLOADER.download(manifest_url, manifest_path)
-
--- -- Parse manifest
--- local manifest = TOML.parse_file(manifest_path)
-
--- -- Install bootloader
--- print("Installing bootloader")
--- -- TODO: Implement bootloader installation logic
+log("You may now reboot")
