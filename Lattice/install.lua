@@ -158,7 +158,7 @@ end
 
 local function install_startup()
     local remote = asset_base .. "boot/startup.lua"
-    local local_path = "/os/boot/startup.lua"
+    local local_path = "/startup.lua"
 
     local ok, result = pcall(shell.run, "wget", remote, local_path)
 
@@ -243,7 +243,7 @@ log("Installation complete")
 log("Lattice OS scaffold installed")
 
 if speaker then
-    speaker.playNote("pling")
+    speaker.playNote("chime")
 end
 
 log("You may now reboot")

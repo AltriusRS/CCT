@@ -1,2 +1,2 @@
 package.path = package.path .. ";/os/boot/"
-shell.run("lboot")
+shell.exec("/os/boot/lboot")
