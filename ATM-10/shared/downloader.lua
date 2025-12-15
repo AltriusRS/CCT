@@ -43,3 +43,6 @@ DOWNLOADER.sha256_unsafe = function(path)
         return nil
     end
 end
+
+
+return DOWNLOADER
