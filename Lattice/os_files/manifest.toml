@@ -1,5 +1,11 @@
-files = [
-  { path = "bin/mesh.lua", cxm = "" },
-  { path = "os/core.lua", cxm = "" },
-  { path = "opt/repository.toml", cxm = "" }
-]
+[[files]]
+path = "bin/mesh.lua"
+cxm = ""
+
+[[files]]
+path = "os/core.lua"
+cxm = ""
+
+[[files]]
+path = "opt/repository.toml"
+cxm = ""

@@ -85,13 +85,13 @@ local function basic_dl(mod)
     if not ok then
         -- Lua-level error
         log("Lua error while downloading " .. mod .. ": " .. tostring(result))
-        shell.exit(1)
+        do return end
     end
 
     if not result then
         -- wget ran but failed
         log("wget failed while downloading " .. mod)
-        shell.exit(1)
+        do return end
     end
 
     if debug then
@@ -147,12 +147,12 @@ local function install_bootloader()
 
     if not ok then
         log("Lua error while downloading bootloader: " .. tostring(result))
-        shell.exit(1)
+        do return end
     end
 
     if not result then
         log("Failed to download bootloader")
-        shell.exit(1)
+        do return end
     end
 
     log("> Bootloader installed")
@@ -166,12 +166,12 @@ local function install_startup()
 
     if not ok then
         log("Lua error while downloading startup: " .. tostring(result))
-        shell.exit(1)
+        do return end
     end
 
     if not result then
         log("Failed to download startup")
-        shell.exit(1)
+        do return end
     end
 
     log("> Startup installed")
@@ -180,14 +180,22 @@ end
 local function install_os()
     local DOWNLOADER = require("shared.downloader")
     local TOML = require("shared.toml")
-    local SHA2 = require("shared.sha2")
+    -- local SHA2 = require("shared.sha2")
 
-    local manifest_path = "/os/manifest.toml"
+    local manifest_path = "/manifest.toml"
     
     local manifest_downloaded = DOWNLOADER.download(os_base.."lattice.toml", manifest_path)
-    local manifest = TOML.parse_file(manifest_path)
-    print(textutils.serialize())
-    shell.exit(1)
+
+    if not manifest_downloaded then
+        log("> Failed to download OS manifest.")
+        do return end
+    end
+
+    log("> OS Manifest Downloaded")
+
+    -- local manifest = TOML.parse_file(manifest_path)
+    -- print(textutils.serialize())
+    do return end
 end
 
 log("Checking available devices")
@@ -240,22 +248,21 @@ for _, dep in ipairs(bootloader.manifest.dependencies) do
     basic_dl(dep)
 end
 
-log("> Writing lattice.toml")
-write_lattice_manifest()
+-- log("> Writing lattice.toml")
+-- write_lattice_manifest()
 
-log("> Writing repo configuration")
-write_repo_config()
+-- log("> Writing repo configuration")
+-- write_repo_config()
 
-log("> Installing bootloader")
-install_bootloader()
+-- log("> Installing bootloader")
+-- install_bootloader()
 
-log("> Installing startup")
-install_startup()
+-- log("> Installing startup")
+-- install_startup()
 
 log("> Installing OS")
 install_os()
 
-exit(1)
 
 log("Installation complete")
 log("Lattice OS scaffold installed")
