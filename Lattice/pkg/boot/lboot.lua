@@ -69,6 +69,7 @@ log.info("Boot complete")
 if not fs.exists("/os/core.lua") then
     log.warn("Lattice is not correctly installed.")
     log.warn("It will now automatically reinstall itself.")
+    fs.delete("/install.lua")
     local did_download = shell.run("wget", "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/install.lua", "/install.lua")
     if not did_download then
         log.error("Failed to download Lattice Installer")
@@ -77,6 +78,8 @@ if not fs.exists("/os/core.lua") then
         log.error("wget https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/install.lua /install.lua")
         shell.exit(1)
     end
+    log.info("Your system will reboot in 10 seconds")
+    os.sleep(10)
     os.reboot()
 end
 
