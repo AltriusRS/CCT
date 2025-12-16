@@ -95,3 +95,4 @@ end
 
 log.info("Passing to kernel")
 
+require "os.core"

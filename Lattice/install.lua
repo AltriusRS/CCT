@@ -23,10 +23,12 @@ local bootloader = {
             "shared/toml",
             "shared/log",
             "shared/downloader",
-            "shared/nanoid"
+            "shared/nanoid",
+            "shared/hardware_surveyor"
         }
     }
 }
+
 local asset_base = "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/pkg/"
 local os_base = "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/os_files/"
 local log_file = "/boot/install.log"
