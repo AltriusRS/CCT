@@ -22,7 +22,8 @@ local bootloader = {
             "shared/sha2",
             "shared/toml",
             "shared/log",
-            "shared/downloader"
+            "shared/downloader",
+            "shared/nanoid"
         }
     }
 }

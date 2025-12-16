@@ -3,23 +3,66 @@
 
 package.path = package.path .. ";/lib/?.lua;/lib/?/init.lua"
 
-local function println(msg)
-    print("[LATTICE] " .. msg)
+
+local monitors = {}
+
+
+for _, name in ipairs(peripheral.getNames()) do
+    if peripheral.getType(name) == "monitor" then
+        table.insert(monitors, peripheral.wrap(name))
+    end
 end
 
-println("Booting Lattice OS")
+local SPLASH = {
+" ██╗      █████╗ ████████╗████████╗██╗ ██████╗███████╗",
+" ██║     ██╔══██╗╚══██╔══╝╚══██╔══╝██║██╔════╝██╔════╝",
+" ██║     ███████║   ██║      ██║   ██║██║     █████╗  ",
+" ██║     ██╔══██║   ██║      ██║   ██║██║     ██╔══╝  ",
+" ███████╗██║  ██║   ██║      ██║   ██║╚██████╗███████╗",
+" ╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝ ╚═════╝╚══════╝",
+"",
+"                 L A T T I C E   O S",
+}
+
+local log = require("shared.log")
+
+local function draw_splash(mon)
+    mon.setTextScale(0.5)
+    mon.clear()
+
+    local w, h = mon.getSize()
+    local start_y = math.floor((h - #SPLASH) / 2) + 1
+
+    for i, line in ipairs(SPLASH) do
+        local x = math.floor((w - #line) / 2) + 1
+        mon.setCursorPos(math.max(1, x), start_y + i - 1)
+        mon.write(line)
+    end
+end
+
+-- Draw splash everywhere
+for _, mon in ipairs(monitors) do
+    draw_splash(mon)
+end
+
+log.info("Booting Lattice OS")
 
 -- Load system manifest
-local ok, toml = pcall(require, "shared/toml")
+local ok, toml = pcall(require, "shared.toml")
 if not ok then
-    println("Failed to load TOML library")
-    println("Reason: "..toml)
+    log.error("Failed to load TOML library")
+    log.error("Reason: "..toml)
     return
 end
 
-print(toml)
 
 local cfg = toml.parse_file("/os/lattice.toml")
 
-println("Node role: " .. (cfg.node and cfg.node.role or "unknown"))
-println("Boot complete")
+assert(cfg.system, "Missing [system]")
+assert(cfg.node, "Missing [node]")
+assert(cfg.dependencies, "Missing [dependencies]")
+
+log.info("System: " .. cfg.system.name .. " " .. cfg.system.version)
+log.info("Node role: " .. (cfg.node.role or "unknown"))
+log.info("Monitors: " .. tostring(#monitors))
+log.info("Boot complete")
