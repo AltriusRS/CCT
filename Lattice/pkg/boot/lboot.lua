@@ -20,12 +20,12 @@ local SPLASH = {
 " ##     ##   ##    ##       ##    ## ##      ##      ",
 " ###### ##   ##    ##       ##    ##  ###### ####### ",
 "",
-"                 L A T T I C E   O S",
+"L A T T I C E   O S",
 }
 local log = require("shared.log")
 
 local function draw_splash(mon)
-    mon.setTextScale(0.5)
+    mon.setTextScale(1)
     mon.clear()
 
     local w, h = mon.getSize()
