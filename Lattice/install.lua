@@ -197,11 +197,10 @@ local function install_os()
 
     for _,file in ipairs(manifest.files) do
         log("> -"..file.path)
-        print(textutils.serialize(file))
         local url = os_base..file.path
         local path = "/"..file.path
         DOWNLOADER.download(url, path)
-        if file.cxm.len() > 0 then
+        if string.len(file.cxm) > 0 then
             local fcxm = DOWNLOADER.sha256(path)
             if not fcxm == file.cxm then
                 log("> - ERROR FILE DOESNT MATCH CHECKSUM")
