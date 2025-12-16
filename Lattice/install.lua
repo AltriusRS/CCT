@@ -182,9 +182,9 @@ local function install_os()
     local TOML = require("shared.toml")
     -- local SHA2 = require("shared.sha2")
 
-    local manifest_path = "/manifest.toml"
+    local manifest_path = "/os/manifest.toml"
     
-    local manifest_downloaded = DOWNLOADER.download(os_base.."lattice.toml", manifest_path)
+    local manifest_downloaded = DOWNLOADER.download(os_base.."manifest.toml", manifest_path)
 
     if not manifest_downloaded then
         log("> Failed to download OS manifest.")
@@ -193,8 +193,23 @@ local function install_os()
 
     log("> OS Manifest Downloaded")
 
-    -- local manifest = TOML.parse_file(manifest_path)
-    -- print(textutils.serialize())
+    local manifest = TOML.parse_file(manifest_path)
+
+    for _,file in ipairs(manifest.files) do
+        log("> -"..file.path)
+        print(textutils.serialize(file))
+        local url = os_base..file.path
+        local path = "/"..file.path
+        DOWNLOADER.download(url, path)
+        if file.cxm.len() > 0 then
+            local fcxm = DOWNLOADER.sha256(path)
+            if not fcxm == file.cxm then
+                log("> - ERROR FILE DOESNT MATCH CHECKSUM")
+                do return end
+            end
+            log("> - PASS")
+        end
+    end
     do return end
 end
 
@@ -248,17 +263,17 @@ for _, dep in ipairs(bootloader.manifest.dependencies) do
     basic_dl(dep)
 end
 
--- log("> Writing lattice.toml")
--- write_lattice_manifest()
+log("> Writing lattice.toml")
+write_lattice_manifest()
 
--- log("> Writing repo configuration")
--- write_repo_config()
+log("> Writing repo configuration")
+write_repo_config()
 
--- log("> Installing bootloader")
--- install_bootloader()
+log("> Installing bootloader")
+install_bootloader()
 
--- log("> Installing startup")
--- install_startup()
+log("> Installing startup")
+install_startup()
 
 log("> Installing OS")
 install_os()
