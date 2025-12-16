@@ -75,7 +75,9 @@ if not fs.exists("/os/core.lua") then
         log.error("You will need to download it manually.")
         log.error("Try running the following command")
         log.error("wget https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/install.lua /install.lua")
+        shell.exit(1)
     end
+    os.reboot()
 end
 
 log.info("Passing to kernel")
