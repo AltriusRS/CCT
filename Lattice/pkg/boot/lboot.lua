@@ -77,6 +77,8 @@ if not fs.exists("/os/core.lua") then
         log.error("Try running the following command")
         log.error("wget https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/install.lua /install.lua")
         shell.exit(1)
+    else
+        log.info("Successfully reinstalled Lattice OS")
     end
     log.info("Your system will reboot in 10 seconds")
     os.sleep(10)
