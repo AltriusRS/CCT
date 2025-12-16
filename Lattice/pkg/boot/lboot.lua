@@ -71,15 +71,23 @@ if not fs.exists("/os/core.lua") then
     log.warn("It will now automatically reinstall itself.")
     fs.delete("/install.lua")
     local did_download = shell.run("wget", "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/install.lua", "/install.lua")
-    if not did_download then
+    if did_download == false then
         log.error("Failed to download Lattice Installer")
         log.error("You will need to download it manually.")
         log.error("Try running the following command")
         log.error("wget https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/install.lua /install.lua")
         shell.exit(1)
-    else
-        log.info("Successfully reinstalled Lattice OS")
     end
+
+    log.info("Downloaded installer")
+    local did_install = require("install")
+
+    if did_install == false then
+        fs.delete("/startup.lua")
+        log.error("Failed to reinstall. Please try again manually")
+        log.error("This computer has been unenrolled from Lattice")
+    end
+
     log.info("Your system will reboot in 10 seconds")
     os.sleep(10)
     os.reboot()

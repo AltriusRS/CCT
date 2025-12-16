@@ -28,6 +28,7 @@ local bootloader = {
     }
 }
 local asset_base = "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/pkg/"
+local os_base = "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/os_files/"
 local log_file = "/boot/install.log"
 local os_directory = "/os"
 local library_directory = "/lib"
@@ -176,6 +177,18 @@ local function install_startup()
     log("> Startup installed")
 end
 
+local function install_os()
+    local DOWNLOADER = require("shared.downloader")
+    local TOML = require("shared.toml")
+    local SHA2 = require("shared.sha2")
+
+    local manifest_path = "/os/manifest.toml"
+    
+    local manifest_downloaded = DOWNLOADER.download(os_base.."lattice.toml", manifest_path)
+    local manifest = TOML.parse_file(manifest_path)
+    print(textutils.serialize())
+    shell.exit(1)
+end
 
 log("Checking available devices")
 
@@ -238,6 +251,9 @@ install_bootloader()
 
 log("> Installing startup")
 install_startup()
+
+log("> Installing OS")
+install_os()
 
 
 log("Installation complete")
