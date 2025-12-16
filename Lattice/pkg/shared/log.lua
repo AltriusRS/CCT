@@ -3,7 +3,7 @@ local log = {}
 function log._inner(level, msg)
     local os_time = textutils.formatTime(os.time())
     local str = "[" .. os_time .. "] " .. "{"..level.."} " .. tostring(msg)
-    print()
+    print(str)
 end
 
 function log.info(msg)
