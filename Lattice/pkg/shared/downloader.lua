@@ -5,7 +5,7 @@ local DOWNLOADER = {
 
 
 DOWNLOADER.download = function(url, path)
-    local response = https.get(url)
+    local response = http.get(url)
     if response then
         local file = fs.open(path, "w")
         file.write(response.readAll())

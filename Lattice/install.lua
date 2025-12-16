@@ -255,6 +255,7 @@ install_startup()
 log("> Installing OS")
 install_os()
 
+exit(1)
 
 log("Installation complete")
 log("Lattice OS scaffold installed")
