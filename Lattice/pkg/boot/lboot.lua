@@ -64,3 +64,19 @@ log.info("System: " .. cfg.system.name .. " " .. cfg.system.version)
 log.info("Node role: " .. (cfg.node.role or "unknown"))
 log.info("Monitors: " .. tostring(#monitors))
 log.info("Boot complete")
+
+
+if not fs.exists("/os/core.lua") then
+    log.warn("Lattice is not correctly installed.")
+    log.warn("It will now automatically reinstall itself.")
+    local did_download = shell.run("wget", "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/install.lua", "/install.lua")
+    if not did_download then
+        log.error("Failed to download Lattice Installer")
+        log.error("You will need to download it manually.")
+        log.error("Try running the following command")
+        log.error("wget https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/install.lua /install.lua")
+    end
+end
+
+log.info("Passing to kernel")
+
