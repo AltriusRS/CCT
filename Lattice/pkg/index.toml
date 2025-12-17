@@ -3,6 +3,7 @@ name = "Lattice Official"
 description = "Official Lattice package repository"
 
 [packages.drivers_core]
+monitor = { path = "drivers/core/monitor.lua", sha256 = "bb911926596f2984d0f0ef847df5cba75344d954fb5f38a1a66a812ed2303951" }
 speaker = { path = "drivers/core/speaker.lua", sha256 = "0245a45b21035a3c1053f39fbc887fca7d1b2ca39fe772b799226f1e25d2703c" }
 
 [packages.shared]
@@ -19,12 +20,13 @@ lboot = { path = "boot/lboot.lua", sha256 = "b8cceb9e6548445e28ee744d7c3881ad141
 startup = { path = "boot/startup.lua", sha256 = "d7ab8552dadbbcbeb61bbc7e0cef67c3bb7a2396f894a5672a9cf54a8e22be94" }
 
 [packages.kernel]
-device_manager = { path = "kernel/device_manager.lua", sha256 = "0f16010534e2d37927520ba21e39b47504602631bfae616e0defc7d1f53cf29d" }
+device_manager = { path = "kernel/device_manager.lua", sha256 = "aaab917f8db7e0a8d7d4aadc5a46373736ed0d6cddc778f0f6e93c33d5f8d20f" }
 driver_registry = { path = "kernel/driver_registry.lua", sha256 = "d6340e7feaeabf53f93b599c1e4c5be46bdcd7aff0ba08309799570a22c75434" }
-init = { path = "kernel/init.lua", sha256 = "fec482bc894bf211863a19918e05496d01de1d409a5aa5386d9d0fa93952e83d" }
+init = { path = "kernel/init.lua", sha256 = "0326d6928d55e8511e540e408ca2fac9087c4ebee8c91f286739f361e197d8b2" }
 
 [packages.services]
-audio = { path = "services/audio.lua", sha256 = "b976739e3ba440faf28e8cb7b9410b9d2ca637d19db9f48521674d53c6f80f40" }
+audio = { path = "services/audio.lua", sha256 = "4c4897c91e7def021646ed3fa4f15718f9ef1c2857f612bbb401fc8eca7226e3" }
+debug = { path = "services/debug.lua", sha256 = "8e380ad425df7d91fd4a999de979c1d43801b1b9492f511cc47be9a2d6300f1d" }
 
 [packages.config]
 
