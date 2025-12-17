@@ -15,7 +15,7 @@ toml = { path = "shared/toml.lua", sha256 = "689d43c7ef7056b96c5542bf59545700631
 
 [packages.boot]
 hardware_surveyor = { path = "boot/hardware_surveyor.lua", sha256 = "e008643bdfea273ea1ecd3658edabe3c5a7e9625dd00f1f6fa7e525ff2a3a3eb" }
-lboot = { path = "boot/lboot.lua", sha256 = "8f19a5fd26d03837e8f20d79534d8500472060950a21492dba7a729b8df1ac9c" }
+lboot = { path = "boot/lboot.lua", sha256 = "b81e290faf6d36998ab6f69d1d6fe70aeca3ed8c23ef3f48cc2fae5513bb6e6e" }
 startup = { path = "boot/startup.lua", sha256 = "d7ab8552dadbbcbeb61bbc7e0cef67c3bb7a2396f894a5672a9cf54a8e22be94" }
 
 [packages.kernel]
