@@ -19,7 +19,7 @@ local REQUIRED_GROUPS = {
 }
 
 local INSTALL_ROOTS = {
-    ["packages.shared"] = "/lib",
+    ["packages.shared"] = "/lib/shared",
     ["packages.kernel"] = "/os/kernel",
     ["packages.boot"] = "/os/boot",
     ["packages.drivers_core"] = "/os/drivers/core",
