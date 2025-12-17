@@ -1,107 +1,61 @@
-local math_random = math.random
-local str_gmatch = string.gmatch
-local tbl_concat = table.concat
+-- nanoid.lua
+-- Pure Lua NanoID-style ID generator (callable module)
+-- NOTE: This implementation is not cryptographically secure, nor is it specification compliant.
+-- it is intended only for use in ComputerCraft. This implementation is not suitable for production use.
 
-local RandomMaxBit <const> = 63
-local RandomMax <const> = (1 << RandomMaxBit) - 1
+-- URL-safe alphabet (64 chars)
+local ALPHABET = "_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+local ALPHABET_LEN = #ALPHABET
 
-local DefaultAlphabet <const> = "_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-local DefaultSize <const> = 21
+local DEFAULT_SIZE = 21
 
-local function countl_zero(x)
-    local n = 32
-    local y = x >> 16
-    if y ~= 0 then
-        n = n - 16
-        x = y
+-- Seed math.random once
+do
+    local seed = os.time()
+
+    if os.clock then
+        seed = seed + math.floor(os.clock() * 1e6)
     end
-    y = x >> 8
-    if y ~= 0 then
-        n = n - 8
-        x = y
+
+    -- Use table address as extra entropy
+    local addr = tostring({})
+    local hex = addr:match("0x(%x+)")
+    if hex then
+        seed = seed + tonumber(hex, 16)
     end
-    y = x >> 4
-    if y ~= 0 then
-        n = n - 4
-        x = y
+
+    math.randomseed(seed)
+
+    -- Discard first few values
+    for _ = 1, 4 do
+        math.random()
     end
-    y = x >> 2
-    if y ~= 0 then
-        n = n - 2
-        x = y
-    end
-    y = x >> 1
-    if y ~= 0 then
-        n = n - 1
-        x = y
-    end
-    return n - x
 end
 
-local function random()
-    return math_random(0, RandomMax)
-end
+-- Actual generator function
+local function generate(size)
+    size = size or DEFAULT_SIZE
 
-return function(config)
-    config = config or {
-        alphabet = DefaultAlphabet,
-        size = DefaultSize,
-    }
-    local alphabet = {}
-    for c in str_gmatch(config.alphabet, ".") do
-        alphabet[#alphabet + 1] = c
-    end
-    local size = config.size
-    local mask_bit = 32 - countl_zero(#alphabet - 1)
-    local mask = (1 << mask_bit) - 1
     local id = {}
-    if #alphabet == mask + 1 then
-        local step <const> = RandomMaxBit // mask_bit
-        local suffix <const> = size // step * step
-        if suffix == size then
-            return function()
-                for cnt = 1, size - step + 1, step do
-                    local rnd = random()
-                    for i = 0, step - 1 do
-                        local index = 1 + ((rnd >> (i * mask_bit)) & mask)
-                        id[cnt + i] = alphabet[index]
-                    end
-                end
-                return tbl_concat(id)
-            end
-        else
-            return function()
-                for cnt = 1, size - step + 1, step do
-                    local rnd = random()
-                    for i = 0, step - 1 do
-                        local index = 1 + ((rnd >> (i * mask_bit)) & mask)
-                        id[cnt + i] = alphabet[index]
-                    end
-                end
-                local rnd = random()
-                for cnt = suffix, size do
-                    local index = 1 + ((rnd >> ((cnt - suffix) * mask_bit)) & mask)
-                    id[cnt] = alphabet[index]
-                end
-                return tbl_concat(id)
-            end
-        end
-    else
-        return function()
-            local cnt = 1
-            while true do
-                local rnd = random()
-                for i = 0, RandomMaxBit - mask_bit, mask_bit do
-                    local index = 1 + ((rnd >> i) & mask)
-                    if index <= #alphabet then
-                        id[cnt] = alphabet[index]
-                        cnt = cnt + 1
-                        if cnt > size then
-                            return tbl_concat(id)
-                        end
-                    end
-                end
-            end
-        end
+
+    for i = 1, size do
+        local index = math.random(1, ALPHABET_LEN)
+        id[i] = ALPHABET:sub(index, index)
     end
+
+    return table.concat(id)
 end
+
+-- Public module table
+local nanoid = {
+    generate = generate,
+}
+
+-- Make the module callable
+setmetatable(nanoid, {
+    __call = function(_, size)
+        return generate(size)
+    end,
+})
+
+return nanoid

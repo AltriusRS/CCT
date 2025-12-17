@@ -10,7 +10,7 @@ speaker = { path = "drivers/core/speaker.lua", sha256 = "0245a45b21035a3c1053f39
 downloader = { path = "shared/downloader.lua", sha256 = "dfe1938746d80be1588372836b451033cb643f7b45e6b2daf2239870c787e16e" }
 hardware_surveyor = { path = "shared/hardware_surveyor.lua", sha256 = "38d9b798f6a2aae9b935fed171e939e210ceafd86a3b4d89e22c285603a4c7af" }
 log = { path = "shared/log.lua", sha256 = "32931972905b1dd71161db0d5da40fde41961085158e3305f32f046510e63fdc" }
-nanoid = { path = "shared/nanoid.lua", sha256 = "1ac838d8286d0285879d39b2f870053091e689183440bbd8c4a57700059414fc" }
+nanoid = { path = "shared/nanoid.lua", sha256 = "2641bfaf9e80b1d6dbc0d79431d21663d10904cd3fe0ba606245b31d0c4e42c9" }
 sha2 = { path = "shared/sha2.lua", sha256 = "1efccd26c9c423c13143b51c8aa3cd5ae436c0560fe87a04754eca22b1090942" }
 toml = { path = "shared/toml.lua", sha256 = "689d43c7ef7056b96c5542bf59545700631c8d52b191f62437b364bb1832fe68" }
 
