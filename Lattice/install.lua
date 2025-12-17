@@ -6,7 +6,7 @@
 package.path = package.path .. ";/lib/?.lua;/lib/?/init.lua"
 
 local REPO_BASE =
-"https://raw.githubusercontent.com/AltriusRS/CCT/main/Lattice/pkg/"
+"https://lattice-os.cc/pkg/"
 
 local INDEX_URL = REPO_BASE .. "index.toml"
 local INDEX_PATH = "/tmp/index.toml"
@@ -102,7 +102,7 @@ local function install_packages()
             log("Installing " .. pkg.path)
             downloader.download(url, dest)
 
-            local hash = sha2.sha256_file(dest)
+            local hash = downloader.sha256(dest)
             if hash ~= pkg.sha256 then
                 error("Checksum mismatch for " .. pkg.path)
             end

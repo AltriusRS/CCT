@@ -43,7 +43,7 @@ Optional but encouraged:
 
 Installing Lattice is intentionally simple.
 
-From an **Advanced Computer**, run:
+From a **ComputerCraft Computer**, run:
 
 ```sh
 wget run https://raw.githubusercontent.com/AltriusRS/CCT/main/Lattice/install.lua
