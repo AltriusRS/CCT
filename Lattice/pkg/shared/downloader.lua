@@ -19,11 +19,11 @@ end
 
 -- Calculates the SHA-256 hash of a file
 DOWNLOADER.sha256 = function(path)
-    local signature, err = pcall(DOWNLOADER.sha256_unsafe, path)
+    local signature, output = pcall(DOWNLOADER.sha256_unsafe, path)
     if signature then
-        return signature
+        return output
     else
-        print("Error calculating SHA-256 hash:", err)
+        print("Error calculating SHA-256 hash:", output)
         return ""
     end
 end

@@ -6,7 +6,7 @@
 package.path = package.path .. ";/lib/?.lua;/lib/?/init.lua"
 
 local REPO_BASE =
-"https://lattice-os.cc/pkg/"
+"https://lattice-os.cc/pkg/api/package/"
 
 local INDEX_URL = REPO_BASE .. "index.toml"
 local INDEX_PATH = "/tmp/index.toml"
@@ -44,6 +44,7 @@ fs.makeDir("/tmp")
 -- -----------------------------
 
 local function wget(url, path)
+    log("Downloading " .. url)
     local ok = shell.run("wget", url, path)
     if not ok then
         error("Failed to download: " .. url)
@@ -52,19 +53,19 @@ end
 
 log("Bootstrapping core libraries")
 
-wget(REPO_BASE .. "shared/toml.lua", "/lib/toml.lua")
-wget(REPO_BASE .. "shared/sha2.lua", "/lib/sha2.lua")
-wget(REPO_BASE .. "shared/downloader.lua", "/lib/downloader.lua")
+wget(REPO_BASE .. "shared/toml.lua", "/lib/shared/toml.lua")
+wget(REPO_BASE .. "shared/sha2.lua", "/lib/shared/sha2.lua")
+wget(REPO_BASE .. "shared/downloader.lua", "/lib/shared/downloader.lua")
 
-local toml = require("toml")
-local sha2 = require("sha2")
-local downloader = require("downloader")
+local toml = require("shared.toml")
+local downloader = require("shared.downloader")
 
 -- -----------------------------
 -- Fetch and parse index
 -- -----------------------------
 
 log("Downloading package index")
+fs.delete(INDEX_PATH) -- Delete the existing index file
 wget(INDEX_URL, INDEX_PATH)
 
 local index = toml.parse_file(INDEX_PATH)
@@ -100,10 +101,16 @@ local function install_packages()
             local url = REPO_BASE .. pkg.path
 
             log("Installing " .. pkg.path)
+            log("> Destination: " .. dest)
             downloader.download(url, dest)
 
             local hash = downloader.sha256(dest)
             if hash ~= pkg.sha256 then
+                log("> Checksum mismatch")
+                log("> Expected: " .. pkg.sha256)
+                log("> Actual: " .. hash)
+                log("> Downloaded file: " .. dest)
+                os.sleep(0.5)
                 error("Checksum mismatch for " .. pkg.path)
             end
         end
