@@ -8,3 +8,15 @@ package = "os.drivers.core.speaker"
 mod_versions = {
     "cc_tweaked": "~1.109.0",
 }
+
+
+[drivers.monitor]
+mods = ["cc_tweaked"]
+name = "Generic Monitor Driver"
+version = "1.0"
+author = "Arthur Amos"
+date = "2025-12-17"
+package = "os.drivers.core.monitor"
+mod_versions = {
+    "cc_tweaked": "~1.109.0",
+}

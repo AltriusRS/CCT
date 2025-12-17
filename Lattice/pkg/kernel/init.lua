@@ -35,7 +35,7 @@ audio.init()
 
 -- Boot confirmation beep
 os.sleep(0.5)
-local ok, err = audio.beep()
+local ok, err = audio.ding()
 if not ok then
     log.error("Failed to play beep sound: " .. err)
 end
