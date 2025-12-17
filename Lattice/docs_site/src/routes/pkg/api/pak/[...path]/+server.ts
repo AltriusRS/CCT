@@ -9,7 +9,7 @@ export const GET = async ({ params }) => {
 
 	const url = PACKAGE_REPOSITORY + path;
 	console.log(url);
-	const res = await fetch(url);
+	const res = await fetch(url, { cache: 'no-store' });
 
 	if (!res.ok) {
 		return new Response('Package not found', { status: 404 });

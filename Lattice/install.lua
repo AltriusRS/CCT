@@ -6,7 +6,7 @@
 package.path = package.path .. ";/lib/?.lua;/lib/?/init.lua"
 
 local REPO_BASE =
-"https://lattice-os.cc/pkg/api/package/"
+"https://lattice-os.cc/pkg/api/pak/"
 
 local INDEX_URL = REPO_BASE .. "index.toml"
 local INDEX_PATH = "/tmp/index.toml"
