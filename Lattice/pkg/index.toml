@@ -22,7 +22,7 @@ startup = { path = "boot/startup.lua", sha256 = "d7ab8552dadbbcbeb61bbc7e0cef67c
 [packages.kernel]
 device_manager = { path = "kernel/device_manager.lua", sha256 = "aaab917f8db7e0a8d7d4aadc5a46373736ed0d6cddc778f0f6e93c33d5f8d20f" }
 driver_registry = { path = "kernel/driver_registry.lua", sha256 = "d6340e7feaeabf53f93b599c1e4c5be46bdcd7aff0ba08309799570a22c75434" }
-init = { path = "kernel/init.lua", sha256 = "0326d6928d55e8511e540e408ca2fac9087c4ebee8c91f286739f361e197d8b2" }
+init = { path = "kernel/init.lua", sha256 = "4a01751c23c4a24349060e0f2fe35939c52ded9110cb7f7cf6ab7f003be57300" }
 
 [packages.services]
 audio = { path = "services/audio.lua", sha256 = "4c4897c91e7def021646ed3fa4f15718f9ef1c2857f612bbb401fc8eca7226e3" }
