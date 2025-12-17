@@ -19,8 +19,8 @@ export const GET = async ({ params }) => {
 
 	return new Response(data, {
 		headers: {
-			'Content-Type': 'text/plain; charset=utf-8',
-			'Cache-Control': 'public, max-age=31536000, immutable'
+			'Content-Type': 'text/plain; charset=utf-8'
+			// 'Cache-Control': 'public, max-age=31536000, immutable'
 		}
 	});
 };
