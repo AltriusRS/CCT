@@ -2,9 +2,23 @@
 name = "Lattice Official"
 description = "Official Lattice package repository"
 
+[packages.drivers_core]
+speaker = { path = "drivers/core/speaker.lua", sha256 = "0245a45b21035a3c1053f39fbc887fca7d1b2ca39fe772b799226f1e25d2703c" }
+
 [packages.shared]
-sha2 = "shared/sha2.lua"
-toml = "shared/toml.lua"
-downloader = "shared/downloader.lua"
-log = "shared/log.lua"
-hardware_surveyor = "shared/hardware_surveyor"
+downloader = { path = "shared/downloader.lua", sha256 = "e09d96d083cfe6da51118961eb98e23d603ff1c6dd2b146c0f2a8b68943d0ad0" }
+hardware_surveyor = { path = "shared/hardware_surveyor.lua", sha256 = "38d9b798f6a2aae9b935fed171e939e210ceafd86a3b4d89e22c285603a4c7af" }
+log = { path = "shared/log.lua", sha256 = "32931972905b1dd71161db0d5da40fde41961085158e3305f32f046510e63fdc" }
+nanoid = { path = "shared/nanoid.lua", sha256 = "1ac838d8286d0285879d39b2f870053091e689183440bbd8c4a57700059414fc" }
+sha2 = { path = "shared/sha2.lua", sha256 = "1efccd26c9c423c13143b51c8aa3cd5ae436c0560fe87a04754eca22b1090942" }
+toml = { path = "shared/toml.lua", sha256 = "689d43c7ef7056b96c5542bf59545700631c8d52b191f62437b364bb1832fe68" }
+
+[packages.boot]
+hardware_surveyor = { path = "boot/hardware_surveyor.lua", sha256 = "e008643bdfea273ea1ecd3658edabe3c5a7e9625dd00f1f6fa7e525ff2a3a3eb" }
+lboot = { path = "boot/lboot.lua", sha256 = "fc8779a3deb3bf8fe7288f1df2334e51e09a8c866f181673a1c6dd5c45440b7b" }
+startup = { path = "boot/startup.lua", sha256 = "d7ab8552dadbbcbeb61bbc7e0cef67c3bb7a2396f894a5672a9cf54a8e22be94" }
+
+[packages.kernel]
+device_manager = { path = "kernel/device_manager.lua", sha256 = "228d66dc319086feac68434e15024597beaa81c3f17f536829c4aaa5e968a150" }
+driver_registry = { path = "kernel/driver_registry.lua", sha256 = "68acaabe394d384e6ea42770c7e18e1d3b42bc61e03d6ed7d30995f3c57952aa" }
+

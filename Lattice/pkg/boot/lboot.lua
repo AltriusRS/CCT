@@ -14,13 +14,13 @@ for _, name in ipairs(peripheral.getNames()) do
 end
 
 local SPLASH = {
-" ##      #####  ######## ######## ##  ###### ####### ",
-" ##     ##   ##    ##       ##    ## ##      ##      ",
-" ##     #######    ##       ##    ## ##      #####   ",
-" ##     ##   ##    ##       ##    ## ##      ##      ",
-" ###### ##   ##    ##       ##    ##  ###### ####### ",
-"",
-"L A T T I C E   O S",
+    " ##      #####  ######## ######## ##  ###### ####### ",
+    " ##     ##   ##    ##       ##    ## ##      ##      ",
+    " ##     #######    ##       ##    ## ##      #####   ",
+    " ##     ##   ##    ##       ##    ## ##      ##      ",
+    " ###### ##   ##    ##       ##    ##  ###### ####### ",
+    "",
+    "L A T T I C E   O S",
 }
 local log = require("shared.log")
 
@@ -49,7 +49,7 @@ log.info("Booting Lattice OS")
 local ok, toml = pcall(require, "shared.toml")
 if not ok then
     log.error("Failed to load TOML library")
-    log.error("Reason: "..toml)
+    log.error("Reason: " .. toml)
     return
 end
 
@@ -70,12 +70,14 @@ if not fs.exists("/os/core.lua") then
     log.warn("Lattice is not correctly installed.")
     log.warn("It will now automatically reinstall itself.")
     fs.delete("/install.lua")
-    local did_download = shell.run("wget", "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/install.lua", "/install.lua")
+    local did_download = shell.run("wget",
+        "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/install.lua", "/install.lua")
     if did_download == false then
         log.error("Failed to download Lattice Installer")
         log.error("You will need to download it manually.")
         log.error("Try running the following command")
-        log.error("wget https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/install.lua /install.lua")
+        log.error(
+            "wget https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/install.lua /install.lua")
         shell.exit(1)
     end
 

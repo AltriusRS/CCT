@@ -46,7 +46,7 @@ Installing Lattice is intentionally simple.
 From an **Advanced Computer**, run:
 
 ```sh
-wget run https://raw.githubusercontent.com/AltriusRS/CCT/main/ATM-10/install.lua
+wget run https://raw.githubusercontent.com/AltriusRS/CCT/main/Lattice/install.lua
 ```
 
 The installer will:

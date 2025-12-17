@@ -1,109 +1,124 @@
 -- Name: install.lua
--- Description: Installs the bootloader for the ATM-OS
--- Author: AltriusRS
+-- Description: Installs Lattice OS using Mesh repository index
+-- Author: Arthur Amos
 -- License: MIT
--- Last Updated: 2025-12-15
 
 package.path = package.path .. ";/lib/?.lua;/lib/?/init.lua"
 
-local debug = false
+local REPO_BASE =
+"https://raw.githubusercontent.com/AltriusRS/CCT/main/Lattice/pkg/"
 
+local INDEX_URL = REPO_BASE .. "index.toml"
+local INDEX_PATH = "/tmp/index.toml"
 
-
-
-local bootloader = {
-    name = "ATM-10",
-    version = "1.0.0",
-    author = "AltriusRS",
-    license = "MIT",
-    lastUpdated = "2025-12-15",
-    manifest = {
-        dependencies = {
-            "shared/sha2",
-            "shared/toml",
-            "shared/log",
-            "shared/downloader",
-            "shared/nanoid",
-            "shared/hardware_surveyor"
-        }
-    }
+local REQUIRED_GROUPS = {
+    "packages.boot",
+    "packages.kernel",
+    "packages.shared",
+    "packages.drivers_core",
 }
 
-local asset_base = "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/pkg/"
-local os_base = "https://raw.githubusercontent.com/AltriusRS/CCT/refs/heads/main/Lattice/os_files/"
-local log_file = "/boot/install.log"
-local os_directory = "/os"
-local library_directory = "/lib"
+-- -----------------------------
+-- Logging (minimal, no UI fluff)
+-- -----------------------------
 
--- Logging Settings
-local scrollback = {}
-local scrollback_max = 1
+local function log(msg)
+    print("[INSTALL] " .. msg)
+end
 
-local monitor = nil
-local speaker = nil
-local monitor_size = { w = 1, h = 1 }
+-- -----------------------------
+-- Bootstrap dirs
+-- -----------------------------
 
+fs.delete("/lib")
+fs.delete("/os")
+fs.delete("/boot")
 
-local function redraw_monitor()
-    if not monitor then return end
+fs.makeDir("/lib")
+fs.makeDir("/os")
+fs.makeDir("/boot")
+fs.makeDir("/tmp")
 
-    monitor.clear()
+-- -----------------------------
+-- Bootstrap downloader + toml
+-- -----------------------------
 
-    local start = math.max(1, #scrollback - scrollback_max + 1)
-    local line = 1
-
-    for i = start, #scrollback do
-        monitor.setCursorPos(1, line)
-        monitor.write(scrollback[i])
-        line = line + 1
+local function wget(url, path)
+    local ok = shell.run("wget", url, path)
+    if not ok then
+        error("Failed to download: " .. url)
     end
 end
 
-local function log(message)
-    local os_time = textutils.formatTime(os.time())
-    local str = "[" .. os_time .. "] " .. tostring(message)
+log("Bootstrapping core libraries")
 
-    print(str)
+wget(REPO_BASE .. "shared/toml.lua", "/lib/toml.lua")
+wget(REPO_BASE .. "shared/sha2.lua", "/lib/sha2.lua")
+wget(REPO_BASE .. "shared/downloader.lua", "/lib/downloader.lua")
 
-    if monitor then
-        table.insert(scrollback, str)
+local toml = require("toml")
+local sha2 = require("sha2")
+local downloader = require("downloader")
 
-        -- Trim scrollback
-        if #scrollback > scrollback_max then
-            table.remove(scrollback, 1)
+-- -----------------------------
+-- Fetch and parse index
+-- -----------------------------
+
+log("Downloading package index")
+wget(INDEX_URL, INDEX_PATH)
+
+local index = toml.parse_file(INDEX_PATH)
+
+-- -----------------------------
+-- Helper: resolve dotted path
+-- -----------------------------
+
+local function resolve(tbl, path)
+    for key in string.gmatch(path, "[^%.]+") do
+        tbl = tbl[key]
+        if not tbl then
+            return nil
+        end
+    end
+    return tbl
+end
+
+-- -----------------------------
+-- Install packages
+-- -----------------------------
+
+local function install_packages()
+    for _, group_path in ipairs(REQUIRED_GROUPS) do
+        local group = resolve(index, group_path)
+
+        if not group then
+            error("Missing package group: " .. group_path)
         end
 
-        redraw_monitor()
+        for name, pkg in pairs(group) do
+            local dest = "/" .. pkg.path
+            local url = REPO_BASE .. pkg.path
+
+            log("Installing " .. pkg.path)
+            downloader.download(url, dest)
+
+            local hash = sha2.sha256_file(dest)
+            if hash ~= pkg.sha256 then
+                error("Checksum mismatch for " .. pkg.path)
+            end
+        end
     end
 end
 
--- Basic downloader function. Does not validate anything.
-local function basic_dl(mod)
-    local full_path = asset_base .. mod .. ".lua"
-    local disk_path = library_directory .. "/" .. mod .. ".lua"
+install_packages()
 
-    local ok, result = pcall(shell.run, "wget", full_path, disk_path)
+-- -----------------------------
+-- Write lattice.toml
+-- -----------------------------
 
-    if not ok then
-        -- Lua-level error
-        log("Lua error while downloading " .. mod .. ": " .. tostring(result))
-        do return end
-    end
+log("Writing lattice.toml")
 
-    if not result then
-        -- wget ran but failed
-        log("wget failed while downloading " .. mod)
-        do return end
-    end
-
-    if debug then
-        log("DBG: Fetched " .. mod)
-    end
-end
-
-
-local function write_lattice_manifest()
-    local contents = [[
+local lattice_cfg = [[
 [system]
 name = "Lattice"
 version = "0.1.0"
@@ -113,178 +128,39 @@ codename = "Scaffold"
 role = "controller"
 
 [boot]
-entry = "/boot/init.lua"
-
-[dependencies]
-shared = ["sha2", "toml", "downloader", "log"]
-
-[ui]
-monitor = true
-speaker = true
+entry = "/boot/lboot.lua"
 ]]
 
-    local f = fs.open(os_directory .. "/lattice.toml", "w")
-    f.write(contents)
-    f.close()
-end
+local f = fs.open("/os/lattice.toml", "w")
+f.write(lattice_cfg)
+f.close()
 
+-- -----------------------------
+-- Write repo.toml
+-- -----------------------------
 
-local function write_repo_config()
-    local contents = [[
+log("Writing repo.toml")
+
+local repo_cfg = [[
 [repository]
 base = "https://raw.githubusercontent.com/AltriusRS/CCT/main/Lattice/pkg"
 index = "index.toml"
 ]]
 
-    local f = fs.open(os_directory .. "/repo.toml", "w")
-    f.write(contents)
-    f.close()
-end
+local f2 = fs.open("/os/repo.toml", "w")
+f2.write(repo_cfg)
+f2.close()
 
-local function install_bootloader()
-    local remote = asset_base .. "boot/lboot.lua"
-    local local_path = "/os/boot/lboot.lua"
+-- -----------------------------
+-- Install startup.lua
+-- -----------------------------
 
-    local ok, result = pcall(shell.run, "wget", remote, local_path)
-
-    if not ok then
-        log("Lua error while downloading bootloader: " .. tostring(result))
-        do return end
-    end
-
-    if not result then
-        log("Failed to download bootloader")
-        do return end
-    end
-
-    log("> Bootloader installed")
-end
-
-local function install_startup()
-    local remote = asset_base .. "boot/startup.lua"
-    local local_path = "/startup.lua"
-
-    local ok, result = pcall(shell.run, "wget", remote, local_path)
-
-    if not ok then
-        log("Lua error while downloading startup: " .. tostring(result))
-        do return end
-    end
-
-    if not result then
-        log("Failed to download startup")
-        do return end
-    end
-
-    log("> Startup installed")
-end
-
-local function install_os()
-    local DOWNLOADER = require("shared.downloader")
-    local TOML = require("shared.toml")
-    -- local SHA2 = require("shared.sha2")
-
-    local manifest_path = "/os/manifest.toml"
-    
-    local manifest_downloaded = DOWNLOADER.download(os_base.."manifest.toml", manifest_path)
-
-    if not manifest_downloaded then
-        log("> Failed to download OS manifest.")
-        do return end
-    end
-
-    log("> OS Manifest Downloaded")
-
-    local manifest = TOML.parse_file(manifest_path)
-
-    for _,file in ipairs(manifest.files) do
-        log("> -"..file.path)
-        local url = os_base..file.path
-        local path = "/"..file.path
-        DOWNLOADER.download(url, path)
-        if string.len(file.cxm) > 0 then
-            local fcxm = DOWNLOADER.sha256(path)
-            if not fcxm == file.cxm then
-                log("> - ERROR FILE DOESNT MATCH CHECKSUM")
-                do return end
-            end
-            log("> - PASS")
-        end
-    end
-    do return end
-end
-
-log("Checking available devices")
-
-local names = peripheral.getNames()
-
-for id, name in ipairs(names) do
-    local p_type = peripheral.getType(name)
-    log("> " .. id .. ": " .. name .. " - " .. p_type)
-
-    if p_type == "speaker" and speaker == nil then
-        speaker = peripheral.wrap(name)
-    elseif p_type == "monitor" and monitor == nil then
-        monitor = peripheral.wrap(name)
-    end
-end
-
-if monitor then
-    local w, h = monitor.getSize()
-    monitor_size.w = w
-    monitor_size.h = h
-
-    scrollback_max = h - 1
-
-    monitor.setTextScale(0.5) -- optional but nice
-    monitor.clear()
-    monitor.setCursorPos(1, 1)
-
-    log("Monitor detected (" .. w .. "x" .. h .. ")")
-end
-
-if speaker then
-    speaker.playNote("chime")
-end
-
-log("Starting installation")
-
--- Delete existing files (This allows for clean updates)
-fs.delete(os_directory)
-fs.delete(library_directory)
-
--- Recreate required directories
-fs.makeDir(os_directory)
-fs.makeDir(library_directory)
-
-log("> Installing core dependencies")
-
-for _, dep in ipairs(bootloader.manifest.dependencies) do
-    log("> - " .. dep)
-    basic_dl(dep)
-end
-
-log("> Writing lattice.toml")
-write_lattice_manifest()
-
-log("> Writing repo configuration")
-write_repo_config()
-
-log("> Installing bootloader")
-install_bootloader()
-
-log("> Installing startup")
-install_startup()
-
-log("> Installing OS")
-install_os()
-
+log("Installing startup.lua")
+wget(REPO_BASE .. "boot/startup.lua", "/startup.lua")
 
 log("Installation complete")
-log("Lattice OS scaffold installed")
-
-if speaker then
-    speaker.playNote("chime")
-end
-
-log("You may now reboot")
+log("The system will reboot in 20 seconds")
+os.sleep(20)
+log("Goodbye!")
+os.sleep(3)
+os.reboot()

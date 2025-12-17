@@ -1,11 +1,13 @@
 local log = require("shared.log")
-local hardware = require("shared.hardware_surveyor")
+local toml = require("shared.toml")
+local config_path = "/os/lattice.toml"
 
 
-log.info("Detected peripherals:")
 
-for ptype, list in pairs(hardware.by_type) do
-    log.info(string.format(" - %s: %d", ptype, #list))
-end
+
+
+-- Begin loading drivers
+local DeviceManager = require("os.kernel.device_manager")
+
 
 log.info("Welcome to Lattice OS")
