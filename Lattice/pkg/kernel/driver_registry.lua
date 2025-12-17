@@ -1,3 +1,5 @@
+local toml = require("shared.toml")
+
 local Registry = {}
 
 Registry.__index = Registry

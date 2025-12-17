@@ -1,0 +1,7 @@
+[system]
+name = "Lattice"
+version = "0.1.0"
+codename = "Scaffold"
+
+[node]
+role = "controller"

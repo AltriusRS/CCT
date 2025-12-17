@@ -1,93 +1,120 @@
--- Import core dependencies
+-- device_manager.lua
+
 local log = require("shared.log")
 local Registry = require("kernel.driver_registry")
 
-local DeviceManager = {}
+local DeviceManager = {
+    initialized = false,
+    registry = nil,
+    devices = {},
+}
 
-DeviceManager.__index = DeviceManager
+function DeviceManager.init(registry_path)
+    if DeviceManager.initialized then
+        log.trace("Device manager already initialized")
+        return
+    end
 
-function DeviceManager.new(registry_path)
-    local self = setmetatable({}, DeviceManager)
+    log.trace("Initializing device manager")
 
-    self.registry = Registry.load(registry_path)
-    self.devices = {}
+    DeviceManager.registry = Registry.load(registry_path)
+    DeviceManager.devices = {}
 
-    return self
+    DeviceManager.scan()
+    DeviceManager.bind()
+
+    DeviceManager.initialized = true
+    log.trace("Device manager initialized")
 end
 
-function DeviceManager:scan()
-    self.devices = {}
+function DeviceManager.scan()
+    log.trace("Scanning for peripherals")
+    DeviceManager.devices = {}
 
     for _, name in ipairs(peripheral.getNames()) do
         local ok, wrapped = pcall(peripheral.wrap, name)
+
         if not ok then
-            -- extremely rare, but defensive
-            table.insert(self.devices, {
+            log.error("Failed to wrap peripheral '" .. name .. "': " .. wrapped)
+            table.insert(DeviceManager.devices, {
                 name = name,
                 type = "unknown",
                 peripheral = nil,
+                driver = nil,
+                driver_meta = nil,
                 status = "error",
                 error = "Failed to wrap peripheral",
                 warnings = {},
             })
         else
-            table.insert(self.devices, {
+            log.debug("Wrapped peripheral '" .. name .. "'")
+            table.insert(DeviceManager.devices, {
                 name = name,
                 type = peripheral.getType(name),
                 peripheral = wrapped,
-
                 driver = nil,
                 driver_meta = nil,
-
                 status = "unbound",
                 error = nil,
                 warnings = {},
             })
         end
     end
+
+    log.trace("Devices scanned")
 end
 
-function DeviceManager:bind()
-    for _, device in ipairs(self.devices) do
-        local meta = self.registry:get(device.type)
+function DeviceManager.bind()
+    log.trace("Binding devices")
+
+    for _, device in ipairs(DeviceManager.devices) do
+        local meta = DeviceManager.registry:get(device.type)
 
         if not meta then
             device.status = "error"
             device.error =
                 "No driver registered for device type '" .. device.type .. "'"
+            log.error(device.error)
             goto continue
         end
 
         device.driver_meta = meta
 
-        -- Attempt to load driver module
         local ok, driver_def = pcall(require, meta.package)
         if not ok then
             device.status = "error"
             device.error =
                 "Failed to load driver package '" .. meta.package .. "'"
+            log.debug(device.error)
             goto continue
         end
 
-        -- Attempt to initialise driver
         local ok2, instance = pcall(driver_def.init, device.peripheral)
         if not ok2 then
             device.status = "error"
-            device.error =
-                "Driver init failed: " .. tostring(instance)
+            device.error = "Driver init failed: " .. tostring(instance)
+            log.trace(device.error)
             goto continue
         end
 
         device.driver = instance
         device.status = "ok"
+        log.trace(
+            "Device '" ..
+            device.name ..
+            "' bound to driver '" ..
+            meta.name ..
+            "'"
+        )
 
         ::continue::
     end
+
+    log.trace("Devices bound")
 end
 
-function DeviceManager:init()
-    self:scan()
-    self:bind()
+function DeviceManager.get_devices()
+    return DeviceManager.devices
 end
 
 return DeviceManager
