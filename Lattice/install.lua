@@ -147,13 +147,15 @@ local lattice_cfg = wget(REPO_BASE .. "config/lattice.toml", "/os/lattice.toml")
 
 log("Writing repo.toml")
 
-local repo_cfg = [[
+local lattice_cfg = wget(REPO_BASE .. "config/repo.toml", "/os/repo.toml")
 
-]]
+-- -----------------------------
+-- Write registry.toml
+-- -----------------------------
 
-local f2 = fs.open("/os/repo.toml", "w")
-f2.write(repo_cfg)
-f2.close()
+log("Writing repo.toml")
+
+local lattice_cfg = wget(REPO_BASE .. "drivers/registry.toml", "/os/drivers/registry.toml")
 
 -- -----------------------------
 -- Install startup.lua

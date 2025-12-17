@@ -9,7 +9,14 @@ export const GET = async ({ params }) => {
 
 	const url = PACKAGE_REPOSITORY + path;
 	console.log(url);
-	const res = await fetch(url, { cache: 'no-store' });
+	const res = await fetch(url, {
+		cache: 'no-store',
+		headers: {
+			'User-Agent': 'CCT/Lattice',
+			'Cache-Control': 'no-store',
+			Pragma: 'no-cache'
+		}
+	});
 
 	if (!res.ok) {
 		return new Response('Package not found', { status: 404 });
@@ -19,8 +26,9 @@ export const GET = async ({ params }) => {
 
 	return new Response(data, {
 		headers: {
-			'Content-Type': 'text/plain; charset=utf-8'
-			// 'Cache-Control': 'public, max-age=31536000, immutable'
+			'Content-Type': 'text/plain; charset=utf-8',
+			'Cache-Control': 'no-store',
+			Pragma: 'no-cache'
 		}
 	});
 };
