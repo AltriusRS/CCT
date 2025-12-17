@@ -34,10 +34,12 @@ local function render()
     for _, dev in ipairs(device_manager.get_devices()) do
         local line =
             string.format(
-                "%-8s %-10s %s",
+                "%-8s %-15s %-15s %-7s %s",
                 dev.name,
                 dev.type,
-                dev.status
+                dev.driver or "N/A",
+                dev.status,
+                dev.error or "N/A"
             )
 
         Debug.display.write_at(2, y, line)
