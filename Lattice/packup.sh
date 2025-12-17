@@ -6,6 +6,12 @@ OUT_FILE="$PKG_DIR/index.toml"
 
 echo "Generating package index at $OUT_FILE"
 
+# Sanity check: are we in a git repo?
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "Error: not inside a git repository"
+    exit 1
+fi
+
 # Write header
 cat > "$OUT_FILE" <<EOF
 [repository]
@@ -19,6 +25,8 @@ declare -A PACKAGE_GROUPS=(
     ["kernel"]="packages.kernel"
     ["boot"]="packages.boot"
     ["shared"]="packages.shared"
+    ["config"]="packages.config"
+    ["services"]="packages.services"
     ["drivers/core"]="packages.drivers_core"
     ["drivers/mekanism"]="packages.drivers_mekanism"
 )
@@ -43,5 +51,38 @@ EOF
 
     echo >> "$OUT_FILE"
 done
+
+echo "Package index generated."
+
+# Stage changes
+git add "$PKG_DIR"
+
+# Check if there is anything to commit
+if git diff --cached --quiet; then
+    echo "No changes to commit."
+    exit 0
+fi
+
+# Prompt for commit message
+default_msg="Update package index"
+read -r -p "Commit message [$default_msg]: " commit_msg
+commit_msg="${commit_msg:-$default_msg}"
+
+git commit -m "$commit_msg"
+
+# Ask whether to push
+read -r -p "Push to origin? [Y/n]: " push_ans
+push_ans="${push_ans:-y}"
+
+case "$push_ans" in
+    [yY]|[yY][eE][sS])
+        current_branch="$(git branch --show-current)"
+        echo "Pushing to origin/$current_branch"
+        git push origin "$current_branch"
+        ;;
+    *)
+        echo "Skipping push."
+        ;;
+esac
 
 echo "Done."

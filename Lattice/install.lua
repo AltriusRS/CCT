@@ -23,6 +23,7 @@ local INSTALL_ROOTS = {
     ["packages.kernel"] = "/os/kernel",
     ["packages.boot"] = "/os/boot",
     ["packages.drivers_core"] = "/os/drivers/core",
+    ["packages.services"] = "/os/services",
 }
 
 -- -----------------------------
@@ -138,19 +139,7 @@ install_packages()
 
 log("Writing lattice.toml")
 
-local lattice_cfg = [[
-[system]
-name = "Lattice"
-version = "0.1.0"
-codename = "Scaffold"
-
-[node]
-role = "controller"
-]]
-
-local f = fs.open("/os/lattice.toml", "w")
-f.write(lattice_cfg)
-f.close()
+local lattice_cfg = wget(REPO_BASE .. "config/lattice.toml", "/os/lattice.toml")
 
 -- -----------------------------
 -- Write repo.toml
@@ -159,9 +148,7 @@ f.close()
 log("Writing repo.toml")
 
 local repo_cfg = [[
-[repository]
-base = "https://raw.githubusercontent.com/AltriusRS/CCT/main/Lattice/pkg"
-index = "index.toml"
+
 ]]
 
 local f2 = fs.open("/os/repo.toml", "w")
