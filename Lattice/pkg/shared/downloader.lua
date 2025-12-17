@@ -7,6 +7,10 @@ local DOWNLOADER = {
 DOWNLOADER.download = function(url, path)
     local response = http.get(url)
     if response then
+        if fs.exists(path) then
+            fs.delete(path)
+        end
+
         local file = fs.open(path, "w")
         file.write(response.readAll())
         file.close()

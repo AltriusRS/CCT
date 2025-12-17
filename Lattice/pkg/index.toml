@@ -7,7 +7,7 @@ monitor = { path = "drivers/core/monitor.lua", sha256 = "bb911926596f2984d0f0ef8
 speaker = { path = "drivers/core/speaker.lua", sha256 = "0245a45b21035a3c1053f39fbc887fca7d1b2ca39fe772b799226f1e25d2703c" }
 
 [packages.shared]
-downloader = { path = "shared/downloader.lua", sha256 = "dfe1938746d80be1588372836b451033cb643f7b45e6b2daf2239870c787e16e" }
+downloader = { path = "shared/downloader.lua", sha256 = "07f7158f6e8c7d09b937264b445328cda26e4e72b5c240e74d7d7fe0d67c8083" }
 hardware_surveyor = { path = "shared/hardware_surveyor.lua", sha256 = "38d9b798f6a2aae9b935fed171e939e210ceafd86a3b4d89e22c285603a4c7af" }
 log = { path = "shared/log.lua", sha256 = "32931972905b1dd71161db0d5da40fde41961085158e3305f32f046510e63fdc" }
 nanoid = { path = "shared/nanoid.lua", sha256 = "2641bfaf9e80b1d6dbc0d79431d21663d10904cd3fe0ba606245b31d0c4e42c9" }
