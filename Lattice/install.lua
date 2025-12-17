@@ -18,6 +18,13 @@ local REQUIRED_GROUPS = {
     "packages.drivers_core",
 }
 
+local INSTALL_ROOTS = {
+    ["packages.shared"] = "/lib",
+    ["packages.kernel"] = "/os/kernel",
+    ["packages.boot"] = "/os/boot",
+    ["packages.drivers_core"] = "/os/drivers/core",
+}
+
 -- -----------------------------
 -- Logging (minimal, no UI fluff)
 -- -----------------------------
@@ -82,29 +89,42 @@ end
 -- Install packages
 -- -----------------------------
 
+local function ensure_directory(path)
+    if not fs.exists(path) then
+        fs.makeDir(path)
+    end
+end
+
 local function install_packages()
     for _, group_path in ipairs(REQUIRED_GROUPS) do
         local group = resolve(index, group_path)
-
         if not group then
             error("Missing package group: " .. group_path)
         end
 
-        for name, pkg in pairs(group) do
-            local dest = "/lib/" .. pkg.path
+        local root = INSTALL_ROOTS[group_path]
+        if not root then
+            error("No install root for " .. group_path)
+        end
+
+        ensure_directory(root)
+
+        for _, pkg in pairs(group) do
+            local filename = fs.getName(pkg.path)
+            local dest = root .. "/" .. filename
             local url = REPO_BASE .. pkg.path
 
-            log("Installing " .. pkg.path)
-            log("> Destination: " .. dest)
+            log("Installing " .. pkg.path .. " -> " .. dest)
+
             downloader.download(url, dest)
 
             local hash = downloader.sha256(dest)
             if hash ~= pkg.sha256 then
-                log("> Checksum mismatch")
-                log("> Expected: " .. pkg.sha256)
-                log("> Actual: " .. hash)
-                log("> Downloaded file: " .. dest)
-                error("Checksum mismatch for " .. pkg.path)
+                error(
+                    "Checksum mismatch for " ..
+                    pkg.path ..
+                    " (expected " .. pkg.sha256 .. ", got " .. hash .. ")"
+                )
             end
         end
     end
@@ -126,9 +146,6 @@ codename = "Scaffold"
 
 [node]
 role = "controller"
-
-[boot]
-entry = "/boot/lboot.lua"
 ]]
 
 local f = fs.open("/os/lattice.toml", "w")

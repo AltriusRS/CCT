@@ -58,7 +58,6 @@ local cfg = toml.parse_file("/os/lattice.toml")
 
 assert(cfg.system, "Missing [system]")
 assert(cfg.node, "Missing [node]")
-assert(cfg.dependencies, "Missing [dependencies]")
 
 log.info("System: " .. cfg.system.name .. " " .. cfg.system.version)
 log.info("Node role: " .. (cfg.node.role or "unknown"))
