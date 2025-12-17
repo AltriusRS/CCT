@@ -19,7 +19,12 @@ lboot = { path = "boot/lboot.lua", sha256 = "b8cceb9e6548445e28ee744d7c3881ad141
 startup = { path = "boot/startup.lua", sha256 = "d7ab8552dadbbcbeb61bbc7e0cef67c3bb7a2396f894a5672a9cf54a8e22be94" }
 
 [packages.kernel]
-device_manager = { path = "kernel/device_manager.lua", sha256 = "228d66dc319086feac68434e15024597beaa81c3f17f536829c4aaa5e968a150" }
-driver_registry = { path = "kernel/driver_registry.lua", sha256 = "68acaabe394d384e6ea42770c7e18e1d3b42bc61e03d6ed7d30995f3c57952aa" }
-init = { path = "kernel/init.lua", sha256 = "1cd1fb27bbac69ec29aa4e8e34032c6d65d86208641a35a13c18633400605d81" }
+device_manager = { path = "kernel/device_manager.lua", sha256 = "0f16010534e2d37927520ba21e39b47504602631bfae616e0defc7d1f53cf29d" }
+driver_registry = { path = "kernel/driver_registry.lua", sha256 = "d6340e7feaeabf53f93b599c1e4c5be46bdcd7aff0ba08309799570a22c75434" }
+init = { path = "kernel/init.lua", sha256 = "fec482bc894bf211863a19918e05496d01de1d409a5aa5386d9d0fa93952e83d" }
+
+[packages.services]
+audio = { path = "services/audio.lua", sha256 = "b976739e3ba440faf28e8cb7b9410b9d2ca637d19db9f48521674d53c6f80f40" }
+
+[packages.config]
 
