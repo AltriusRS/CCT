@@ -16,6 +16,7 @@ local REQUIRED_GROUPS = {
     "packages.kernel",
     "packages.shared",
     "packages.drivers_core",
+    "packages.services"
 }
 
 local INSTALL_ROOTS = {
