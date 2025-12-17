@@ -1,3 +1,5 @@
+local log = require("shared.log")
+
 local DOWNLOADER = {
     version = "0.1.0",
     author = "Arthur",
