@@ -6,7 +6,7 @@ description = "Official Lattice package repository"
 speaker = { path = "drivers/core/speaker.lua", sha256 = "0245a45b21035a3c1053f39fbc887fca7d1b2ca39fe772b799226f1e25d2703c" }
 
 [packages.shared]
-downloader = { path = "shared/downloader.lua", sha256 = "97cf3820997514316cbd3629011bffe26e5262aa2c6f63242ee6a71c1ce751ba" }
+downloader = { path = "shared/downloader.lua", sha256 = "dfe1938746d80be1588372836b451033cb643f7b45e6b2daf2239870c787e16e" }
 hardware_surveyor = { path = "shared/hardware_surveyor.lua", sha256 = "38d9b798f6a2aae9b935fed171e939e210ceafd86a3b4d89e22c285603a4c7af" }
 log = { path = "shared/log.lua", sha256 = "32931972905b1dd71161db0d5da40fde41961085158e3305f32f046510e63fdc" }
 nanoid = { path = "shared/nanoid.lua", sha256 = "1ac838d8286d0285879d39b2f870053091e689183440bbd8c4a57700059414fc" }

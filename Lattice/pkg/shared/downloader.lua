@@ -1,5 +1,3 @@
-local log = require("shared.log")
-
 local DOWNLOADER = {
     version = "0.1.0",
     author = "Arthur",
@@ -22,9 +20,6 @@ end
 -- Calculates the SHA-256 hash of a file
 DOWNLOADER.sha256 = function(path)
     local ok, output = pcall(DOWNLOADER.sha256_unsafe, path)
-
-    log.debug(ok)
-    log.debug(output)
 
     if ok then
         return output

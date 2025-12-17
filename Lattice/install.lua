@@ -30,14 +30,7 @@ end
 -- Bootstrap dirs
 -- -----------------------------
 
-fs.delete("/lib")
-fs.delete("/os")
-fs.delete("/boot")
-
-fs.makeDir("/lib")
-fs.makeDir("/os")
-fs.makeDir("/boot")
-fs.makeDir("/tmp")
+-- TODO: Implement directory purging
 
 -- -----------------------------
 -- Bootstrap downloader + toml
@@ -55,6 +48,7 @@ log("Bootstrapping core libraries")
 
 wget(REPO_BASE .. "shared/toml.lua", "/lib/shared/toml.lua")
 wget(REPO_BASE .. "shared/sha2.lua", "/lib/shared/sha2.lua")
+wget(REPO_BASE .. "shared/log.lua", "/lib/shared/log.lua")
 wget(REPO_BASE .. "shared/downloader.lua", "/lib/shared/downloader.lua")
 
 local toml = require("shared.toml")
@@ -97,7 +91,7 @@ local function install_packages()
         end
 
         for name, pkg in pairs(group) do
-            local dest = "/" .. pkg.path
+            local dest = "/lib/" .. pkg.path
             local url = REPO_BASE .. pkg.path
 
             log("Installing " .. pkg.path)
@@ -110,7 +104,6 @@ local function install_packages()
                 log("> Expected: " .. pkg.sha256)
                 log("> Actual: " .. hash)
                 log("> Downloaded file: " .. dest)
-                os.sleep(0.5)
                 error("Checksum mismatch for " .. pkg.path)
             end
         end
@@ -164,10 +157,10 @@ f2.close()
 
 log("Installing startup.lua")
 wget(REPO_BASE .. "boot/startup.lua", "/startup.lua")
-
+local TIMEOUT = 5
 log("Installation complete")
-log("The system will reboot in 20 seconds")
-os.sleep(20)
+log("The system will reboot in " .. TIMEOUT .. " seconds")
+os.sleep(TIMEOUT)
 log("Goodbye!")
-os.sleep(3)
+os.sleep(1.4)
 os.reboot()
