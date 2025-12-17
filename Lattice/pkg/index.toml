@@ -15,10 +15,11 @@ toml = { path = "shared/toml.lua", sha256 = "689d43c7ef7056b96c5542bf59545700631
 
 [packages.boot]
 hardware_surveyor = { path = "boot/hardware_surveyor.lua", sha256 = "e008643bdfea273ea1ecd3658edabe3c5a7e9625dd00f1f6fa7e525ff2a3a3eb" }
-lboot = { path = "boot/lboot.lua", sha256 = "fc8779a3deb3bf8fe7288f1df2334e51e09a8c866f181673a1c6dd5c45440b7b" }
+lboot = { path = "boot/lboot.lua", sha256 = "346eedef4c2b83022598873d61762da879293588f69357dc9f8714bdd0c6b892" }
 startup = { path = "boot/startup.lua", sha256 = "d7ab8552dadbbcbeb61bbc7e0cef67c3bb7a2396f894a5672a9cf54a8e22be94" }
 
 [packages.kernel]
 device_manager = { path = "kernel/device_manager.lua", sha256 = "228d66dc319086feac68434e15024597beaa81c3f17f536829c4aaa5e968a150" }
 driver_registry = { path = "kernel/driver_registry.lua", sha256 = "68acaabe394d384e6ea42770c7e18e1d3b42bc61e03d6ed7d30995f3c57952aa" }
+init = { path = "kernel/init.lua", sha256 = "1cd1fb27bbac69ec29aa4e8e34032c6d65d86208641a35a13c18633400605d81" }
 
