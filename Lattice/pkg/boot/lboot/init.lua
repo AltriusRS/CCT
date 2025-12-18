@@ -65,7 +65,7 @@ log.info("Monitors: " .. tostring(#monitors))
 log.info("Boot complete")
 
 
-if not fs.exists("/os/kernel/init.lua") then
+if not fs.exists("/os/kernel/core/init.lua") then
     log.warn("Lattice is not correctly installed.")
     log.warn("It will now automatically reinstall itself.")
     fs.delete("/install.lua")
@@ -96,4 +96,4 @@ end
 
 log.info("Passing to kernel")
 
-require "os.kernel.init"
+require "os.kernel.core"
