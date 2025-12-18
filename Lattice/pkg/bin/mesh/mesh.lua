@@ -2,8 +2,11 @@
 -- Lattice Standalone Package Manager (v0.4.0)
 -- Handles multi-file packages and self-seeding hash verification.
 
+package.path = package.path .. ";/lib/?.lua;/lib/?/init.lua"
+
 local args = { ... }
 local API_BASE = "https://lattice-os.cc/pkg/api/"
+
 
 -- 1. Helper: Raw HTTP Download
 local function fetch(url, path)
