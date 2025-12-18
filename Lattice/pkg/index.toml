@@ -1,6 +1,6 @@
 [repository]
 name = "Lattice Official"
-updated = 1_766_087_263
+updated = 1_766_087_749
 
 [p."services.audio"]
 p = "services/audio"
@@ -18,16 +18,8 @@ d = [ "shared.log", "kernel.device_manager" ]
   n = "init.lua"
   s = "564e9febc6ec219cbbf20d7354fd25b4506b7fea6b8c45e98b7babee5fef4053"
 
-[p."kernel.device_manager"]
-p = "kernel/device_manager"
-d = [ "shared.toml", "shared.log" ]
-
-  [[p."kernel.device_manager".f]]
-  n = "init.lua"
-  s = "b366b3b8244976d7a7379198e48539589c99718bfd65eb386c4f57608d20b1b1"
-
 [p."kernel.core"]
-p = "kernel/kernel"
+p = "kernel/core"
 d = [
   "shared.log",
   "shared.toml",
@@ -40,6 +32,14 @@ d = [
   n = "init.lua"
   s = "4a01751c23c4a24349060e0f2fe35939c52ded9110cb7f7cf6ab7f003be57300"
 
+[p."kernel.device_manager"]
+p = "kernel/device_manager"
+d = [ "shared.toml", "shared.log" ]
+
+  [[p."kernel.device_manager".f]]
+  n = "init.lua"
+  s = "b366b3b8244976d7a7379198e48539589c99718bfd65eb386c4f57608d20b1b1"
+
 [p."packages.os"]
 p = "packages/os"
 f = [ ]
@@ -51,6 +51,27 @@ d = [
   "config.system",
   "config.repo"
 ]
+
+[p."packages.kernel"]
+p = "packages/kernel"
+f = [ ]
+d = [ "kernel.device_manager", "kernel.core", "kernel.startup" ]
+
+[p."packages.shared"]
+p = "packages/shared"
+f = [ ]
+d = [
+  "shared.toml",
+  "shared.sha2",
+  "shared.nanoid",
+  "shared.log",
+  "shared.hardware_surveyor"
+]
+
+[p."packages.boot"]
+p = "packages/boot"
+f = [ ]
+d = [ "boot.hardware_surveyor", "boot.lboot", "boot.startup" ]
 
 [p."packages.drivers"]
 p = "packages/drivers"
