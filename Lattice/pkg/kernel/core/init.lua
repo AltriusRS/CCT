@@ -3,14 +3,8 @@ local toml = require("shared.toml")
 
 log.info("Starting Lattice kernel")
 
-local registry_path = "/os/drivers/registry.toml"
-if not fs.exists(registry_path) then
-    log.error("Driver registry not found: " .. registry_path)
-    return
-end
-
 local device_manager = require("os.kernel.device_manager")
-device_manager.init(registry_path)
+device_manager.init()
 
 log.info("Welcome to Lattice OS")
 
