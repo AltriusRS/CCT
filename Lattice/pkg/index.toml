@@ -1,13 +1,15 @@
 [repository]
 name = "Lattice Official"
-updated = 1_766_085_557
+updated = 1_766_086_768
 
 [p."services.audio"]
 p = "services/audio"
 d = [ "shared.log", "kernel.device_manager" ]
+
   [[p."services.audio".f]]
   n = "init.lua"
   s = "4c4897c91e7def021646ed3fa4f15718f9ef1c2857f612bbb401fc8eca7226e3"
+
 [p."services.debug"]
 p = "services/debug"
 d = [ "shared.log", "kernel.device_manager" ]
@@ -15,133 +17,6 @@ d = [ "shared.log", "kernel.device_manager" ]
   [[p."services.debug".f]]
   n = "init.lua"
   s = "564e9febc6ec219cbbf20d7354fd25b4506b7fea6b8c45e98b7babee5fef4053"
-
-[p."config.repo"]
-p = "config/repo"
-
-  [[p."config.repo".f]]
-  n = "repo.toml"
-  s = "a51ac55bc8b7f57fe8a954e80bddc0576d71caa5ab2b758d39817b794348b80c"
-
-  [p."config.repo".m]
-  install_path = "/os/repo.toml"
-
-[p."config.system"]
-p = "config/lattice"
-
-  [[p."config.system".f]]
-  n = "system.toml"
-  s = "e4b925b04b9b30c0b0e6e7ac4118efcdce9b4559c19951df4b7f6ff67434c5f8"
-
-  [p."config.system".m]
-  install_path = "/os/lattice.toml"
-
-[p."packages.os"]
-p = "packages/os"
-f = [ ]
-d = [
-  "boot.lboot",
-  "boot.startup",
-  "kernel.core",
-  "kernel.device_manager",
-  "config.system",
-  "config.repo"
-]
-
-[p."packages.drivers"]
-p = "packages/drivers"
-f = [ ]
-d = [ "drivers.core.monitor", "drivers.core.speaker" ]
-
-[p."bin.mesh"]
-p = "bin/mesh"
-d = [ "shared.sha2" ]
-
-  [[p."bin.mesh".f]]
-  n = "mesh.lua"
-  s = "4a66996ea06ebe305a35410b077e4fc36f14e2514986ae6542bc168b543d825d"
-
-  [p."bin.mesh".m]
-  install_root = "/bin"
-  type = "binary"
-
-[p."shared.log"]
-p = "shared/log"
-
-  [[p."shared.log".f]]
-  n = "init.lua"
-  s = "32931972905b1dd71161db0d5da40fde41961085158e3305f32f046510e63fdc"
-
-[p."shared.hardware_surveyor"]
-p = "shared/hardware_surveyor"
-
-  [[p."shared.hardware_surveyor".f]]
-  n = "init.lua"
-  s = "38d9b798f6a2aae9b935fed171e939e210ceafd86a3b4d89e22c285603a4c7af"
-
-[p."shared.sha2"]
-p = "shared/sha2"
-
-  [[p."shared.sha2".f]]
-  n = "init.lua"
-  s = "1efccd26c9c423c13143b51c8aa3cd5ae436c0560fe87a04754eca22b1090942"
-
-[p."shared.toml"]
-p = "shared/toml"
-
-  [[p."shared.toml".f]]
-  n = "init.lua"
-  s = "0c90b91259d676dc21319faba76a60bb1fba4097bdae77847e82ba444be192f1"
-
-[p."shared.nanoid"]
-p = "shared/nanoid"
-
-  [[p."shared.nanoid".f]]
-  n = "init.lua"
-  s = "2641bfaf9e80b1d6dbc0d79431d21663d10904cd3fe0ba606245b31d0c4e42c9"
-
-[p."drivers.core.monitor"]
-p = "drivers/core/monitor"
-t = [ "monitor" ]
-
-  [[p."drivers.core.monitor".f]]
-  n = "init.lua"
-  s = "fad9671697e2ba0b745c780fcff82b7f1b31936d6ca55f166d4168fd62fd92d2"
-
-[p."drivers.core.speaker"]
-p = "drivers/core/speaker"
-d = [ "shared.log" ]
-t = [ "speaker" ]
-
-  [[p."drivers.core.speaker".f]]
-  n = "init.lua"
-  s = "0245a45b21035a3c1053f39fbc887fca7d1b2ca39fe772b799226f1e25d2703c"
-
-[p."boot.hardware_surveyor"]
-p = "boot/hardware_surveyor"
-d = [ ]
-
-  [[p."boot.hardware_surveyor".f]]
-  n = "init.lua"
-  s = "e008643bdfea273ea1ecd3658edabe3c5a7e9625dd00f1f6fa7e525ff2a3a3eb"
-
-[p."boot.startup"]
-p = "boot/startup"
-
-  [[p."boot.startup".f]]
-  n = "init.lua"
-  s = "d7ab8552dadbbcbeb61bbc7e0cef67c3bb7a2396f894a5672a9cf54a8e22be94"
-
-  [p."boot.startup".m]
-  install_path = "/startup.lua"
-
-[p."boot.lboot"]
-p = "boot/lboot"
-d = [ "shared.log", "shared.toml", "kernel.device_manager" ]
-
-  [[p."boot.lboot".f]]
-  n = "init.lua"
-  s = "b8cceb9e6548445e28ee744d7c3881ad141a25fcbf49fdb92ce848e91250925c"
 
 [p."kernel.device_manager"]
 p = "kernel/device_manager"
@@ -164,3 +39,129 @@ d = [
   [[p."kernel.core".f]]
   n = "init.lua"
   s = "4a01751c23c4a24349060e0f2fe35939c52ded9110cb7f7cf6ab7f003be57300"
+
+[p."packages.os"]
+p = "packages/os"
+f = [ ]
+d = [
+  "boot.lboot",
+  "boot.startup",
+  "kernel.core",
+  "kernel.device_manager",
+  "config.system",
+  "config.repo"
+]
+
+[p."packages.drivers"]
+p = "packages/drivers"
+f = [ ]
+d = [ "drivers.core.monitor", "drivers.core.speaker" ]
+
+[p."config.system"]
+p = "config/lattice"
+
+  [[p."config.system".f]]
+  n = "system.toml"
+  s = "e4b925b04b9b30c0b0e6e7ac4118efcdce9b4559c19951df4b7f6ff67434c5f8"
+
+  [p."config.system".m]
+  install_path = "/os/lattice.toml"
+
+[p."config.repo"]
+p = "config/repo"
+
+  [[p."config.repo".f]]
+  n = "repo.toml"
+  s = "a51ac55bc8b7f57fe8a954e80bddc0576d71caa5ab2b758d39817b794348b80c"
+
+  [p."config.repo".m]
+  install_path = "/os/repo.toml"
+
+[p."shared.toml"]
+p = "shared/toml"
+
+  [[p."shared.toml".f]]
+  n = "init.lua"
+  s = "0c90b91259d676dc21319faba76a60bb1fba4097bdae77847e82ba444be192f1"
+
+[p."shared.nanoid"]
+p = "shared/nanoid"
+
+  [[p."shared.nanoid".f]]
+  n = "init.lua"
+  s = "2641bfaf9e80b1d6dbc0d79431d21663d10904cd3fe0ba606245b31d0c4e42c9"
+
+[p."shared.sha2"]
+p = "shared/sha2"
+
+  [[p."shared.sha2".f]]
+  n = "init.lua"
+  s = "1efccd26c9c423c13143b51c8aa3cd5ae436c0560fe87a04754eca22b1090942"
+
+[p."shared.log"]
+p = "shared/log"
+
+  [[p."shared.log".f]]
+  n = "init.lua"
+  s = "32931972905b1dd71161db0d5da40fde41961085158e3305f32f046510e63fdc"
+
+[p."shared.hardware_surveyor"]
+p = "shared/hardware_surveyor"
+
+  [[p."shared.hardware_surveyor".f]]
+  n = "init.lua"
+  s = "38d9b798f6a2aae9b935fed171e939e210ceafd86a3b4d89e22c285603a4c7af"
+
+[p."bin.mesh"]
+p = "bin/mesh"
+d = [ "shared.sha2" ]
+
+  [[p."bin.mesh".f]]
+  n = "mesh.lua"
+  s = "4a66996ea06ebe305a35410b077e4fc36f14e2514986ae6542bc168b543d825d"
+
+  [p."bin.mesh".m]
+  install_path = "/bin/mesh.lua"
+
+[p."boot.lboot"]
+p = "boot/lboot"
+d = [ "shared.log", "shared.toml", "kernel.device_manager" ]
+
+  [[p."boot.lboot".f]]
+  n = "init.lua"
+  s = "b8cceb9e6548445e28ee744d7c3881ad141a25fcbf49fdb92ce848e91250925c"
+
+[p."boot.startup"]
+p = "boot/startup"
+
+  [[p."boot.startup".f]]
+  n = "init.lua"
+  s = "d7ab8552dadbbcbeb61bbc7e0cef67c3bb7a2396f894a5672a9cf54a8e22be94"
+
+  [p."boot.startup".m]
+  install_path = "/startup.lua"
+
+[p."boot.hardware_surveyor"]
+p = "boot/hardware_surveyor"
+d = [ ]
+
+  [[p."boot.hardware_surveyor".f]]
+  n = "init.lua"
+  s = "e008643bdfea273ea1ecd3658edabe3c5a7e9625dd00f1f6fa7e525ff2a3a3eb"
+
+[p."drivers.core.speaker"]
+p = "drivers/core/speaker"
+d = [ "shared.log" ]
+t = [ "speaker" ]
+
+  [[p."drivers.core.speaker".f]]
+  n = "init.lua"
+  s = "0245a45b21035a3c1053f39fbc887fca7d1b2ca39fe772b799226f1e25d2703c"
+
+[p."drivers.core.monitor"]
+p = "drivers/core/monitor"
+t = [ "monitor" ]
+
+  [[p."drivers.core.monitor".f]]
+  n = "init.lua"
+  s = "fad9671697e2ba0b745c780fcff82b7f1b31936d6ca55f166d4168fd62fd92d2"
