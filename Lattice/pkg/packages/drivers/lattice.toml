@@ -1,5 +1,5 @@
 [package]
-name = "packages.drivers"
+name = "packages.core_drivers"
 entrypoint = "lattice.toml"
 
 [dependencies]
