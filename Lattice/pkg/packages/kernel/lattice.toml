@@ -7,4 +7,5 @@ libs = [
     "kernel.core",
     "config.system",
     "config.repo",
+    "packages.core_drivers"
     ]

@@ -10,4 +10,5 @@ libs = [
     "kernel.device_manager",
     "config.system",
     "config.repo"
+    "packages.core_drivers"
 ]
