@@ -32,12 +32,17 @@ local function render()
     local y = 3
 
     for _, dev in ipairs(device_manager.get_devices()) do
+        local driver_name = "N/A"
+        if dev.driver then
+            driver_name = dev.driver.name or "N/A"
+        end
+
         local line =
             string.format(
                 "%-8s %-15s %-15s %-7s %s",
                 dev.name,
                 dev.type,
-                dev.driver.name or "N/A",
+                driver_name or "N/A",
                 dev.status,
                 dev.error or "N/A"
             )
