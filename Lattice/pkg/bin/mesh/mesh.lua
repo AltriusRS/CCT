@@ -62,7 +62,7 @@ local function install_package(name, branch, bypass_hash)
     print("Mesh: Resolving " .. name .. "...")
 
     -- A. Fetch index as Lua Table
-    local res = http.get(API_BASE .. "index?format=lua&branch=" .. branch)
+    local res = http.get(API_BASE .. branch .. "/index?format=lua")
     if not res then error("Could not reach Lattice API") end
     local index_source = res.readAll()
     res.close()
@@ -131,10 +131,7 @@ local function install_package(name, branch, bypass_hash)
             dest_path = dest_root .. "/" .. filename
         end
 
-        local file_url = API_BASE .. "package/" .. pkg.p .. "/" .. filename .. "?branch=" .. branch
-
-        print("Mesh: Fetching " .. name .. " -> " .. dest_path)
-        local ok, err = fetch(file_url, dest_path)
+        local file_url = API_BASE .. branch .. "/package/" .. pkg.p .. "/" .. filename
 
         print("Mesh: Fetching " .. name .. ":" .. filename)
         local ok, err = fetch(file_url, dest_path)
