@@ -9,7 +9,6 @@ d = [ "shared.log", "kernel.device_manager" ]
   [[p."services.audio".f]]
   n = "init.lua"
   s = "4c4897c91e7def021646ed3fa4f15718f9ef1c2857f612bbb401fc8eca7226e3"
-
 [p."services.debug"]
 p = "services/debug"
 d = [ "shared.log", "kernel.device_manager" ]

@@ -2,6 +2,8 @@ name: Lattice Packup
 
 on:
   push:
+    branches:
+      - "**"
     paths:
       - "Lattice/pkg/**"
 
@@ -24,9 +26,12 @@ jobs:
         run: |
           git config --global user.name "Lattice Bot"
           git config --global user.email "bot@lattice-os.cc"
-          git add pkg/index.toml
+
+          # Target the actual file generated inside the Lattice subfolder
+          git add Lattice/pkg/index.toml
+
           if git diff --cached --quiet; then
-            echo "No changes"
+            echo "No changes in index.toml"
           else
             git commit -m "chore: auto-update index [skip ci]"
             git push
