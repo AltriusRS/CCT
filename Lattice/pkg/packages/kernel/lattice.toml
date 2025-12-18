@@ -1,0 +1,9 @@
+[package]
+name = "packages.kernel"
+
+[dependencies]
+libs = [
+    "kernel.device_manager",
+    "kernel.core",
+    "kernel.startup"
+]
