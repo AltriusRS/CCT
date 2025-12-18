@@ -69,7 +69,7 @@ local function install_package(name, branch, bypass_hash)
 
     local index = load(index_source)()
     if not index or not index.p then error("Invalid index received from server") end
-    print("Mesh: Manifest Updated At: " .. index.updated)
+    print("Mesh: Manifest Updated At: " .. index.repository.updated)
 
     local pkg = index.p[name]
     if not pkg then error("Package not found in index: " .. name) end
