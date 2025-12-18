@@ -1,6 +1,6 @@
 [repository]
 name = "Lattice Official"
-updated = 1_766_089_957
+updated = 1_766_090_170
 
 [p."services.audio"]
 p = "services/audio"
@@ -55,7 +55,12 @@ d = [
 [p."packages.kernel"]
 p = "packages/kernel"
 f = [ ]
-d = [ "kernel.device_manager", "kernel.core" ]
+d = [
+  "kernel.device_manager",
+  "kernel.core",
+  "config.system",
+  "config.repo"
+]
 
 [p."packages.shared"]
 p = "packages/shared"
