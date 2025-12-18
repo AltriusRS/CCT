@@ -37,7 +37,7 @@ local function render()
                 "%-8s %-15s %-15s %-7s %s",
                 dev.name,
                 dev.type,
-                dev.driver_meta.name or "N/A",
+                dev.driver.name or "N/A",
                 dev.status,
                 dev.error or "N/A"
             )

@@ -26,7 +26,7 @@ init = { path = "kernel/init.lua", sha256 = "4a01751c23c4a24349060e0f2fe35939c52
 
 [packages.services]
 audio = { path = "services/audio.lua", sha256 = "4c4897c91e7def021646ed3fa4f15718f9ef1c2857f612bbb401fc8eca7226e3" }
-debug = { path = "services/debug.lua", sha256 = "a0d694c13e0496a1fe4e577162bff78aa616fbf222e91b30f3fc5427d14c220a" }
+debug = { path = "services/debug.lua", sha256 = "b7a529eaefc380129e346d820ae7cd5bca893541221fcdb0e4ac7bddc2fc7aed" }
 
 [packages.config]
 
