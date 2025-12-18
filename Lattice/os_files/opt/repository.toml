@@ -1,3 +1,4 @@
 [repository]
-base = "https://raw.githubusercontent.com/AltriusRS/CCT/main/Lattice/pkg"
+base = "https://lattice-os.cc/pkg/"
+branch = "main"
 index = "index.toml"

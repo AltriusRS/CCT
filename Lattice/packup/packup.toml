@@ -1,0 +1,13 @@
+# Sample packup.toml
+[package]
+name = "packup",
+version = "0.1.0",
+authors = ["Your Name <your@email.com>"],
+description = "A packup tool for managing Lattice Packs"
+entrypoint = "main.lua"
+
+[dependencies]
+shared.log
+drivers.cc_advanced_math.matrix_math
+crypto.sha2
+shared.nanoid

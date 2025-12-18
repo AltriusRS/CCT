@@ -1,0 +1,8 @@
+[package]
+name = "shared.log"
+entrypoint = "init.lua"
+description = "Lattice Logging Service"
+
+[dependencies]
+# List names only
+libs = ["shared.utils"]

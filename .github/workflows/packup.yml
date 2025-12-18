@@ -1,0 +1,33 @@
+name: Lattice Packup
+
+on:
+  push:
+    paths:
+      - "pkg/**"
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Packup Binary
+        run: |
+          chmod +x ./packup-bin
+          ./packup-bin
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Lattice Bot"
+          git config --global user.email "bot@lattice-os.cc"
+          git add pkg/index.toml
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "chore: auto-update index [skip ci]"
+            git push
+          fi

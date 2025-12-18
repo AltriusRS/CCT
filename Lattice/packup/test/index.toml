@@ -1,0 +1,11 @@
+[repository]
+name = "Lattice Official"
+updated = 1_766_077_574
+
+[p."shared.log"]
+p = "sample"
+d = [ "shared.utils" ]
+
+  [[p."shared.log".f]]
+  n = "init.lua"
+  s = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
