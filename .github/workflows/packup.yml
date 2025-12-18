@@ -3,7 +3,7 @@ name: Lattice Packup
 on:
   push:
     paths:
-      - "pkg/**"
+      - "Lattice/pkg/**"
 
 jobs:
   build-index:
@@ -17,8 +17,8 @@ jobs:
 
       - name: Run Packup Binary
         run: |
-          chmod +x ./packup-bin
-          ./packup-bin
+          chmod +x ./packup/packup-bin
+          ./packup/packup-bin
 
       - name: Commit and Push
         run: |
