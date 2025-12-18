@@ -1,6 +1,6 @@
 [repository]
 name = "Lattice Official"
-updated = 1_766_089_778
+updated = 1_766_089_957
 
 [p."services.audio"]
 p = "services/audio"
@@ -55,7 +55,7 @@ d = [
 [p."packages.kernel"]
 p = "packages/kernel"
 f = [ ]
-d = [ "kernel.device_manager", "kernel.core", "kernel.startup" ]
+d = [ "kernel.device_manager", "kernel.core" ]
 
 [p."packages.shared"]
 p = "packages/shared"
@@ -139,7 +139,7 @@ d = [ "shared.sha2" ]
 
   [[p."bin.mesh".f]]
   n = "mesh.lua"
-  s = "4e6b59df373cd2a114d7634f04b4329107fc28a6ea0b29d3aad128db1e2851a8"
+  s = "60806d1ad07e08cb8f919f80b382ea8d6d6cb48a001021d62507f7ace5383ee1"
 
   [p."bin.mesh".m]
   install_path = "/bin/mesh.lua"
