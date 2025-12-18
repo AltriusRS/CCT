@@ -19,8 +19,8 @@ jobs:
 
       - name: Run Packup Binary
         run: |
-          chmod +x ./packup/packup-bin
-          ./packup/packup-bin -d Lattice/pkg
+          chmod +x ./Lattice/packup/packup-bin
+          ./Lattice/packup/packup-bin -d Lattice/pkg
 
       - name: Commit and Push
         run: |
