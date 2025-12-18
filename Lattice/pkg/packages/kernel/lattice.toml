@@ -5,6 +5,6 @@ name = "packages.kernel"
 libs = [
     "kernel.device_manager",
     "kernel.core",
-    "config.system"
-    "config.repo"
+    "config.system",
+    "config.repo",
     ]
