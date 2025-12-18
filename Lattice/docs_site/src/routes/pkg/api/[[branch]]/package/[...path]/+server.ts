@@ -2,12 +2,13 @@ import { PACKAGE_REPOSITORY } from '$lib/consts.js';
 
 export const GET = async ({ params }) => {
 	const path = params.path;
+	const branch = params.branch;
 
 	if (!path) {
 		return new Response('Missing package path', { status: 400 });
 	}
 
-	const url = PACKAGE_REPOSITORY + path;
+	const url = PACKAGE_REPOSITORY(branch) + path;
 	console.log(url);
 	const res = await fetch(url, {
 		cache: 'no-store',
