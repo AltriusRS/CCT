@@ -1,6 +1,6 @@
 [repository]
 name = "Lattice Official"
-updated = 1_766_086_768
+updated = 1_766_087_263
 
 [p."services.audio"]
 p = "services/audio"
@@ -57,16 +57,6 @@ p = "packages/drivers"
 f = [ ]
 d = [ "drivers.core.monitor", "drivers.core.speaker" ]
 
-[p."config.system"]
-p = "config/lattice"
-
-  [[p."config.system".f]]
-  n = "system.toml"
-  s = "e4b925b04b9b30c0b0e6e7ac4118efcdce9b4559c19951df4b7f6ff67434c5f8"
-
-  [p."config.system".m]
-  install_path = "/os/lattice.toml"
-
 [p."config.repo"]
 p = "config/repo"
 
@@ -76,6 +66,16 @@ p = "config/repo"
 
   [p."config.repo".m]
   install_path = "/os/repo.toml"
+
+[p."config.system"]
+p = "config/system"
+
+  [[p."config.system".f]]
+  n = "system.toml"
+  s = "e4b925b04b9b30c0b0e6e7ac4118efcdce9b4559c19951df4b7f6ff67434c5f8"
+
+  [p."config.system".m]
+  install_path = "/os/lattice.toml"
 
 [p."shared.toml"]
 p = "shared/toml"
