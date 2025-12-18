@@ -15,7 +15,11 @@ return {
             error("Peripheral does not support monitor interface")
         end
 
-        local driver = {}
+        local driver = {
+            id = DRIVER_ID,
+            name = DRIVER_NAME,
+            version = DRIVER_VERSION,
+        }
 
         -- cache some state
         local width, height = monitor.getSize()

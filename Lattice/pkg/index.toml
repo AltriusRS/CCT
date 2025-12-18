@@ -3,7 +3,7 @@ name = "Lattice Official"
 description = "Official Lattice package repository"
 
 [packages.drivers_core]
-monitor = { path = "drivers/core/monitor.lua", sha256 = "bb911926596f2984d0f0ef847df5cba75344d954fb5f38a1a66a812ed2303951" }
+monitor = { path = "drivers/core/monitor.lua", sha256 = "fad9671697e2ba0b745c780fcff82b7f1b31936d6ca55f166d4168fd62fd92d2" }
 speaker = { path = "drivers/core/speaker.lua", sha256 = "0245a45b21035a3c1053f39fbc887fca7d1b2ca39fe772b799226f1e25d2703c" }
 
 [packages.shared]
