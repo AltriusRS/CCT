@@ -12,5 +12,4 @@ libs = ["shared.sha2"]
 
 [metadata]
 # Tells the installer/mesh where this should live on disk
-install_root = "/bin"
-type = "binary"
+install_path = "/bin/mesh.lua"
