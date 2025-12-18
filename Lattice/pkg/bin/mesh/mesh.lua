@@ -150,7 +150,8 @@ local function install_package(name, branch, bypass_hash)
             local actual_hash = sha2.sha256(content)
             if actual_hash ~= expected_hash then
                 fs.delete(dest_path)
-                error("\nIntegrity Error: Hash mismatch for " .. name .. ":" .. filename)
+                error("\nIntegrity Error: Hash mismatch for " ..
+                    name .. ":" .. filename .. "\nExpected: " .. expected_hash .. "\nActual: " .. actual_hash)
             end
         end
     end
