@@ -5,5 +5,4 @@ name = "packages.kernel"
 libs = [
     "kernel.device_manager",
     "kernel.core",
-    "kernel.startup"
 ]

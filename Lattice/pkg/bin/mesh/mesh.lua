@@ -123,6 +123,7 @@ local function install_package(name, branch, bypass_hash)
     -- E. Iterate and Download
     for _, file_entry in ipairs(pkg.f) do
         local filename = file_entry.n
+        local expected_hash = file_entry.s
         local dest_path = ""
 
         if is_override then
