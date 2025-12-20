@@ -20,22 +20,22 @@ local PITCH_RANGE = {
 }
 
 local VALID_INSTRUMENTS = {
-    harp = true,
-    basedrum = true,
-    snare = true,
-    hat = true,
-    bass = true,
-    flute = true,
-    bell = true,
-    guitar = true,
-    chime = true,
-    xylophone = true,
-    iron_xylophone = true,
-    cow_bell = true,
-    didgeridoo = true,
-    bit = true,
-    banjo = true,
-    pling = true
+    "harp",
+    "basedrum",
+    "snare",
+    "hat",
+    "bass",
+    "flute",
+    "bell",
+    "guitar",
+    "chime",
+    "xylophone",
+    "iron_xylophone",
+    "cow_bell",
+    "didgeridoo",
+    "bit",
+    "banjo",
+    "pling"
 }
 
 local function clamp(value, min, max)
@@ -89,6 +89,8 @@ local function build_new_driver(peripheral)
     end
 
     function driver:beep()
+        log.trace("Beeping with instrument: " ..
+            self.instrument .. " at pitch " .. self.pitch .. " and volume " .. self.volume)
         local ok, err = pcall(
             self.peripheral.playNote,
             self.instrument,
