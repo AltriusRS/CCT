@@ -7,3 +7,13 @@ description = "Default Lattice system configuration"
 # Even though it's called system.toml in the repo,
 # it lands as /os/lattice.toml on the machine.
 install_path = "/os/lattice.toml"
+
+[os.updates]
+enabled = true
+# Interval in seconds between update checks
+interval = 86400 # 24 hours
+
+[os.services.debug]
+enabled = true
+
+[os.services.]
