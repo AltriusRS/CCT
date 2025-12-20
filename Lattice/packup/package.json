@@ -3,6 +3,11 @@
   "module": "src/packup.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "build": "bun build . --compile --outfile packup-bin",
+    "prestart": "bun run build",
+    "start": "packup-bin"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },

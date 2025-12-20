@@ -59,10 +59,16 @@ function crawl(
   if (files.includes("lattice.toml")) {
     const manifestPath = path.join(dir, "lattice.toml");
     const rawContent = fs.readFileSync(manifestPath, "utf-8");
+    let manifest: LatticePackageManifest | null = null;
 
-    const manifest = TOML.parse(
-      rawContent,
-    ) as unknown as LatticePackageManifest;
+    try {
+      manifest = TOML.parse(rawContent) as unknown as LatticePackageManifest;
+    } catch (error) {
+      console.error(`Error parsing package: ${dir}`);
+      console.error(`Error parsing lattice.toml: ${error}`);
+      process.exit(1);
+    }
+
     const relPath = path.relative(WORKING_DIR, dir).replace(/\\/g, "/");
 
     // Get all files in the package directory except the manifest
