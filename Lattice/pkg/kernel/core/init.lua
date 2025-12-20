@@ -70,13 +70,14 @@ local function interrupt_on_redstone()
         os.pullEvent("redstone")
         local strength = redstone.getAnalogInput("front")
         if strength >= RESET_SIGNAL then
-            os.reboot()
+            -- Trigger a hard reset
+            do return true end
         end
     end
 end
 
 --- Begin executing the user space
-parallel.waitForAny(
+local reboot = parallel.waitForAny(
     interrupt_on_redstone,
     device_event_loop,
     debug.run
@@ -84,4 +85,11 @@ parallel.waitForAny(
 
 redstone.setAnalogOutput("front", ERROR_LIGHT)
 
+
 log.info("Goodbye!")
+
+os.sleep(5)
+
+if reboot then
+    os.reboot()
+end
