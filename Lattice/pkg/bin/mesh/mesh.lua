@@ -22,7 +22,7 @@ end
 -- 2. Local State / CLI Flags
 local skip_hash_flag = false
 for i, arg in ipairs(args) do
-    if arg == "--skip-hash" then
+    if arg == "--skip-hash" or arg == "-s" then
         skip_hash_flag = true
         table.remove(args, i)
     end
@@ -143,6 +143,7 @@ local function install_package(name, branch, bypass_hash)
         end
 
         -- F. Integrity Check
+        -- Can be skipped by setting the --skip-hash flag
         if not bypass_hash and sha2 then
             local f = fs.open(dest_path, "r")
             local content = f.readAll()
@@ -180,6 +181,7 @@ elseif cmd == "bootstrap" then
     install_package("packages.shared", branch)
     install_package("packages.boot", branch)
     install_package("packages.kernel", branch)
+    install_package("packages.core_drivers", branch)
     install_package("bin.mesh", branch)
     print("\nMesh: Lattice OS Bootstrap Complete.")
 else
