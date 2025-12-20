@@ -22,13 +22,27 @@ if key == "" then
     key = "lat_" .. math.random(100000, 999999)
 end
 
+-- 3. Get Network Port (Channel)
+write("Enter Communication Port (1-65535, leave blank for random): ")
+local port_input = read()
+local port = tonumber(port_input)
+
+if not port or port < 1 or port > 65535 then
+    -- Generate a random "High" port to avoid common ones (10000-65000)
+    port = math.random(10000, 65000)
+    print("Assigned random port: " .. port)
+else
+    print("Assigned custom port: " .. port)
+end
+
 print("Writing network configuration...")
+
 local net_cfg = string.format([[
 [network]
 ssid = "%s"
 key = "%s"
-channel = 4242
-]], ssid, key)
+channel = "%s"
+]], ssid, key, port)
 
 local f = fs.open("/os/network.toml", "w")
 f.write(net_cfg)

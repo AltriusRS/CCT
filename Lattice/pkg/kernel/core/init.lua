@@ -13,6 +13,10 @@ if fs.exists("/os/_.cmp.id") then
 else
     _G.CMP_ID = nanoid()
     local f = fs.open("/os/_.cmp.id", "w")
+    if not f.write then
+        log.error("Failed to open computer ID file")
+        os.exit(1)
+    end
     f.write(net_cfg)
     f.close()
     log.info("Computer ID: " .. _G.CMP_ID)
