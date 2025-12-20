@@ -23,7 +23,7 @@ _G.K_DEBUG_SERVICES = {}
 
 
 --- Provides a global status light function
-function K_STATUS_ERROR(enable)
+function _G.K_STATUS_ERROR(enable)
     --- Return if status lights are disabled
     if not STATUS_ENABLED then return end
 
@@ -35,13 +35,14 @@ function K_STATUS_ERROR(enable)
     end
 end
 
+--- Provides a global status light controller
 if kernel_settings.services.status_lights.enabled then
     STATUS_ENABLED = true
     POWER_LIGHT = kernel_settings.services.status_lights.threshold_power_light
     ERROR_LIGHT = kernel_settings.services.status_lights.threshold_error_light
     STATUS_FACE = kernel_settings.services.status_lights.face
-
     table.insert(_G.K_DEBUG_SERVICES, "status_lights")
+
     K_STATUS_ERROR(false)
 end
 
@@ -155,7 +156,7 @@ local reboot = parallel.waitForAny(
     table.unpack(services)
 )
 
-redstone.setAnalogOutput("front", ERROR_LIGHT)
+K_STATUS_ERROR(true)
 
 
 log.info("Goodbye!")
