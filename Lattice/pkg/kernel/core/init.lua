@@ -8,7 +8,9 @@ log.info("Starting Lattice kernel")
 
 -- Initialize Computer ID
 if fs.exists("/os/_.cmp.id") then
-    _G.CMP_ID = fs.read("/os/_.cmp.id")
+    local f = fs.open("/os/_.cmp.id", "r")
+    _G.CMP_ID = f.read("/os/_.cmp.id")
+    f.close()
     log.info("Computer ID: " .. _G.CMP_ID)
 else
     _G.CMP_ID = nanoid()
@@ -17,7 +19,7 @@ else
         log.error("Failed to open computer ID file")
         os.exit(1)
     end
-    f.write(net_cfg)
+    f.write(_G.CMP_ID)
     f.close()
     log.info("Computer ID: " .. _G.CMP_ID)
 end
