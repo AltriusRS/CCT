@@ -1,6 +1,6 @@
 [repository]
 name = "Lattice Official"
-updated = 1_766_246_777
+updated = 1_766_248_802
 
 [p."services.audio"]
 p = "services/audio"
@@ -30,7 +30,7 @@ d = [
 
   [[p."kernel.core".f]]
   n = "init.lua"
-  s = "617b00fd9b1704249a624d4204927f415cb9f7283336940c1821d5e935728787"
+  s = "39762453041bfdfb88ba85b521c71a521c41921224359382c3579ac912e16362"
 
 [p."kernel.device_manager"]
 p = "kernel/device_manager"
@@ -100,7 +100,7 @@ p = "config/system"
 
   [[p."config.system".f]]
   n = "system.toml"
-  s = "2aa2be92ef11cdf444e79d2cf506b742eca0c0edf6c3b38bf0d5538912fff31d"
+  s = "4c2ab6e1cfe4efe906507a7e46db940b2ae77d9cef4c0c03c740c996ac597152"
 
   [p."config.system".m]
   install_path = "/os/lattice.toml"
