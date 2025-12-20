@@ -41,7 +41,7 @@ if kernel_settings.services.status_lights.enabled then
     ERROR_LIGHT = kernel_settings.services.status_lights.threshold_error_light
     STATUS_FACE = kernel_settings.services.status_lights.face
 
-    table.insert(_G._G.K_DEBUG_SERVICES, "status_lights")
+    table.insert(_G.K_DEBUG_SERVICES, "status_lights")
     K_STATUS_ERROR(false)
 end
 
@@ -94,23 +94,16 @@ if kernel_settings.interrupts.peripherals.enabled then
     table.insert(services, device_event_loop)
 end
 
---- Enable the debug service if it is enabled in the configuration
-if kernel_settings.services.debug.enabled then
-    local debug = require("os.services.debug")
-    debug.init()
-    table.insert(services, debug.run)
-end
-
-
-
 --- Handle redstone events.
 --- This allows the kernel to trigger a hard reset when the redstone signal is high.
 --- It also allows the kernel to trigger a warning light when an error is detected.
 ---
 local function interrupt_on_redstone()
+    log.info("Redstone interrupt service started") -- Add this!
     while true do
         --- Wait for a redstone signal to trigger an interrupt
-        os.pullEvent("redstone")
+        local event = os.pullEvent("redstone")
+        log.trace("Redstone event detected") -- Add this!
 
         local faces = {
             front = redstone.getAnalogInput("front"),
@@ -150,7 +143,12 @@ elseif kernel_settings.services.reboot_button.enabled then
     table.insert(services, interrupt_on_redstone)
 end
 
-
+--- Enable the debug service if it is enabled in the configuration
+if kernel_settings.services.debug.enabled then
+    local debug = require("os.services.debug")
+    debug.init()
+    table.insert(services, debug.run)
+end
 
 --- Begin executing the user space
 local reboot = parallel.waitForAny(
