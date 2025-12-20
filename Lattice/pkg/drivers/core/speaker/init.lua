@@ -1,6 +1,7 @@
 -- Author: Arthur Amos
 -- Date: 2025-12-17
---
+
+local log = require("shared.log")
 
 local DRIVER_ID = "speaker"
 local DRIVER_NAME = "Generic Speaker Driver"
@@ -80,6 +81,7 @@ local function build_new_driver(peripheral)
 
     function driver:setInstrument(name)
         if not VALID_INSTRUMENTS[name] then
+            log.error("Invalid instrument: " .. tostring(name))
             return false, "Invalid instrument: " .. tostring(name)
         end
         self.instrument = name
@@ -95,6 +97,7 @@ local function build_new_driver(peripheral)
         )
 
         if not ok then
+            log.error("Failed to play note: " .. err)
             self.last_error = err
             return false, err
         end
@@ -116,6 +119,7 @@ local function build_new_driver(peripheral)
         )
 
         if not ok then
+            log.error("Failed to play note: " .. err)
             self.last_error = err
             return false, err
         end
