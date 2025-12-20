@@ -1,9 +1,20 @@
 local log = require("shared.log")
 local toml = require("shared.toml")
+local nanoid = require("shared.nanoid")
 
 local kernel_settings = toml.parse_file("/os/lattice.toml")
 
 log.info("Starting Lattice kernel")
+
+-- Initialize Computer ID
+if fs.exists("/os/_.cmp.id") then
+    _G.CMP_ID = fs.read("/os/_.cmp.id")
+    log.info("Computer ID: " .. _G.CMP_ID)
+else
+    _G.CMP_ID = nanoid()
+    fs.write("/os/_.cmp.id", _G.CMP_ID)
+    log.info("Computer ID: " .. _G.CMP_ID)
+end
 
 local device_manager = require("os.kernel.device_manager")
 device_manager.init()
@@ -12,8 +23,6 @@ local STATUS_ENABLED = false
 local POWER_LIGHT = 3
 local ERROR_LIGHT = 7
 local STATUS_FACE = "back"
-local RESET_FACE = "front"
-local RESET_SIGNAL = 10
 
 --- This table holds all of the services which are expected to be running
 --- It is assigned dynamically based on the configuration parse_file

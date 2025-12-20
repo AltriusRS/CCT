@@ -3,6 +3,7 @@
         "build_device_record",
         "shell",
         "parallel",
-        "redstone"
+        "redstone",
+        "fs"
     ]
 }
