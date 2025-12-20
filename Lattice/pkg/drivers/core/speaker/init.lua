@@ -103,6 +103,27 @@ local function build_new_driver(peripheral)
         return true
     end
 
+    function driver:play_note(instrument, pitch, volume)
+        local i = instrument or self.instrument
+        local p = pitch or self.pitch
+        local v = volume or self.volume
+
+        local ok, err = pcall(
+            self.peripheral.playNote,
+            i,
+            v,
+            p
+        )
+
+        if not ok then
+            self.last_error = err
+            return false, err
+        end
+
+        self.last_error = nil
+        return true
+    end
+
     return driver
 end
 

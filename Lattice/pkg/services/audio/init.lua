@@ -120,8 +120,8 @@ function Audio.play_note(instrument, volume, pitch)
         speaker.play_note,
         speaker,
         instrument,
-        volume,
-        pitch
+        pitch,
+        volume
     )
 
     Audio.busy = false
