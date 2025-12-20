@@ -1,10 +1,17 @@
 local log = require("shared.log")
 local toml = require("shared.toml")
 
+local RESET_SIGNAL = 10
+local POWER_LIGHT = 3
+local ERROR_LIGHT = 7
+
+
 log.info("Starting Lattice kernel")
 
 local device_manager = require("os.kernel.device_manager")
 device_manager.init()
+
+redstone.setAnalogOutput("front", POWER_LIGHT)
 
 log.info("Welcome to Lattice OS")
 
@@ -34,7 +41,9 @@ if not ok then
     log.error("Failed to play beep sound: " .. err)
 end
 
-
+--- Handle the attaching and detaching of peripherals.
+--- This allows the kernel to react to changes in the
+--- attached devices which it is trying to manage.
 local function device_event_loop()
     while true do
         local event, side = os.pullEvent()
@@ -50,7 +59,28 @@ end
 local debug = require("os.services.debug")
 debug.init()
 
+--- Handle redstone events.
+--- This allows the kernel to trigger a hard reset when the redstone signal is high.
+--- It also allows the kernel to trigger a warning light when an error is detected.
+---
+local function interrupt_on_redstone()
+    while true do
+        --- Wait for a redstone signal to trigger an interrupt
+        os.pullEvent("redstone")
+        local strength = redstone.getAnalogInput(side)
+        if strength >= RESET_SIGNAL then
+            os.reboot()
+        end
+    end
+end
+
+--- Begin executing the user space
 parallel.waitForAny(
+    interrupt_on_redstone,
     device_event_loop,
     debug.run
 )
+
+redstone.setAnalogOutput("front", ERROR_LIGHT)
+
+log.info("Goodbye!")

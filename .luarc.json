@@ -2,6 +2,7 @@
     "diagnostics.globals": [
         "build_device_record",
         "shell",
-        "parallel"
+        "parallel",
+        "redstone"
     ]
 }

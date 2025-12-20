@@ -38,6 +38,7 @@ local function bind_device(device, driver_map)
         device.status = "error"
         device.error = "Failed to load driver package: " .. package_name
         log.error(device.error)
+        log.error(driver_def)
         return
     end
 
