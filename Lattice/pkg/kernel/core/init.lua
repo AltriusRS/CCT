@@ -19,7 +19,7 @@ local RESET_SIGNAL = 10
 --- It is assigned dynamically based on the configuration parse_file
 --- located at /os/lattice.toml
 local services = {}
-K_DEBUG_SERVICES = {}
+_G.K_DEBUG_SERVICES = {}
 
 
 --- Provides a global status light function
@@ -41,7 +41,7 @@ if kernel_settings.services.status_lights.enabled then
     ERROR_LIGHT = kernel_settings.services.status_lights.threshold_error_light
     STATUS_FACE = kernel_settings.services.status_lights.face
 
-    table.insert(K_DEBUG_SERVICES, "status_lights")
+    table.insert(_G._G.K_DEBUG_SERVICES, "status_lights")
     K_STATUS_ERROR(false)
 end
 
@@ -90,7 +90,7 @@ local function device_event_loop()
 end
 
 if kernel_settings.interrupts.peripherals.enabled then
-    table.insert(K_DEBUG_SERVICES, "peripherals")
+    table.insert(_G.K_DEBUG_SERVICES, "peripherals")
     table.insert(services, device_event_loop)
 end
 
@@ -140,13 +140,13 @@ end
 --- Enable the redstone interrupts if they're enabled in the configuration
 if kernel_settings.interrupts.redstone.enabled then
     if kernel_settings.services.reboot_button.enabled then
-        table.insert(K_DEBUG_SERVICES, "redstone + REBOOT")
+        table.insert(_G.K_DEBUG_SERVICES, "redstone + REBOOT")
     else
-        table.insert(K_DEBUG_SERVICES, "redstone")
+        table.insert(_G.K_DEBUG_SERVICES, "redstone")
     end
     table.insert(services, interrupt_on_redstone)
 elseif kernel_settings.services.reboot_button.enabled then
-    table.insert(K_DEBUG_SERVICES, "redstone (REBOOT)")
+    table.insert(_G.K_DEBUG_SERVICES, "redstone (REBOOT)")
     table.insert(services, interrupt_on_redstone)
 end
 

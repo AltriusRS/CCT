@@ -54,7 +54,7 @@ local function render()
     --- Lower the cursor by one row
     y = y + 1
 
-    --- Displaye the values from the K_DEBUG_SERVICES global table
+    --- Display the values from the K_DEBUG_SERVICES global table
     for _, service in ipairs(K_DEBUG_SERVICES) do
         Debug.display.write_at(2, y, service)
         y = y + 1
