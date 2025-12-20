@@ -12,7 +12,9 @@ if fs.exists("/os/_.cmp.id") then
     log.info("Computer ID: " .. _G.CMP_ID)
 else
     _G.CMP_ID = nanoid()
-    fs.write("/os/_.cmp.id", _G.CMP_ID)
+    local f = fs.open("/os/_.cmp.id", "w")
+    f.write(net_cfg)
+    f.close()
     log.info("Computer ID: " .. _G.CMP_ID)
 end
 

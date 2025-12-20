@@ -20,7 +20,7 @@ enabled = true
 [services.status_lights]
 enabled = true
 threshold_power_light = 3
-threshold_error_light = 4
+threshold_error_light = 5
 face = "back"
 
 [services.reboot_button]
