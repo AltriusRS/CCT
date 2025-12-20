@@ -20,22 +20,22 @@ local PITCH_RANGE = {
 }
 
 local VALID_INSTRUMENTS = {
-    "harp",
-    "basedrum",
-    "snare",
-    "hat",
-    "bass",
-    "flute",
-    "bell",
-    "guitar",
-    "chime",
-    "xylophone",
-    "iron_xylophone",
-    "cow_bell",
-    "didgeridoo",
-    "bit",
-    "banjo",
-    "pling"
+    harp = true,
+    basedrum = true,
+    snare = true,
+    hat = true,
+    bass = true,
+    flute = true,
+    bell = true,
+    guitar = true,
+    chime = true,
+    xylophone = true,
+    iron_xylophone = true,
+    cow_bell = true,
+    didgeridoo = true,
+    bit = true,
+    banjo = true,
+    pling = true
 }
 
 local function clamp(value, min, max)
