@@ -1,6 +1,6 @@
 [repository]
 name = "Lattice Official"
-updated = 1_766_272_589
+updated = 1_766_273_119
 
 [p."services.audio"]
 p = "services/audio"
@@ -8,7 +8,7 @@ d = [ "shared.log", "kernel.device_manager" ]
 
   [[p."services.audio".f]]
   n = "init.lua"
-  s = "c298b6f114783e2cb0e9c814e638ad87b7cb280a831807581e305bf6d46b5399"
+  s = "a3becdc83e6f533017c6939fb8052a5632944382d1013e5ab10f78fbf4b7e7e1"
 
 [p."services.debug"]
 p = "services/debug"
@@ -192,7 +192,7 @@ t = [ "speaker" ]
 
   [[p."drivers.core.speaker".f]]
   n = "init.lua"
-  s = "8f1f150b1ff906f955f5909b99888ce65fe1fb919294dbf8f20d3dfea30deed5"
+  s = "9ba913ce3ad5a838487463c863452d15b2705af0b2433eca752fa1aacad8c4ae"
 
 [p."drivers.core.modem"]
 p = "drivers/core/modem"
