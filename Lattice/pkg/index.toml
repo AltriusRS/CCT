@@ -1,6 +1,6 @@
 [repository]
 name = "Lattice Official"
-updated = 1_766_250_419
+updated = 1_766_258_702
 
 [p."services.audio"]
 p = "services/audio"
@@ -30,7 +30,7 @@ d = [
 
   [[p."kernel.core".f]]
   n = "init.lua"
-  s = "0aa9b7ed0be281c3d7e4fa31ad832263b4e309ed93331f8e4d01b29e951972af"
+  s = "be95f342b7c398a48701604831b52063e77e0c1a11fc1042d9090b53b27dc197"
 
 [p."kernel.device_manager"]
 p = "kernel/device_manager"
@@ -100,7 +100,7 @@ p = "config/system"
 
   [[p."config.system".f]]
   n = "system.toml"
-  s = "4c2ab6e1cfe4efe906507a7e46db940b2ae77d9cef4c0c03c740c996ac597152"
+  s = "81df8e5e663bd71433b451ad75e1e5c5d447811ee7f9f2ae32e04451910f79da"
 
   [p."config.system".m]
   install_path = "/os/lattice.toml"
@@ -177,6 +177,14 @@ d = [ ]
   n = "init.lua"
   s = "e008643bdfea273ea1ecd3658edabe3c5a7e9625dd00f1f6fa7e525ff2a3a3eb"
 
+[p."drivers.core.printer"]
+p = "drivers/core/printer"
+t = [ "printer" ]
+
+  [[p."drivers.core.printer".f]]
+  n = "init.lua"
+  s = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+
 [p."drivers.core.speaker"]
 p = "drivers/core/speaker"
 d = [ "shared.log" ]
@@ -185,6 +193,14 @@ t = [ "speaker" ]
   [[p."drivers.core.speaker".f]]
   n = "init.lua"
   s = "7136548127fa0c02d582a67a6c9a640c59626deb081be01c77575a8ddc66bdf9"
+
+[p."drivers.core.modem"]
+p = "drivers/core/modem"
+t = [ "modem" ]
+
+  [[p."drivers.core.modem".f]]
+  n = "init.lua"
+  s = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
 [p."drivers.core.monitor"]
 p = "drivers/core/monitor"
