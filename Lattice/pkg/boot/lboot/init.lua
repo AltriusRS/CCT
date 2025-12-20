@@ -1,7 +1,7 @@
 -- Lattice OS boot entrypoint
 -- Stage-1 bootstrap
 
-package.path = package.path .. ";/lib/?.lua;/lib/?/init.lua;/os/?.lua;/os/?/?.lua"
+package.path = package.path .. ";/lib/?.lua;/lib/?/init.lua;/os/?.lua;/os/?/?.lua;/os/?/init.lua"
 
 
 local monitors = {}

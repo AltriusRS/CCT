@@ -6,6 +6,7 @@ local POWER_LIGHT = 3
 local ERROR_LIGHT = 7
 
 
+
 log.info("Starting Lattice kernel")
 
 local device_manager = require("os.kernel.device_manager")
