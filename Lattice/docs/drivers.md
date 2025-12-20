@@ -9,8 +9,9 @@ return {
 
     -- Initialize the driver with the peripheral handle.
     init = function(device)
-        -- The "device" in this method is the result of calling `peripheral.wrap` on a peripheral.
-        -- You recieve the raw peripheral handle, Lattice receives a generic driver overview.
+        -- The "device" in this method is the result of calling 
+        -- `peripheral.wrap` on a peripheral. You receive the raw 
+        -- peripheral handle, Lattice receives a generic driver overview.
         
         return {
             _status = "OK",
@@ -47,6 +48,7 @@ print("Peripheral: " .. status.peripheral)
 ```
 
 This sample code, run with the Generic Monitor Driver (monitor) would output:
+
 ```
 Driver Name: Generic Monitor Driver
 Status: OK
