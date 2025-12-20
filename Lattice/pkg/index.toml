@@ -1,6 +1,6 @@
 [repository]
 name = "Lattice Official"
-updated = 1_766_271_968
+updated = 1_766_272_108
 
 [p."services.audio"]
 p = "services/audio"
@@ -192,7 +192,7 @@ t = [ "speaker" ]
 
   [[p."drivers.core.speaker".f]]
   n = "init.lua"
-  s = "7136548127fa0c02d582a67a6c9a640c59626deb081be01c77575a8ddc66bdf9"
+  s = "29b69eb9bfe34d2e19b58f810294f968c93942f6a5527b237a84ccc89e73c583"
 
 [p."drivers.core.modem"]
 p = "drivers/core/modem"
