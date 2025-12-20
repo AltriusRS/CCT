@@ -1,6 +1,6 @@
 [repository]
 name = "Lattice Official"
-updated = 1_766_243_281
+updated = 1_766_243_424
 
 [p."services.audio"]
 p = "services/audio"
@@ -30,7 +30,7 @@ d = [
 
   [[p."kernel.core".f]]
   n = "init.lua"
-  s = "05ada61757a469164a62ce99d99f4a3f9061df78942122b8447cbe839b44c3e2"
+  s = "d966f5b8dcef2deb4ce1e3f6862d2a6bc02e49356c1e692ba97dec810e04d2ca"
 
 [p."kernel.device_manager"]
 p = "kernel/device_manager"
