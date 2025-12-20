@@ -5,5 +5,5 @@ name = "packages.boot"
 libs = [
     "boot.hardware_surveyor",
     "boot.lboot",
-    "boot.startup"
+    "boot.startup",
 ]

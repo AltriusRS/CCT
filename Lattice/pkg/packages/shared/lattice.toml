@@ -7,5 +7,5 @@ libs = [
     "shared.sha2",
     "shared.nanoid",
     "shared.log",
-    "shared.hardware_surveyor"
+    "shared.hardware_surveyor",
 ]
