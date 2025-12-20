@@ -9,6 +9,6 @@ libs = [
     "kernel.core",
     "kernel.device_manager",
     "config.system",
-    "config.repo"
-    "packages.core_drivers"
+    "config.repo",
+    "packages.core_drivers",
 ]

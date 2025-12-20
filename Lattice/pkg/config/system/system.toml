@@ -5,3 +5,13 @@ codename = "Scaffold"
 
 [node]
 role = "controller"
+
+[updates]
+enabled = true
+# Interval in seconds between update checks
+interval = 86400 # 24 hours
+
+[services.debug]
+enabled = true
+
+# [services.]
