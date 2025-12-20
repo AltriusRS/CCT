@@ -30,6 +30,9 @@ local function render()
     Debug.display.write_at(2, 1, "Lattice Debug View")
 
     local y = 3
+    Debug.display.write_at(2, y, "Device List")
+
+    y = y + 1
 
     for _, dev in ipairs(device_manager.get_devices()) do
         local driver_name = "N/A"
@@ -52,6 +55,10 @@ local function render()
     end
 
     --- Lower the cursor by one row
+    y = y + 1
+
+    Debug.display.write_at(2, y, "Kernel Services")
+
     y = y + 1
 
     --- Display the values from the K_DEBUG_SERVICES global table
