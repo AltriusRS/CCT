@@ -67,7 +67,7 @@ local function interrupt_on_redstone()
     while true do
         --- Wait for a redstone signal to trigger an interrupt
         os.pullEvent("redstone")
-        local strength = redstone.getAnalogInput(side)
+        local strength = redstone.getAnalogInput("front")
         if strength >= RESET_SIGNAL then
             os.reboot()
         end
