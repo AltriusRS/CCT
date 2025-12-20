@@ -87,7 +87,7 @@ function Audio.ding()
     Audio.busy = true
 
     -- Call into the driver, not the peripheral
-    local ok, result = pcall(speaker.driver.beep, speaker)
+    local ok, result = pcall(speaker.driver.beep, speaker.driver)
 
     Audio.busy = false
 
@@ -118,7 +118,7 @@ function Audio.play_note(instrument, volume, pitch)
 
     local ok, result = pcall(
         speaker.driver.play_note,
-        speaker,
+        speaker.driver,
         instrument,
         pitch,
         volume

@@ -6,14 +6,32 @@ local kernel_settings = toml.parse_file("/os/lattice.toml")
 
 log.info("Starting Lattice kernel")
 
--- Initialize Computer ID
-if fs.exists("/os/_.cmp.id") then
-    _G.CMP_ID = fs.read("/os/_.cmp.id")
-    log.info("Computer ID: " .. _G.CMP_ID)
+local ID_FILE = "/os/_.cmp.id"
+
+if fs.exists(ID_FILE) then
+    -- READ PHASE
+    local f = fs.open(ID_FILE, "r")
+    if f then
+        _G.CMP_ID = f.readAll() -- Fixed: readAll() instead of f.read(path)
+        f.close()
+        log.info("Computer ID: " .. _G.CMP_ID)
+    else
+        log.error("Failed to read existing computer ID")
+    end
 else
-    _G.CMP_ID = nanoid()
-    fs.write("/os/_.cmp.id", _G.CMP_ID)
-    log.info("Computer ID: " .. _G.CMP_ID)
+    -- GENERATION PHASE
+    _G.CMP_ID = nanoid() -- Assumes the callable module pattern we built
+    local f = fs.open(ID_FILE, "w")
+    if f then
+        f.write(_G.CMP_ID)
+        f.close()
+        log.info("Initialized New Computer ID: " .. _G.CMP_ID)
+    else
+        log.error("Failed to write new computer ID")
+        -- If we can't save the ID, the node identity is volatile.
+        -- We should probably halt here.
+        error("Kernel Panic: Persistent storage failure")
+    end
 end
 
 local device_manager = require("os.kernel.device_manager")

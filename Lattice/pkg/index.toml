@@ -8,7 +8,7 @@ d = [ "shared.log", "kernel.device_manager" ]
 
   [[p."services.audio".f]]
   n = "init.lua"
-  s = "c298b6f114783e2cb0e9c814e638ad87b7cb280a831807581e305bf6d46b5399"
+  s = "a3becdc83e6f533017c6939fb8052a5632944382d1013e5ab10f78fbf4b7e7e1"
 
 [p."services.debug"]
 p = "services/debug"
@@ -30,7 +30,7 @@ d = [
 
   [[p."kernel.core".f]]
   n = "init.lua"
-  s = "7f75c07134da16249ae4742267b90ceaac4ba31fa710926edc8fb49cd5f9d23d"
+  s = "21a00d85ba81c12d548a3b775108e2c33c79d1e590b403fd88861b1c753ad4f4"
 
 [p."kernel.device_manager"]
 p = "kernel/device_manager"
@@ -100,7 +100,7 @@ p = "config/system"
 
   [[p."config.system".f]]
   n = "system.toml"
-  s = "4c2ab6e1cfe4efe906507a7e46db940b2ae77d9cef4c0c03c740c996ac597152"
+  s = "81df8e5e663bd71433b451ad75e1e5c5d447811ee7f9f2ae32e04451910f79da"
 
   [p."config.system".m]
   install_path = "/os/lattice.toml"
@@ -177,6 +177,14 @@ d = [ ]
   n = "init.lua"
   s = "e008643bdfea273ea1ecd3658edabe3c5a7e9625dd00f1f6fa7e525ff2a3a3eb"
 
+[p."drivers.core.printer"]
+p = "drivers/core/printer"
+t = [ "printer" ]
+
+  [[p."drivers.core.printer".f]]
+  n = "init.lua"
+  s = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+
 [p."drivers.core.speaker"]
 p = "drivers/core/speaker"
 d = [ "shared.log" ]
@@ -184,7 +192,15 @@ t = [ "speaker" ]
 
   [[p."drivers.core.speaker".f]]
   n = "init.lua"
-  s = "7136548127fa0c02d582a67a6c9a640c59626deb081be01c77575a8ddc66bdf9"
+  s = "9ba913ce3ad5a838487463c863452d15b2705af0b2433eca752fa1aacad8c4ae"
+
+[p."drivers.core.modem"]
+p = "drivers/core/modem"
+t = [ "modem" ]
+
+  [[p."drivers.core.modem".f]]
+  n = "init.lua"
+  s = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
 [p."drivers.core.monitor"]
 p = "drivers/core/monitor"
