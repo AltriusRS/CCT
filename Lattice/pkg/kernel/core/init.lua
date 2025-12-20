@@ -1,18 +1,47 @@
 local log = require("shared.log")
 local toml = require("shared.toml")
 
-local RESET_SIGNAL = 10
-local POWER_LIGHT = 3
-local ERROR_LIGHT = 7
-
-
+local kernel_settings = toml.parse_file("/os/lattice.toml")
 
 log.info("Starting Lattice kernel")
 
 local device_manager = require("os.kernel.device_manager")
 device_manager.init()
 
-redstone.setAnalogOutput("front", POWER_LIGHT)
+local STATUS_ENABLED = false
+local POWER_LIGHT = 3
+local ERROR_LIGHT = 7
+local STATUS_FACE = "back"
+local RESET_FACE = "front"
+local RESET_SIGNAL = 10
+
+--- This table holds all of the services which are expected to be running
+--- It is assigned dynamically based on the configuration parse_file
+--- located at /os/lattice.toml
+local services = {}
+
+
+--- Provides a global status light function
+function K_STATUS_ERROR(enable)
+    --- Return if status lights are disabled
+    if not STATUS_ENABLED then return end
+
+    --- Set status light to error or power light
+    if enable then
+        redstone.setAnalogOutput(STATUS_FACE, ERROR_LIGHT)
+    else
+        redstone.setAnalogOutput(STATUS_FACE, POWER_LIGHT)
+    end
+end
+
+if kernel_settings.services.status_lights.enabled then
+    STATUS_ENABLED = true
+    POWER_LIGHT = kernel_settings.services.status_lights.threshold_power_light
+    ERROR_LIGHT = kernel_settings.services.status_lights.threshold_error_light
+    STATUS_FACE = kernel_settings.services.status_lights.face
+
+    K_STATUS_ERROR(false)
+end
 
 log.info("Welcome to Lattice OS")
 
@@ -39,6 +68,7 @@ audio.init()
 os.sleep(0.5)
 local ok, err = audio.ding()
 if not ok then
+    K_STATUS_ERROR(true)
     log.error("Failed to play beep sound: " .. err)
 end
 
@@ -57,8 +87,18 @@ local function device_event_loop()
     end
 end
 
-local debug = require("os.services.debug")
-debug.init()
+if kernel_settings.interrupts.peripherals.enabled then
+    table.insert(services, device_event_loop)
+end
+
+--- Enable the debug service if it is enabled in the configuration
+if kernel_settings.services.debug.enabled then
+    local debug = require("os.services.debug")
+    debug.init()
+    table.insert(services, debug.run)
+end
+
+
 
 --- Handle redstone events.
 --- This allows the kernel to trigger a hard reset when the redstone signal is high.
@@ -68,19 +108,44 @@ local function interrupt_on_redstone()
     while true do
         --- Wait for a redstone signal to trigger an interrupt
         os.pullEvent("redstone")
-        local strength = redstone.getAnalogInput("front")
-        if strength >= RESET_SIGNAL then
-            -- Trigger a hard reset
-            do return true end
+
+        local faces = {
+            front = redstone.getAnalogInput("front"),
+            back = redstone.getAnalogInput("back"),
+            top = redstone.getAnalogInput("top"),
+            bottom = redstone.getAnalogInput("bottom"),
+            left = redstone.getAnalogInput("left"),
+            right = redstone.getAnalogInput("right")
+        }
+
+        if kernel_settings.services.reboot_button.enabled then
+            local strength = faces[kernel_settings.services.reboot_button.face]
+            if strength then
+                if strength >= kernel_settings.services.reboot_button.threshold then
+                    -- Trigger a soft reset
+                    do return true end
+                end
+            end
+        end
+
+        if kernel_settings.interrupts.redstone.enabled then
+            -- TODO: Do stuff to handle redstone levels changing
         end
     end
 end
 
+--- Enable the redstone interrupts if they're enabled in the configuration
+if kernel_settings.interrupts.redstone.enabled then
+    table.insert(services, interrupt_on_redstone)
+elseif kernel_settings.services.reboot_button.enabled then
+    table.insert(services, interrupt_on_redstone)
+end
+
+
+
 --- Begin executing the user space
 local reboot = parallel.waitForAny(
-    interrupt_on_redstone,
-    device_event_loop,
-    debug.run
+    table.unpack(services)
 )
 
 redstone.setAnalogOutput("front", ERROR_LIGHT)
